@@ -31,10 +31,10 @@ La aplicación consta de tres secciones principales diseñadas para guiar a los 
 
 Este proyecto utiliza tecnologías modernas para garantizar un desarrollo ágil y un producto final optimizado:
 
-- [![Astro][astro-badge]][astro-url] - The web framework for content-driven websites.
-- [![Typescript][typescript-badge]][typescript-url] - JavaScript with syntax for types.
-- [![Tailwind CSS][tailwind-badge]][tailwind-url] - A utility-first CSS framework for rapidly building custom designs.
-- [![@midudev/tailwind-animations][animations-badge]][animations-url] - Easy peasy animations for your Tailwind project.
+- [![Astro][astro-badge]][astro-url] - Framework diseñado para la creacción de proyectos enfocados ak contenido.
+- [![Typescript][typescript-badge]][typescript-url] - Javascript con alto tipado.
+- [![Tailwind CSS][tailwind-badge]][tailwind-url] - Framework de CSS usado para generar estilos de manera rapida y sencilla.
+- [![@midudev/tailwind-animations][animations-badge]][animations-url] - Librería usada para usar animaciones de una manera sencilla.
 
 ---
 
