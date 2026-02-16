@@ -1,24 +1,15 @@
-/* src/styles/global.css */
-
-/* 1. Importa las fuentes de Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&family=Zen+Dots&display=swap');
 
-/* 2. Importa Tailwind */
 @import 'tailwindcss';
 
-/* 3. Configura tu tema personalizado */
 @theme {
-    /* Fuentes personalizadas */
     --font-zen-dots: 'Zen Dots', cursive;
     --font-jetbrains: 'JetBrains Mono', monospace;
 
-    /* Colores personalizados */
     --color-primary-ark-blue: #0B1020;
     --color-primary-orange: #FF4D00;
-    /* Corregí tu color que tenía un dígito menos */
 }
 
-/* 4. (Opcional) Asigna fuentes por defecto */
 body {
     font-family: var(--font-jetbrains);
 }
