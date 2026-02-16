@@ -1,1 +1,24 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&family=Zen+Dots&display=swap');
+
+@import 'tailwindcss';
+
+@theme {
+    --font-zen-dots: 'Zen Dots', cursive;
+    --font-jetbrains: 'JetBrains Mono', monospace;
+
+    --color-primary-ark-blue: #0B1020;
+    --color-primary-orange: #FF4D00;
+}
+
+body {
+    font-family: var(--font-jetbrains);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-zen-dots);
+}
