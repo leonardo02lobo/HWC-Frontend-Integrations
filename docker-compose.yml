@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: HelloWorldCup2026Frontend
+    container_name: hello-world-cup-2026-frontend
     ports:
       - "4321:4321"
     volumes:
@@ -19,4 +19,4 @@ services:
 
 volumes:
   node_modules_volume:
-    name: HelloWorldCup2026Frontend-node-modules
+    name:   hello-world-cup-2026-frontend-node-modules

@@ -6,8 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "docker:build": "docker build -t astro HelloWorldCup2026Frontend .",
-    "docker:run": "docker run -p 4321:4321 HelloWorldCup2026Frontend",
+    "docker:build": "docker build -t hello-world-cup-2026-frontend .",
+    "docker:run": "docker run -p 4321:4321 hello-world-cup-2026-frontend",
     "docker:compose": "docker compose up",
     "astro": "astro"
   },
