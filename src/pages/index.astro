@@ -1,19 +1,8 @@
 ---
-import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Layout from "../layout/Layout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="/assets/mascot/logo-hwc-2026.png" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body class="bg-primary-ark-blue">
-		<h1 class="font-zen-dots text-4xl flex flex-row">
-			<p class="text-white">HWC</p>
-			<p class="text-primary-orange">|2026</p>
-		</h1>
-	</body>
-</html>
+<Layout title="Hello World Cup 2026">
+	<Header />
+</Layout>

@@ -1,0 +1,82 @@
+<header
+    class="w-full rounded-2xl flex xl:flex-row flex-col gap-4 justify-center items-center px-16 py-8 relative"
+>
+    <div
+        class="flex xl:flex-row flex-col gap-4 justify-between items-center w-full px-4"
+    >
+        <h1 class="font-zen-dots text-5xl flex flex-row">
+            <p class="text-white">HWC</p>
+            <p class="text-primary-orange">|2026</p>
+        </h1>
+        <button
+            class="block sm:hidden text-white text-2xl z-50"
+            id="hamburger"
+            onclick="toggleMenu()"
+        >
+            <span id="hamburger-icon">☰</span>
+        </button>
+        <div
+            class="sm:flex sm:flex-row flex-col text-white gap-4 hidden"
+            id="menu"
+        >
+            <a href="">CATEGORIAS</a>
+            <a href="">CHARLAS</a>
+            <a href="">CALENDARIO</a>
+            <a href="">PATROCINADORES</a>
+            <a href="" class="flex flex-row">
+                <p class="text-primary-orange">&lt;</p>
+                <p>EQUIPO HWC</p>
+                <p class="text-primary-orange">/&gt;</p>
+            </a>
+        </div>
+    </div>
+    <div
+        class="sm:flex flex-row justify-center items-center hidden"
+        id="button-container"
+    >
+        <button class="bg-primary-orange text-white px-4 py-2 rounded-lg">
+            REGISTRARSE
+        </button>
+    </div>
+</header>
+
+<div
+    id="mobile-menu-overlay"
+    class="fixed inset-0 bg-black opacity-75 flex items-start justify-center transition-all duration-300 pointer-events-none -translate-y-full z-40"
+>
+    <div class="w-full max-w-sm mt-32 mx-4 rounded-lg p-4 flex flex-col gap-4">
+        <div class="flex flex-col text-white gap-4 w-full justify-center items-center" id="mobile-menu">
+            <a href="">CATEGORIAS</a>
+            <a href="">CHARLAS</a>
+            <a href="">CALENDARIO</a>
+            <a href="">PATROCINADORES</a>
+            <a href="" class="flex flex-row">
+                <p class="text-primary-orange">&lt;</p>
+                <p>EQUIPO HWC</p>
+                <p class="text-primary-orange">/&gt;</p>
+            </a>
+        </div>
+        <div class="flex justify-center" id="mobile-button-container">
+            <button class="bg-primary-orange text-white px-4 py-2 rounded-lg">
+                REGISTRARSE
+            </button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function toggleMenu() {
+        const overlay = document.getElementById("mobile-menu-overlay");
+        const icon = document.getElementById("hamburger-icon");
+
+        if (overlay.classList.contains("opacity-0")) {
+            overlay.classList.remove("opacity-0", "pointer-events-none", "-translate-y-full");
+            overlay.classList.add("opacity-100", "pointer-events-auto", "translate-y-0");
+            icon.textContent = "✕";
+        } else {
+            overlay.classList.remove("opacity-100", "pointer-events-auto", "translate-y-0");
+            overlay.classList.add("opacity-0", "pointer-events-none", "-translate-y-full");
+            icon.textContent = "☰";
+        }
+    }
+</script>
