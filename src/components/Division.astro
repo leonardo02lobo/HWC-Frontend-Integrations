@@ -1,0 +1,31 @@
+---
+interface Props {
+    side: "left" | "right";
+    text: string;
+}
+
+const { side, text } = Astro.props;
+---
+
+<div
+    class="absolute top-0 left-0 right-0 flex items-center gap-2 w-full px-4 md:px-0"
+>
+    {
+        side == "right" ? (
+            <>
+                <div class="h-1 flex-1 border bg-primary-orange" />
+                <span class="text-white text-2xl md:text-5xl mr-4 ml-4 font-zen-dots">
+                    {text}
+                </span>
+            </>
+        ):
+        (
+            <>
+                <span class="text-white text-2xl md:text-5xl mr-4 ml-4 font-zen-dots">
+                    {text}
+                </span>
+                <div class="h-1 flex-1 border bg-primary-orange" />
+            </>
+        )
+    }
+</div>      
