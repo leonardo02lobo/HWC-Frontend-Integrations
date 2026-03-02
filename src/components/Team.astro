@@ -1,0 +1,28 @@
+---
+import DivisionFooter from "./DivisionFooter.astro";
+import Instagram from "./icons/Instagram.astro";
+---
+
+<div class="flex flex-col justify-center items-center gap-10 w-full">
+    <DivisionFooter rotate={true} />
+    <div class="flex flex-col md:flex-row justify-center items-center gap-10 md:gap-16 w-full px-16">
+        <div class="flex justify-center items-center">
+            <img src="/assets/team/Green-Team-de-james-gosling.png" alt="" class="w-screen h-60 md:h-96 border-2 border-primary-orange"/>
+        </div>
+        <div
+            class="flex flex-col justify-between items-center h-full w-full gap-10 text-white text-center"
+        >
+            <span
+                >Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Obcaecati magni laboriosam cumque culpa consequuntur?
+                Repellendus dolore dolorum accusantium quis magni? Est neque
+                voluptas eum ipsum quidem excepturi, iusto quisquam? Delectus.</span
+            >
+            <a href="https://www.instagram.com/helloworldcup_/" target="_blank" class="flex flex-row justify-center items-center gap-3">
+                <span><Instagram /></span>
+                <span>@HelloWorldCup</span>
+            </a>
+        </div>
+    </div>
+    <DivisionFooter rotate={false} />
+</div>
