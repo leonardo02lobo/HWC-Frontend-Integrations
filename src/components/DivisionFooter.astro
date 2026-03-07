@@ -1,0 +1,34 @@
+---
+interface Props {
+    rotate: boolean;
+}
+const { rotate } = Astro.props;
+---
+
+<div class="flex items-center gap-2 w-full px-4 md:px-0">
+    {
+        rotate ? (
+            <div class="h-1 flex-1 border bg-primary-orange" />
+        ) : (
+            <div class="h-1 flex-1 border bg-white" />
+        )
+    }
+    <span class="text-white text-2xl md:text-5xl mr-4 ml-4 font-zen-dots">
+        <div class="flex flex-row text-center">
+            <p class="text-primary-orange">&lt;</p>
+            {rotate ? (
+                <p>EQUIPO H<span class="text-primary-orange">W</span>C</p>
+                ) : (
+                <p>H<span class="text-primary-orange">W</span>C</p>
+            )}
+            <p class="text-primary-orange">/&gt;</p>
+        </div>
+    </span>
+    {
+        rotate ? (
+            <div class="h-1 flex-1 border bg-white" />
+        ) : (
+            <div class="h-1 flex-1 border bg-primary-orange" />
+        )
+    }
+</div>
