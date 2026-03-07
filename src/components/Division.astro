@@ -7,9 +7,7 @@ interface Props {
 const { side, text } = Astro.props;
 ---
 
-<div
-    class="absolute top-0 left-0 right-0 flex items-center gap-2 w-full px-4 md:px-0"
->
+<div class="flex items-center gap-2 w-full px-4 md:px-0 mb-6 mt-6">
     {
         side == "right" ? (
             <>
@@ -18,8 +16,7 @@ const { side, text } = Astro.props;
                     {text}
                 </span>
             </>
-        ):
-        (
+        ) : (
             <>
                 <span class="text-white text-2xl md:text-5xl mr-4 ml-4 font-zen-dots">
                     {text}
@@ -28,4 +25,4 @@ const { side, text } = Astro.props;
             </>
         )
     }
-</div>      
+</div>
