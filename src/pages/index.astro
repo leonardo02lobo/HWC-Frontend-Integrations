@@ -5,12 +5,16 @@ import Speakers from "../components/Speakers.astro";
 import Sponsor from "../components/Sponsor.astro";
 import Ubication from "../components/Ubication.astro";
 import Layout from "../layout/Layout.astro";
+import Division from "../components/division.astro";
 ---
 
 <Layout title="Hello World Cup 2026">
 	<Header />
 	<Main />
+	<Division text="Ubicación" side="right" />
 	<Ubication />
+	<Division text="Charlas" side="left" />
 	<Speakers></Speakers>
+	<Division text="Patrocinadores" side="right" />
 	<Sponsor />
 </Layout>
