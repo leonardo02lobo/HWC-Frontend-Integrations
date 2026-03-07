@@ -1,9 +1,35 @@
 ---
-import Division from './Division.astro'
+import { Image } from "astro:assets";
+import Division from "./Division.astro";
+import CardSpeaker from "./icons/CardSpeaker.astro";
+import { getCollection } from "astro:content";
 
+const speakers = await getCollection("speakers");
 ---
 
-<div class="flex px-10 flex-col items-center gap-6 md:py-10 relative">
-<Division text='Charlas' side='left'></Division>
-</div>
+<div class="flex flex-col items-center gap-6 p-0 md:px-20 py-10 relative">
 
+    <div class="flex flex-col w-full px-4 md:px-0 gap-8">
+        {
+            speakers &&
+                speakers.map(async (speaker) => {
+                    const { Content } = await speaker.render();
+                    return (
+                        <CardSpeaker
+                            name={speaker.data.name}
+                            role={speaker.data.role}
+                            company={speaker.data.company}
+                            avatar={speaker.data.avatar}
+                            tittle={speaker.data.tittle}
+                            github={speaker.data.github}
+                            linkedin={speaker.data.linkedin}
+                            instagram={speaker.data.instagram}
+                            bio={speaker.data.bio}
+                        >
+                            <Content />
+                        </CardSpeaker>
+                    );
+                })
+        }
+    </div>
+</div>
