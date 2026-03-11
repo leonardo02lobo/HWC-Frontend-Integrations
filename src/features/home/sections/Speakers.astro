@@ -1,8 +1,6 @@
 ---
-import { Image } from "astro:assets";
-import Division from "./Division.astro";
-import CardSpeaker from "./icons/CardSpeaker.astro";
 import { getCollection } from "astro:content";
+import CardSpeaker from "./components/CardSpeaker.astro";
 
 const speakers = await getCollection("speakers");
 ---
