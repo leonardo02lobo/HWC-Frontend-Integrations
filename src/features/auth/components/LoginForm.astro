@@ -1,0 +1,153 @@
+<div class="min-h-screen bg-gray-900 flex items-center justify-center px-4">
+    <div
+        class="bg-gray-800 rounded-2xl shadow-2xl max-w-4xl w-full flex flex-col overflow-hidden"
+    >
+        <h1
+            class="text-3xl font-bold text-white text-center mb-8 mt-8 flex justify-center"
+        >
+            <p class="text-primary-orange">&lt;</p>
+            <p>Registro de Participante</p>
+            <p class="text-primary-orange">/&gt;</p>
+        </h1>
+        <div class="flex flex-col md:flex-row">
+            <div class="w-full md:w-1/2 p-8">
+                <form action="" class="space-y-6">
+                    <div class="space-y-4">
+                        <h2 class="text-xl font-semibold text-white pb-2">
+                            [Datos de Perfil]
+                        </h2>
+
+                        <div class="space-y-3">
+                            <label for="username" class="block">
+                                <span class="text-white font-medium"
+                                    >Nombre de Usuario <span
+                                        class="text-gray-400">(Username)</span
+                                    ></span
+                                >
+                                <input
+                                    type="text"
+                                    id="username"
+                                    name="username"
+                                    required
+                                    class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent transition duration-200"
+                                />
+                            </label>
+
+                            <label for="name" class="block">
+                                <span class="text-white font-medium"
+                                    >Nombre Completo <span class="text-gray-400"
+                                        >(Name)</span
+                                    ></span
+                                >
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    required
+                                    class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent transition duration-200"
+                                />
+                            </label>
+
+                            <label for="email" class="block">
+                                <span class="text-white font-medium"
+                                    >Correo Electrónico <span
+                                        class="text-gray-400">(Mail)</span
+                                    ></span
+                                >
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    required
+                                    class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent transition duration-200"
+                                />
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Development Config Section -->
+                    <div class="space-y-4">
+                        <h2
+                            class="text-xl font-semibold text-primary-orange border-b border-primary-orange pb-2"
+                        >
+                            [Configuracion de Desarrollo]
+                        </h2>
+                        <p class="text-gray-400 text-sm">
+                            (Especifico para nivel datos)
+                        </p>
+
+                        <div class="space-y-3">
+                            <label for="language" class="block">
+                                <span class="text-white font-medium"
+                                    >Lenguaje de Programación <span
+                                        class="text-gray-400"
+                                        >(Programming Language)</span
+                                    ></span
+                                >
+                                <select
+                                    id="language"
+                                    name="language"
+                                    required
+                                    class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent transition duration-200"
+                                >
+                                    <option value="" class="bg-gray-700"
+                                        >Selecciona un lenguaje</option
+                                    >
+                                    <option value="python" class="bg-gray-700"
+                                        >Python</option
+                                    >
+                                    <option
+                                        value="javascript"
+                                        class="bg-gray-700">JavaScript</option
+                                    >
+                                    <option value="java" class="bg-gray-700"
+                                        >Java</option
+                                    >
+                                    <option value="csharp" class="bg-gray-700"
+                                        >C#</option
+                                    >
+                                    <option value="cpp" class="bg-gray-700"
+                                        >C++</option
+                                    >
+                                </select>
+                            </label>
+
+                            <label for="github" class="block">
+                                <span class="text-white font-medium"
+                                    >Perfil de GitHub <span
+                                        class="text-gray-400"
+                                        >(GitHub Profile)</span
+                                    ></span
+                                >
+                                <input
+                                    type="url"
+                                    id="github"
+                                    name="github"
+                                    required
+                                    class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent transition duration-200"
+                                />
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button
+                        type="submit"
+                        class="w-full bg-primary-orange hover:bg-orange-600 text-white font-bold py-4 px-6 rounded-lg transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-orange focus:ring-offset-2 focus:ring-offset-gray-800"
+                    >
+                        [Registrar -&gt;]
+                    </button>
+                </form>
+            </div>
+            <div
+                class="hidden md:flex md:w-1/2 bg-gradient-to-br from-gray-700 to-gray-900 items-center justify-center p-8"
+            >
+                <img
+                    src="/assets/mascot/logo-hwc-2026.png"
+                    alt="Logo HWC 2026"
+                    class="max-w-full max-h-64 object-contain"
+                />
+            </div>
+        </div>
+    </div>
+</div>

@@ -4,10 +4,12 @@
     <div
         class="flex xl:flex-row flex-col gap-4 justify-between items-center w-full px-4"
     >
-        <h1 class="font-zen-dots text-5xl flex flex-row">
-            <p class="text-white">HWC</p>
-            <p class="text-primary-orange">|2026</p>
-        </h1>
+        <a href="/">
+            <h1 class="font-zen-dots text-5xl flex flex-row">
+                <p class="text-white">HWC</p>
+                <p class="text-primary-orange">|2026</p>
+            </h1>
+        </a>
         <button
             class="block sm:hidden text-white text-2xl z-50"
             id="hamburger"
@@ -23,7 +25,7 @@
             <a href="" class="header-link">CHARLAS</a>
             <a href="" class="header-link">CALENDARIO</a>
             <a href="" class="header-link">PATROCINADORES</a>
-            <a href="" class=" header-link flex flex-row">
+            <a href="" class="header-link flex flex-row">
                 <p class="text-primary-orange">&lt;</p>
                 <p>EQUIPO HWC</p>
                 <p class="text-primary-orange">/&gt;</p>
@@ -34,9 +36,12 @@
         class="sm:flex flex-row justify-center items-center hidden"
         id="button-container"
     >
-        <button class="bg-primary-orange text-white px-4 py-2 rounded-lg transition hover:scale-105">
+        <a
+            href="/login"
+            class="bg-primary-orange text-white px-4 py-2 rounded-lg transition hover:scale-105 inline-block"
+        >
             REGISTRARSE
-        </button>
+        </a>
     </div>
 </header>
 
@@ -60,9 +65,12 @@
             </a>
         </div>
         <div class="flex justify-center" id="mobile-button-container">
-            <button class="bg-primary-orange text-white px-4 py-2 rounded-lg transition hover:scale-105">
+            <a
+                href="/login"
+                class="bg-primary-orange text-white px-4 py-2 rounded-lg transition hover:scale-105 inline-block"
+            >
                 REGISTRARSE
-            </button>
+            </a>
         </div>
     </div>
 </div>
