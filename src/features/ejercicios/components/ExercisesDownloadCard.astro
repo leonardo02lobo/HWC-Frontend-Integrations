@@ -1,0 +1,33 @@
+---
+import Pdf from "../../../components/ui/Pdf.astro";
+interface Props {
+    isPDF: boolean;
+    text: string;
+    description: string;
+    mode?: 'download' | 'add';
+}
+const { isPDF, text, description, mode = 'download' } = Astro.props as Props;
+---
+
+<div
+    class="flex flex-col justify-center items-center gap-4 border-2 bg-primary-degra-blue border-gray-600 rounded-lg p-6 h-64 w-full"
+>
+    {mode === 'download' ? (
+        <>
+            {!isPDF ? <p></p> : <Pdf />}
+            <h3 class="text-center">{text}</h3>
+            <hr class="w-full border-t border-gray-300" />
+            <p class="text-center">{description}</p>
+        </>
+    ) : (
+        <>
+            <h3 class="text-center">{text}</h3>
+            <hr class="w-full border-t border-gray-300" />
+            <p class="text-center">{description}</p>
+            <form class="flex flex-col gap-2 w-full">
+                <input type="url" placeholder="Ingrese la URL del repositorio" class="px-2 py-1 rounded border border-gray-400" />
+                <button type="submit" class="bg-primary-orange text-white px-4 py-2 rounded hover:bg-orange-600 transition">Agregar</button>
+            </form>
+        </>
+    )}
+</div>
