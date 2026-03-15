@@ -1,0 +1,43 @@
+---
+import ExercisesDownloadCard from "./ExercisesDownloadCard.astro";
+import HeaderExcercise from "./HeaderExcercise.astro";
+---
+<div
+    class="flex min-h-full w-full flex-col bg-[radial-gradient(circle_at_top,rgba(18,35,73,0.5),transparent_45%)]"
+>
+    <HeaderExcercise />
+
+    <div class="flex min-h-full flex-col md:flex-row md:gap-4">
+        <aside class="md:hidden w-full flex items-center justify-center gap-6 px-4 py-4 bg-primary-degra-blue border-b border-gray-600">
+            <a href="#" class="text-white hover:text-primary-orange transition">Ejercicios</a>
+            <a href="#" class="text-white hover:text-primary-orange transition">Mi Equipo</a>
+        </aside>
+
+        <div class="flex-1 min-w-0">
+        <div class="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-8 px-4 py-6 md:px-6 lg:px-8">
+            <div class="flex w-full max-w-5xl flex-col gap-4 py-2 md:py-4">
+                <h2 class="text-white flex flex-row text-2xl md:text-3xl">
+                    <span class="text-primary-orange">&lt;</span>
+                    <span>Panel de Ejercicios</span>
+                    <span class="text-primary-orange">/&gt;</span>
+                </h2>
+                <h3>Visualizacion de Ejercicios</h3>
+            </div>
+            <div class="flex w-full max-w-5xl flex-col items-center justify-center gap-5 px-0 py-2 md:py-4">
+                <div class="flex w-full flex-col items-stretch justify-center gap-5 md:flex-row">
+                    <div class="w-full md:flex-1">
+                        <ExercisesDownloadCard isPDF={true} text="Ejercicios: PDF (Instrucciones Completas)" description="Vea las instrucciones sobre el ejercicio" />
+                    </div>
+                    <div class="w-full md:flex-1">
+                        <ExercisesDownloadCard isPDF={false} text="Ejercicios: PDF (Informacion basica)" description="En lo largo de las profundidades del océano se encuentran diversos ecosistemas" />
+                    </div>
+                </div>
+                <div class="w-full">
+                    <h2 class="text-xl mt-4 mb-4">Entregar Solucion</h2>
+                    <ExercisesDownloadCard isPDF={false} mode="add" text="Agregar Ejercicio" description="Ingrese la URL del repositorio" />
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
