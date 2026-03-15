@@ -3,7 +3,7 @@ import ExercisesDownloadCard from "./ExercisesDownloadCard.astro";
 import HeaderExcercise from "./HeaderExcercise.astro";
 ---
 <div
-    class="flex min-h-full flex-col bg-[radial-gradient(circle_at_top,rgba(18,35,73,0.5),transparent_45%)]"
+    class="flex min-h-full w-full flex-col bg-[radial-gradient(circle_at_top,rgba(18,35,73,0.5),transparent_45%)]"
 >
     <HeaderExcercise />
 
@@ -23,10 +23,16 @@ import HeaderExcercise from "./HeaderExcercise.astro";
                 </h2>
                 <h3 class="">Visualizacion de Ejercicios</h3>
             </div>
-            <div class="flex flex-col md:flex-row justify-center items-center gap-4 px-4 py-6">
-                <ExercisesDownloadCard isPDF={true} text="Ejercicios: PDF (Instrucciones Completas)" description="Vea las instrucciones sobre el ejercicio" />
-                <ExercisesDownloadCard isPDF={false} text="Ejercicios: PDF (Informacion basica)" description="En lo largo de las profundidades del océano se encuentran diversos ecosistemas" />
-                <ExercisesDownloadCard isPDF={false} mode="add" text="Agregar Ejercicio" description="Ingrese la URL del repositorio" />
+            <div class="flex flex-col justify-center items-center gap-4 px-4 py-6">
+                <div class="flex flex-row justify-center items-center gap-5">
+                    <ExercisesDownloadCard isPDF={true} text="Ejercicios: PDF (Instrucciones Completas)" description="Vea las instrucciones sobre el ejercicio" />
+                    <ExercisesDownloadCard isPDF={false} text="Ejercicios: PDF (Informacion basica)" description="En lo largo de las profundidades del océano se encuentran diversos ecosistemas" />
+                </div>
+                <div class="w-full">
+                    <h2 class="text-xl mt-4 mb-4">Entregar Solucion</h2>
+                    <ExercisesDownloadCard isPDF={false} mode="add" text="Agregar Ejercicio" description="Ingrese la URL del repositorio" />
+                </div>
+                
             </div>
         </div>
     </div>

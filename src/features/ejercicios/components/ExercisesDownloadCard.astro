@@ -1,33 +1,100 @@
 ---
 import Pdf from "../../../components/ui/Pdf.astro";
+import Github from "../../../components/ui/Github.astro";
 interface Props {
     isPDF: boolean;
     text: string;
     description: string;
-    mode?: 'download' | 'add';
+    mode?: "download" | "add";
 }
-const { isPDF, text, description, mode = 'download' } = Astro.props as Props;
+const { isPDF, text, description, mode = "download" } = Astro.props as Props;
 ---
 
 <div
-    class="flex flex-col justify-center items-center gap-4 border-2 bg-primary-degra-blue border-gray-600 rounded-lg p-6 h-64 w-full"
+    class="relative flex flex-col justify-between gap-4 bg-gradient-to-br from-white/5 to-primary-degra-blue border border-gray-700 rounded-xl p-5 md:p-6 lg:p-8 shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 w-full max-w-2xl mx-auto overflow-hidden"
+    role="article"
+    aria-label={text}
 >
-    {mode === 'download' ? (
-        <>
-            {!isPDF ? <p></p> : <Pdf />}
-            <h3 class="text-center">{text}</h3>
-            <hr class="w-full border-t border-gray-300" />
-            <p class="text-center">{description}</p>
-        </>
-    ) : (
-        <>
-            <h3 class="text-center">{text}</h3>
-            <hr class="w-full border-t border-gray-300" />
-            <p class="text-center">{description}</p>
-            <form class="flex flex-col gap-2 w-full">
-                <input type="url" placeholder="Ingrese la URL del repositorio" class="px-2 py-1 rounded border border-gray-400" />
-                <button type="submit" class="bg-primary-orange text-white px-4 py-2 rounded hover:bg-orange-600 transition">Agregar</button>
-            </form>
-        </>
-    )}
+    {
+        mode === "download" ? (
+            <>
+                <div class="flex items-start justify-between w-full gap-4">
+                    <div class="flex items-center gap-3">
+                        {isPDF ? (
+                            <div class="flex items-center justify-center w-12 h-12 md:w-14 md:h-14">
+                                <Pdf />
+                            </div>
+                        ) : (
+                            <span></span>
+                        )}
+                        <div>
+                            <h3 class="text-base md:text-lg lg:text-xl font-semibold text-white">
+                                {text}
+                            </h3>
+                            <p class="text-sm md:text-base text-gray-300 mt-1">
+                                {description}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="w-full border-t border-gray-700 my-3" />
+
+                <div class="w-full flex items-center justify-between gap-3">
+                    <p class="text-sm md:text-base text-gray-300 line-clamp-3">
+                        {description}
+                    </p>
+                    { isPDF && (
+                        <button
+                            class="bg-primary-orange text-white px-4 py-2 rounded-md hover:bg-orange-600 transition"
+                            aria-label={`Descargar ${text}`}
+                        >
+                            Descargar
+                        </button>
+                    )}
+                </div>
+            </>
+        ) : (
+            <>
+                <div class="w-full">
+                    <h3 class="text-base md:text-lg lg:text-xl font-semibold text-white">
+                        {text}
+                    </h3>
+                    <p class="text-sm md:text-base text-gray-300 mt-1">
+                        {description}
+                    </p>
+                </div>
+
+                <hr class="w-full border-t border-gray-700 my-3" />
+
+                <form class="w-full">
+                    <div class="flex flex-col sm:flex-row items-center gap-3 w-full">
+                        {mode === "add" && (
+                            <label
+                                for="repo-url"
+                                class="flex items-center justify-center w-10 h-10 rounded-md bg-white/5 p-2 cursor-pointer"
+                                aria-hidden
+                            >
+                                <Github />
+                            </label>
+                        )}
+                        <input
+                            id="repo-url"
+                            name="repo-url"
+                            type="url"
+                            placeholder="Ingrese la URL del repositorio"
+                            class="flex-1 w-full px-3 py-2 rounded-md border border-gray-600 bg-transparent text-gray-100 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent transition"
+                            required
+                        />
+                        <button
+                            type="submit"
+                            class="w-full sm:w-auto bg-primary-orange text-white px-4 py-2 rounded-md hover:bg-orange-600 transition"
+                        >
+                            Agregar
+                        </button>
+                    </div>
+                </form>
+            </>
+        )
+    }
 </div>
