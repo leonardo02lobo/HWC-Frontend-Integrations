@@ -1,0 +1,68 @@
+---
+interface Props {
+	title: string;
+	actionLabel: string;
+}
+
+const { title, actionLabel } = Astro.props as Props;
+---
+
+<section class="team-toolbar">
+	<div class="team-toolbar__title-wrap">
+		<h1 class="team-toolbar__title w-screen max-w-max whitespace-nowrap">
+			<span class="text-primary-orange">&lt;</span>
+			<span>{title}</span>
+			<span class="text-primary-orange">/&gt;</span>
+		</h1>
+		<p class="team-toolbar__subtitle">Gestiona colaboradores, invitaciones y accesos.</p>
+	</div>
+
+	<div class="team-toolbar__actions">
+		<label class="team-toolbar__search" aria-label="Buscar colaborador">
+			<span class="team-toolbar__search-icon">⌕</span>
+			<input type="search" placeholder="Buscar colaborador" />
+		</label>
+
+		<a href="#add-member" class="team-toolbar__button">[ + {actionLabel} ]</a>
+	</div>
+</section>
+
+<style>
+	@reference "../../../styles/global.css";
+
+	.team-toolbar {
+		@apply flex flex-col gap-4 rounded-3xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm md:p-5 lg:flex-row lg:items-end lg:justify-between;
+	}
+
+	.team-toolbar__title-wrap {
+		@apply flex flex-col gap-1;
+	}
+
+	.team-toolbar__title {
+		@apply flex flex-wrap items-center gap-2 text-2xl text-white md:text-3xl;
+	}
+
+	.team-toolbar__subtitle {
+		@apply text-sm text-white/60;
+	}
+
+	.team-toolbar__actions {
+		@apply flex flex-col gap-3 sm:flex-row sm:items-center;
+	}
+
+	.team-toolbar__search {
+		@apply flex h-14 min-w-0 items-center gap-3 rounded-2xl border border-white/10 bg-[#111a32] px-4 text-white/70 shadow-inner;
+	}
+
+	.team-toolbar__search input {
+		@apply min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/35;
+	}
+
+	.team-toolbar__search-icon {
+		@apply text-2xl text-white/35;
+	}
+
+	.team-toolbar__button {
+		@apply inline-flex h-14 items-center justify-center rounded-2xl bg-primary-orange px-5 text-sm font-semibold text-white transition hover:scale-[1.02] hover:bg-[#ff5f1f];
+	}
+</style>
