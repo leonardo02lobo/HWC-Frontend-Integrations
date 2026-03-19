@@ -1,3 +1,7 @@
+---
+const url = Astro.url.pathname;
+---
+
 <header
     class="w-full rounded-2xl flex xl:flex-row flex-col gap-4 justify-center items-center px-16 py-8 relative"
 >
@@ -32,17 +36,21 @@
             </a>
         </div>
     </div>
-    <div
-        class="sm:flex flex-row justify-center items-center hidden"
-        id="button-container"
-    >
-        <a
-            href="/login"
-            class="bg-primary-orange text-white px-4 py-2 rounded-lg transition hover:scale-105 inline-block"
-        >
-            REGISTRARSE
-        </a>
-    </div>
+    {
+        url !== "/register" && (
+            <div
+                class="sm:flex flex-row justify-center items-center hidden"
+                id="button-container"
+            >
+                <a
+                    href="/register"
+                    class="bg-primary-orange text-white px-4 py-2 rounded-lg transition hover:scale-105 inline-block"
+                >
+                    REGISTRARSE
+                </a>
+            </div>
+        )
+    }
 </header>
 
 <div
