@@ -1,0 +1,82 @@
+---
+interface NavItem {
+	label: string;
+	href: string;
+	active?: boolean;
+}
+
+interface Props {
+	items: NavItem[];
+	brandHref?: string;
+	brandLabel?: string;
+	brandYear?: string;
+}
+
+const {
+	items,
+	brandHref = "/",
+	brandLabel = "HWC",
+	brandYear = "2026",
+} = Astro.props as Props;
+---
+
+<aside class="participant-sidebar">
+	<div class="participant-sidebar__brand">
+		<a href={brandHref} class="participant-sidebar__logo" aria-label={`${brandLabel} ${brandYear}`}>
+			<span class="participant-sidebar__logo-main">{brandLabel}</span>
+			<span class="participant-sidebar__logo-separator">|</span>
+			<span class="participant-sidebar__logo-year">{brandYear}</span>
+		</a>
+	</div>
+
+	<nav class="participant-sidebar__nav" aria-label="Navegación del participante">
+		{items.map((item) => (
+			<a
+				href={item.href}
+				class:list={{
+					"participant-sidebar__link": true,
+					"participant-sidebar__link--active": item.active,
+				}}
+			>
+				{item.label}
+			</a>
+		))}
+	</nav>
+</aside>
+
+<style>
+	@reference "../../../styles/global.css";
+
+	.participant-sidebar {
+		@apply flex h-full w-full flex-col gap-6 rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(20,30,56,0.95),rgba(11,16,32,0.98))] p-4 shadow-[0_20px_80px_rgba(0,0,0,0.35)];
+	}
+
+	.participant-sidebar__brand {
+		@apply flex items-center justify-between;
+	}
+
+	.participant-sidebar__logo {
+		@apply flex items-center gap-1 font-zen-dots text-2xl tracking-wide transition hover:opacity-90;
+	}
+
+	.participant-sidebar__logo-main {
+		@apply text-white;
+	}
+
+	.participant-sidebar__logo-separator,
+	.participant-sidebar__logo-year {
+		@apply text-primary-orange;
+	}
+
+	.participant-sidebar__nav {
+		@apply flex flex-col gap-2;
+	}
+
+	.participant-sidebar__link {
+		@apply rounded-xl px-3 py-2 text-sm text-white/80 transition hover:bg-white/5 hover:text-white;
+	}
+
+	.participant-sidebar__link--active {
+		@apply bg-primary-orange/15 text-primary-orange;
+	}
+</style>
