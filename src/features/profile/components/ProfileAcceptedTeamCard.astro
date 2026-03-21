@@ -1,0 +1,71 @@
+---
+import type { AcceptedTeamMember } from "../type";
+
+interface Props {
+	members: AcceptedTeamMember[];
+}
+
+const { members } = Astro.props as Props;
+---
+
+<section class="profile-team" aria-label="Miembros del equipo que aceptaron invitación">
+	<header class="profile-team__header">
+		<h2 class="profile-team__title">
+			<span class="text-primary-orange">&lt;</span>
+			<span>Team Aceptado</span>
+			<span class="text-primary-orange">/&gt;</span>
+		</h2>
+		<p class="profile-team__subtitle">Solo se muestran personas con invitación aceptada.</p>
+	</header>
+
+	<div class="profile-team__list">
+		{members.map((member, index) => (
+			<label class="profile-team__item" for={`accepted-member-${member.id}`}>
+				<span class="profile-team__label">Miembro {index + 1}</span>
+				<input
+					id={`accepted-member-${member.id}`}
+					type="text"
+					value={member.name}
+					placeholder="Coloca un nombre"
+					class="profile-team__input"
+				/>
+			</label>
+		))}
+	</div>
+</section>
+
+<style>
+	@reference "../../../styles/global.css";
+
+	.profile-team {
+		@apply flex flex-col gap-4 rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_top,rgba(24,34,66,0.9),rgba(11,16,32,0.98)_58%)] p-4 shadow-[0_18px_60px_rgba(0,0,0,0.3)] sm:p-5;
+	}
+
+	.profile-team__header {
+		@apply flex flex-col gap-2;
+	}
+
+	.profile-team__title {
+		@apply flex flex-wrap items-center gap-2 text-2xl text-white sm:text-3xl;
+	}
+
+	.profile-team__subtitle {
+		@apply text-sm text-white/60;
+	}
+
+	.profile-team__list {
+		@apply grid grid-cols-1 gap-3 md:grid-cols-2;
+	}
+
+	.profile-team__item {
+		@apply flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-3;
+	}
+
+	.profile-team__label {
+		@apply text-sm text-white/70;
+	}
+
+	.profile-team__input {
+		@apply rounded-xl border border-white/15 bg-[#0d1428] px-3 py-2 text-sm text-white outline-none transition placeholder:text-white/35 focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/30;
+	}
+</style>

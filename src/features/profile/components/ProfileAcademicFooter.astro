@@ -1,0 +1,56 @@
+---
+import type { AcademicProfile } from "../type";
+
+interface Props {
+	academic: AcademicProfile;
+}
+
+const { academic } = Astro.props as Props;
+---
+
+<footer class="profile-academic" aria-label="Información académica del participante">
+	<h3 class="profile-academic__title">Información Académica (UNET)</h3>
+
+	<div class="profile-academic__grid">
+		<div class="profile-academic__item">
+			<p class="profile-academic__label">Institución</p>
+			<p class="profile-academic__value">{academic.institution}</p>
+		</div>
+		<div class="profile-academic__item">
+			<p class="profile-academic__label">Carrera</p>
+			<p class="profile-academic__value">{academic.career}</p>
+		</div>
+		<div class="profile-academic__item">
+			<p class="profile-academic__label">Nivel</p>
+			<p class="profile-academic__value">{academic.level}</p>
+		</div>
+	</div>
+</footer>
+
+<style>
+	@reference "../../../styles/global.css";
+
+	.profile-academic {
+		@apply rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(21,31,58,0.95),rgba(11,16,32,0.99))] p-4 shadow-[0_16px_40px_rgba(0,0,0,0.28)] sm:p-5;
+	}
+
+	.profile-academic__title {
+		@apply text-xl text-white sm:text-2xl;
+	}
+
+	.profile-academic__grid {
+		@apply mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3;
+	}
+
+	.profile-academic__item {
+		@apply rounded-xl border border-white/10 bg-white/5 px-3 py-2;
+	}
+
+	.profile-academic__label {
+		@apply text-xs uppercase tracking-wide text-white/55;
+	}
+
+	.profile-academic__value {
+		@apply mt-1 text-sm text-white;
+	}
+</style>

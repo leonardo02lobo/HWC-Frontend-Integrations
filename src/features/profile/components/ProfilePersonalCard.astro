@@ -1,0 +1,73 @@
+---
+import type { PersonalProfile } from "../type";
+
+interface Props {
+	profile: PersonalProfile;
+}
+
+const { profile } = Astro.props as Props;
+---
+
+<aside class="profile-personal" aria-label="Datos personales del participante">
+	<div class="profile-personal__avatar-wrap">
+		<img src={profile.avatarUrl} alt={`Avatar de ${profile.name}`} class="profile-personal__avatar" />
+	</div>
+
+	<div class="profile-personal__group">
+		<label class="profile-personal__label" for="profile-name">Nombre</label>
+		<input
+			id="profile-name"
+			type="text"
+			value={profile.name}
+			class="profile-personal__input"
+		/>
+	</div>
+
+	<div class="profile-personal__group">
+		<label class="profile-personal__label" for="profile-username">Usuario</label>
+		<input
+			id="profile-username"
+			type="text"
+			value={profile.username}
+			class="profile-personal__input"
+		/>
+	</div>
+
+	<div class="profile-personal__group">
+		<label class="profile-personal__label" for="profile-email">Correo</label>
+		<input
+			id="profile-email"
+			type="email"
+			value={profile.email}
+			class="profile-personal__input"
+		/>
+	</div>
+</aside>
+
+<style>
+	@reference "../../../styles/global.css";
+
+	.profile-personal {
+		@apply flex h-full flex-col gap-4 rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(20,30,56,0.95),rgba(11,16,32,0.98))] p-4 shadow-[0_20px_80px_rgba(0,0,0,0.35)] sm:p-5;
+	}
+
+	.profile-personal__avatar-wrap {
+		@apply flex justify-center;
+	}
+
+	.profile-personal__avatar {
+		@apply h-28 w-28 rounded-full border-4 border-primary-orange bg-white/10 object-cover shadow-[0_0_0_6px_rgba(255,255,255,0.05)] sm:h-32 sm:w-32;
+	}
+
+	.profile-personal__group {
+		@apply flex flex-col gap-2;
+	}
+
+	.profile-personal__label {
+		@apply text-sm text-white/70;
+	}
+
+	.profile-personal__input {
+		@apply w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white outline-none transition placeholder:text-white/40 focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/30;
+	}
+</style>
