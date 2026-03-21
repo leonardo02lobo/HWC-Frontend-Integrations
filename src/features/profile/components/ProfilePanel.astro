@@ -1,0 +1,69 @@
+---
+import ProfileAcademicFooter from "./ProfileAcademicFooter.astro";
+import ProfileAcceptedTeamCard from "./ProfileAcceptedTeamCard.astro";
+import ProfilePersonalCard from "./ProfilePersonalCard.astro";
+import type { AcademicProfile, AcceptedTeamMember, PersonalProfile } from "../type";
+import ParticipantSidebar from "../../shared/components/ParticipantSidebar.astro";
+
+const personalProfile: PersonalProfile = {
+	name: "Juan Pérez",
+	username: "@juanperez_dev",
+	email: "juan.perez@email.unet.edu.ve",
+	avatarUrl: "/assets/mascot/logo-hwc-2026.png",
+};
+
+const academicProfile: AcademicProfile = {
+	institution: "UNET",
+	career: "Ingeniería Informática",
+	level: "Junior",
+};
+
+const acceptedMembers: AcceptedTeamMember[] = [
+	{ id: "1", name: "Juan Pérez" },
+	{ id: "2", name: "María García" },
+	{ id: "3", name: "Carlos Rodríguez" },
+	{ id: "4", name: "" },
+];
+
+const navigation = [
+    { label: "Ejercicios", href: "/ejercicios", active: true },
+    { label: "Mi Equipo", href: "/team" },
+    { label: "Perfil", href: "/profile" },
+];
+---
+
+<section class="profile-shell">
+    <div>
+        <ParticipantSidebar items={navigation} />
+    </div>
+	<div class="profile-shell__sidebar">
+		<ProfilePersonalCard profile={personalProfile} />
+	</div>
+
+	<div class="profile-shell__main">
+		<ProfileAcceptedTeamCard members={acceptedMembers} />
+		<div class="profile-shell__footer">
+			<ProfileAcademicFooter academic={academicProfile} />
+		</div>
+	</div>
+</section>
+
+<style>
+	@reference "../../../styles/global.css";
+
+	.profile-shell {
+		@apply mx-auto flex min-h-[calc(100vh-2rem)] w-full max-w-7xl flex-col gap-4 px-3 py-3 sm:px-4 md:gap-5 md:px-6 lg:flex-row lg:px-8;
+	}
+
+	.profile-shell__sidebar {
+		@apply lg:sticky lg:top-4 lg:h-[calc(100vh-2rem)] lg:w-88 lg:shrink-0;
+	}
+
+	.profile-shell__main {
+		@apply flex min-w-0 flex-1 flex-col gap-4 rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_top,rgba(18,35,73,0.45),rgba(11,16,32,0.98)_58%)] p-4 shadow-[0_20px_80px_rgba(0,0,0,0.35)] sm:p-5 md:gap-5 md:p-6;
+	}
+
+	.profile-shell__footer {
+		@apply mt-auto;
+	}
+</style>
