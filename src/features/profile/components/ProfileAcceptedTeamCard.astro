@@ -18,7 +18,7 @@ const { members } = Astro.props as Props;
 		<p class="profile-team__subtitle">Solo se muestran personas con invitación aceptada.</p>
 	</header>
 
-	<form class="profile-team__list">
+	<div class="profile-team__list">
 		{members.map((member, index) => (
 			<label class="profile-team__item" for={`accepted-member-${member.id}`}>
 				<span class="profile-team__label">Miembro {index + 1}</span>
@@ -31,7 +31,7 @@ const { members } = Astro.props as Props;
 				/>
 			</label>
 		))}
-	</form>
+	</div>
 </section>
 
 <style>

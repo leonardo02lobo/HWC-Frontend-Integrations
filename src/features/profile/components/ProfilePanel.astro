@@ -26,14 +26,14 @@ const acceptedMembers: AcceptedTeamMember[] = [
 ];
 
 const navigation = [
-    { label: "Ejercicios", href: "/ejercicios", active: true },
+    { label: "Ejercicios", href: "/ejercicios" },
     { label: "Mi Equipo", href: "/team" },
-    { label: "Perfil", href: "/profile" },
+    { label: "Perfil", href: "/profile", active: true },
 ];
 ---
 
 <section class="profile-shell">
-    <div>
+    <div class="profile-shell__sidebar">
         <ParticipantSidebar items={navigation} />
     </div>
 	<div class="profile-shell__sidebar">
@@ -51,16 +51,16 @@ const navigation = [
 <style>
 	@reference "../../../styles/global.css";
 
-	.profile-shell {
+    .profile-shell {
 		@apply mx-auto flex min-h-[calc(100vh-2rem)] w-full max-w-7xl flex-col gap-4 px-3 py-3 sm:px-4 md:gap-5 md:px-6 lg:flex-row lg:px-8;
 	}
 
 	.profile-shell__sidebar {
-		@apply lg:sticky lg:top-4 lg:h-[calc(100vh-2rem)] lg:w-88 lg:shrink-0;
+		@apply lg:sticky lg:top-4 lg:h-[calc(100vh-2rem)] lg:w-[20rem] lg:shrink-0;
 	}
 
 	.profile-shell__main {
-		@apply flex min-w-0 flex-1 flex-col gap-4 rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_top,rgba(18,35,73,0.45),rgba(11,16,32,0.98)_58%)] p-4 shadow-[0_20px_80px_rgba(0,0,0,0.35)] sm:p-5 md:gap-5 md:p-6;
+		@apply flex min-w-0 flex-1 flex-col gap-4 rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_top,rgba(24,34,66,0.95),rgba(11,16,32,0.98)_55%)] p-4 shadow-[0_20px_80px_rgba(0,0,0,0.35)] sm:p-5 md:gap-5 md:p-6;
 	}
 
 	.profile-shell__footer {
