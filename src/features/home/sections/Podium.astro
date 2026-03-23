@@ -1,0 +1,63 @@
+---
+import { getCollection } from "astro:content";
+import CardPodium from "../../podium/components/CardPodium.astro";
+
+const entries = await getCollection("podium");
+const sorted = entries.sort((a, b) => a.data.rank - b.data.rank);
+
+const first = sorted.find((t) => t.data.rank === 1);
+const second = sorted.find((t) => t.data.rank === 2);
+const third = sorted.find((t) => t.data.rank === 3);
+
+const hasEntries = sorted.length > 0;
+---
+
+<section class="flex flex-col items-center px-4 sm:px-6 md:px-20 py-10">
+    {hasEntries ? (
+        <div class="flex flex-col md:flex-row md:items-end justify-center gap-6 md:gap-5 w-full max-w-4xl">
+            {second && (
+                <div class="w-full md:w-1/3 order-2 md:order-1">
+                    <CardPodium
+                        rank={second.data.rank}
+                        team={second.data.team}
+                        photo={second.data.photo}
+                        members={second.data.members}
+                    />
+                </div>
+            )}
+            {first && (
+                <div class="w-full md:w-1/3 order-1 md:order-2 md:-translate-y-12">
+                    <CardPodium
+                        rank={first.data.rank}
+                        team={first.data.team}
+                        photo={first.data.photo}
+                        members={first.data.members}
+                    />
+                </div>
+            )}
+            {third && (
+                <div class="w-full md:w-1/3 order-3 md:translate-y-6">
+                    <CardPodium
+                        rank={third.data.rank}
+                        team={third.data.team}
+                        photo={third.data.photo}
+                        members={third.data.members}
+                    />
+                </div>
+            )}
+        </div>
+    ) : (
+        <div class="flex flex-col items-center gap-4 py-16 w-full max-w-md">
+            <span class="font-jetbrains text-4xl text-gray-600 select-none">_ _</span>
+            <p class="text-gray-500 font-jetbrains text-sm text-center leading-relaxed">
+                <span class="text-primary-orange">&lt;</span>
+                Podium
+                <span class="text-primary-orange">&nbsp;/&gt;</span>
+                <br />
+                <span class="text-gray-600 mt-2 block">
+                    Los resultados se publicarán después de la competencia.
+                </span>
+            </p>
+        </div>
+    )}
+</section>
