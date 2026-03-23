@@ -15,6 +15,20 @@ const speakersCollection = defineCollection({
     }),
 });
 
+const podiumCollection = defineCollection({
+    type: "content",
+    schema: ({ image }) => z.object({
+        rank: z.number(),
+        team: z.string(),
+        photo: image(),
+        members: z.array(z.object({
+            name: z.string(),
+            instagram: z.string(),
+        })),
+    }),
+});
+
 export const collections = {
     speakers: speakersCollection,
+    podium: podiumCollection,
 };

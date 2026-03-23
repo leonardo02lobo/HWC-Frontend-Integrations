@@ -1,0 +1,86 @@
+---
+import { Image } from "astro:assets";
+
+interface Member {
+    name: string;
+    instagram: string;
+}
+
+interface Props {
+    rank: number;
+    team: string;
+    photo: any;
+    members: Member[];
+}
+
+const { rank, team, photo, members } = Astro.props as Props;
+
+const rankLabel = `#${rank.toString().padStart(2, "0")}`;
+
+const colorClass =
+    rank === 1
+        ? "text-[#E8A000]"
+        : rank === 2
+          ? "text-[#9BA8B8]"
+          : "text-primary-orange";
+
+const borderClass =
+    rank === 1
+        ? "border-t-[#E8A000]"
+        : rank === 2
+          ? "border-t-[#9BA8B8]"
+          : "border-t-primary-orange";
+
+const glowClass =
+    rank === 1
+        ? "shadow-[0_0_28px_rgba(232,160,0,0.12)]"
+        : rank === 2
+          ? "shadow-[0_0_28px_rgba(155,168,184,0.08)]"
+          : "shadow-[0_0_28px_rgba(255,77,0,0.12)]";
+---
+
+<div class="flex flex-col items-center w-full transition-all duration-300 hover:scale-105">
+    <!-- Photo above card — in document flow, not absolute -->
+    <div class="w-full max-w-[280px] sm:max-w-none mb-[-2rem]">
+        <Image
+            src={photo}
+            alt={`Equipo ${team}`}
+            class="w-full h-auto object-contain drop-shadow-lg"
+        />
+    </div>
+
+    <!-- Card body -->
+    <div
+        class={`relative flex flex-col items-center gap-4 sm:gap-5 pt-10 pb-6 sm:pb-8 px-5 sm:px-8 rounded-2xl bg-[#141929] border border-gray-800/60 border-t-4 ${borderClass} ${glowClass} w-full`}
+    >
+        <span class={`font-jetbrains text-4xl sm:text-5xl font-bold tracking-tight ${colorClass}`}>
+            {rankLabel}
+        </span>
+
+        <h3 class="text-white text-center text-base sm:text-lg leading-snug">
+            <span class="text-primary-orange">&lt;</span>
+            <span class="font-zen-dots">{team}</span>
+            <span class="text-primary-orange">&nbsp;/&gt;</span>
+        </h3>
+
+        <ul class="flex flex-col gap-2.5 sm:gap-3 w-full border-t border-gray-800/60 pt-4 sm:pt-5">
+            {
+                members.map((member) => (
+                    <li class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-0.5 sm:gap-2">
+                        <span class="text-gray-300 text-sm sm:text-base font-jetbrains truncate">
+                            {member.name}
+                        </span>
+                        <a
+                            href={`https://instagram.com/${member.instagram}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="text-gray-500 text-xs sm:text-sm font-jetbrains hover:text-pink-400 transition-colors shrink-0"
+                        >
+                            @{member.instagram}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</div>
