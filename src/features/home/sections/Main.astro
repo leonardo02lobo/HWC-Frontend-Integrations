@@ -1,14 +1,14 @@
-<div
-    class="w-ful flex md:flex-row flex-col-reverse justify-center items-center gap-3 bg-transparent py-0 pl-10"
+<section
+    class="w-full flex md:flex-row flex-col-reverse justify-center items-center gap-6 bg-transparent px-6 md:px-20 py-12 min-h-[70vh]"
 >
     <div
-        class="pt-0 mb-15 flex flex-col justify-center items-center pr-7 pl-7 gap-4"
+        class="flex flex-col justify-center items-center md:items-start gap-6 flex-1"
     >
         <h1
-            class="xl:text-5xl lg:text-3xl md:text-2xl text-[1rem] flex flex-col justify-start items-center gap-2 text-white"
+            class="xl:text-5xl lg:text-3xl md:text-2xl text-xl flex flex-col justify-start items-center md:items-start gap-2 text-white"
             id="hero-title"
         >
-            <div class="flex flex-row underline decoration-white text-center">
+            <div class="flex flex-row underline decoration-white text-center md:text-left">
                 <p class="text-primary-orange">&lt;</p>
                 <p id="type-line-1" class="whitespace-nowrap"></p>
             </div>
@@ -55,28 +55,28 @@
 
             typeLine1();
         </script>
-        <strong class="text-primary-orange w-full text-center text-2xl">
+        <strong class="text-primary-orange w-full text-center md:text-left text-lg md:text-2xl font-jetbrains">
             14 DE JUNIO, 2026 &bull; Táchira &bull; San Cristobal
         </strong>
-        <div class="w-full xl:px-32 lg:px-24 text-center text-white">
+        <div class="w-full max-w-lg text-center md:text-left text-white text-sm md:text-base leading-relaxed">
             <p>
                 Bienvenido a la competencia de programación creada por
                 estudiantes y hecha para estudiantes<span class="text-primary-orange">.</span>
             </p>
-            <p>
+            <p class="mt-2">
                 Únete a nuestra competencia para que pruebes todos tus
                 conocimientos y seas parte de la familia <span class="text-primary-orange font-zen-dots">HELLO WORLD CUP.</span>
             </p>
         </div>
-        <button class="bg-primary-orange text-white px-4 py-2 rounded-lg transition hover:scale-105 cursor-pointer animate-glow-pulse">
+        <a href="/register" class="bg-primary-orange text-white px-6 py-3 rounded-lg transition-all duration-300 hover:scale-102 cursor-pointer animate-glow-pulse font-semibold text-sm tracking-wide">
             Unirme a la comunidad
-        </button>
+        </a>
     </div>
-    <div class="flex justify-center items-center">
+    <div class="flex justify-center items-center flex-1 max-w-md md:max-w-lg">
         <img
             src="/assets/mascot/logo-hwc-2026.png"
-            alt=""
-            class="md:w-full md:h-full w-3/4 h-3/4 object-contain"
+            alt="Hello World Cup 2026 mascot"
+            class="w-full h-auto object-contain"
         />
     </div>
-</div>
+</section>
