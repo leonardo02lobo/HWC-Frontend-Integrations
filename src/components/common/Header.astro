@@ -3,7 +3,7 @@ const url = Astro.url.pathname;
 ---
 
 <header
-    class="w-full rounded-2xl flex xl:flex-row flex-col gap-4 justify-center items-center px-16 py-8 relative"
+    class="w-full flex xl:flex-row flex-col gap-4 justify-center items-center px-6 md:px-16 py-4 sticky top-0 z-50 bg-primary-ark-blue/80 backdrop-blur-lg border-b border-gray-800/60"
 >
     <div
         class="flex xl:flex-row flex-col gap-4 justify-between items-center w-full px-4"
@@ -15,11 +15,17 @@ const url = Astro.url.pathname;
             </h1>
         </a>
         <button
-            class="block sm:hidden text-white text-2xl z-50"
+            class="block sm:hidden text-white z-50 p-1"
             id="hamburger"
             onclick="toggleMenu()"
         >
-            <span id="hamburger-icon">☰</span>
+            <span id="hamburger-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </span>
         </button>
         <div
             class="sm:flex sm:flex-row flex-col text-white gap-4 hidden"
@@ -84,6 +90,9 @@ const url = Astro.url.pathname;
 </div>
 
 <script type="text/javascript">
+    const hamburgerSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>`;
+    const closeSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="6" y1="18" x2="18" y2="6"></line></svg>`;
+
     function toggleMenu() {
         const overlay = document.getElementById("mobile-menu-overlay");
         const icon = document.getElementById("hamburger-icon");
@@ -99,7 +108,7 @@ const url = Astro.url.pathname;
                 "pointer-events-auto",
                 "translate-y-0",
             );
-            icon.textContent = "✕";
+            icon.innerHTML = closeSvg;
         } else {
             overlay.classList.remove(
                 "opacity-100",
@@ -111,7 +120,7 @@ const url = Astro.url.pathname;
                 "pointer-events-none",
                 "-translate-y-full",
             );
-            icon.textContent = "☰";
+            icon.innerHTML = hamburgerSvg;
         }
     }
 </script>
