@@ -9,6 +9,120 @@
     --color-primary-ark-blue: #0B1020;
     --color-primary-orange: #FF4D00;
     --color-primary-degra-blue: #182242;
+
+    --animate-pulse-slow: pulse 5s infinite;
+    --animate-fade-in-up: fade-in-up 0.6s ease-out both;
+    --animate-slide-in-left: slide-in-left 0.6s ease-out both;
+    --animate-slide-in-right: slide-in-right 0.6s ease-out both;
+    --animate-typing: typing 2.5s steps(16) both, blink-caret 0.75s step-end infinite;
+    --animate-glow-pulse: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse-slow {
+    0%, 100% {
+        background-size: 100% 100%;
+    }
+    50% {
+        background-size: 200% 200%;
+    }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-in-left {
+    from {
+        opacity: 0;
+        transform: translateX(-60px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-in-right {
+    from {
+        opacity: 0;
+        transform: translateX(60px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink-caret {
+    from, to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: var(--color-primary-orange);
+    }
+}
+
+@keyframes glow-pulse {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(255, 77, 0, 0.4), 0 0 10px rgba(255, 77, 0, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(255, 77, 0, 0.6), 0 0 30px rgba(255, 77, 0, 0.3);
+    }
+}
+
+/* Scroll-triggered animation: elements start hidden */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered delays for cards */
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+.stagger-5 { transition-delay: 0.5s; }
+
+/* Division slide animations */
+.animate-division-left {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-division-right {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-division-left.visible,
+.animate-division-right.visible {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 body {
