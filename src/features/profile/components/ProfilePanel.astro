@@ -26,9 +26,10 @@ const acceptedMembers: AcceptedTeamMember[] = [
 ];
 
 const navigation = [
-    { label: "Ejercicios", href: "/ejercicios" },
-    { label: "Mi Equipo", href: "/team" },
-    { label: "Perfil", href: "/profile", active: true },
+	{ label: "Ejercicios", href: "/ejercicios" },
+	{ label: "Mi Equipo", href: "/team" },
+	{ label: "Perfil", href: "/profile", active: true },
+	{ label: "Table Dashboard", href: "/tableDashboard" },
 ];
 ---
 
@@ -36,12 +37,15 @@ const navigation = [
     <div class="profile-shell__sidebar">
         <ParticipantSidebar items={navigation} />
     </div>
-	<div class="profile-shell__sidebar">
-		<ProfilePersonalCard profile={personalProfile} />
-	</div>
-
 	<div class="profile-shell__main">
-		<ProfileAcceptedTeamCard members={acceptedMembers} />
+		<div class="profile-shell__content-grid">
+			<div class="profile-shell__personal">
+				<ProfilePersonalCard profile={personalProfile} />
+			</div>
+			<div class="profile-shell__team">
+				<ProfileAcceptedTeamCard members={acceptedMembers} />
+			</div>
+		</div>
 		<div class="profile-shell__footer">
 			<ProfileAcademicFooter academic={academicProfile} />
 		</div>
@@ -61,6 +65,18 @@ const navigation = [
 
 	.profile-shell__main {
 		@apply flex min-w-0 flex-1 flex-col gap-4 rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_top,rgba(24,34,66,0.95),rgba(11,16,32,0.98)_55%)] p-4 shadow-[0_20px_80px_rgba(0,0,0,0.35)] sm:p-5 md:gap-5 md:p-6;
+	}
+
+	.profile-shell__content-grid {
+		@apply grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,22rem)_1fr] md:gap-5;
+	}
+
+	.profile-shell__personal {
+		@apply min-w-0;
+	}
+
+	.profile-shell__team {
+		@apply min-w-0;
 	}
 
 	.profile-shell__footer {

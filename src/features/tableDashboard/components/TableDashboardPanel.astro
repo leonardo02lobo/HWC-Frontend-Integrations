@@ -1,0 +1,195 @@
+---
+import ParticipantSidebar from "../../shared/components/ParticipantSidebar.astro";
+import type { DashboardRow } from "../type";
+import TableDashboardInteractive from "./TableDashboardInteractive";
+
+const navigation = [
+	{ label: "Ejercicios", href: "/ejercicios" },
+	{ label: "Mi Equipo", href: "/team" },
+	{ label: "Perfil", href: "/profile" },
+	{ label: "Table Dashboard", href: "/tableDashboard", active: true },
+];
+
+const rows: DashboardRow[] = [
+	{
+		id: "01",
+		teammate: "Juan Pérez",
+		repository: "github.com/hwc/team-alpha",
+		status: "Aprobado",
+		score: 98,
+		updatedAt: "24 Mar 2026",
+		description: "Excelente estructura y documentación.",
+	},
+	{
+		id: "02",
+		teammate: "María García",
+		repository: "github.com/hwc/team-alpha-api",
+		status: "En revisión",
+		score: 84,
+		updatedAt: "23 Mar 2026",
+		description: "Falta validar cobertura de pruebas.",
+	},
+	{
+		id: "03",
+		teammate: "Carlos Rodríguez",
+		repository: "github.com/hwc/team-alpha-ui",
+		status: "Pendiente",
+		score: 72,
+		updatedAt: "22 Mar 2026",
+		description: "",
+	},
+];
+---
+
+<section class="table-dashboard-shell">
+	<div class="table-dashboard-shell__sidebar">
+		<ParticipantSidebar items={navigation} />
+	</div>
+
+	<div class="table-dashboard-shell__main">
+		<header class="table-dashboard-shell__header">
+			<h2 class="table-dashboard-shell__title">
+				<span class="text-primary-orange">&lt;</span>
+				<span>Table Dashboard</span>
+				<span class="text-primary-orange">/&gt;</span>
+			</h2>
+			<p class="table-dashboard-shell__subtitle">
+				Resumen del estado de entregas, repositorios y puntajes del equipo.
+			</p>
+		</header>
+
+		<TableDashboardInteractive initialRows={rows} client:load />
+	</div>
+</section>
+
+<style is:global>
+	@reference "../../../styles/global.css";
+
+	.table-dashboard-shell {
+		@apply mx-auto flex min-h-[calc(100vh-2rem)] w-full max-w-none flex-col gap-4 px-3 py-3 sm:px-4 md:gap-5 md:px-6 lg:flex-row lg:px-10;
+	}
+
+	.table-dashboard-shell__sidebar {
+		@apply lg:sticky lg:top-4 lg:h-[calc(100vh-2rem)] lg:w-[20rem] lg:shrink-0;
+	}
+
+	.table-dashboard-shell__main {
+		@apply flex min-w-0 flex-1 flex-col gap-4 rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_top,rgba(24,34,66,0.95),rgba(11,16,32,0.98)_55%)] p-4 shadow-[0_20px_80px_rgba(0,0,0,0.35)] sm:p-5 md:gap-5 md:p-6;
+	}
+
+	.table-dashboard-shell__header {
+		@apply flex flex-col gap-2;
+	}
+
+	.table-dashboard-shell__title {
+		@apply flex flex-wrap items-center gap-2 text-2xl text-white md:text-4xl;
+	}
+
+	.table-dashboard-shell__subtitle {
+		@apply max-w-2xl text-sm text-white/60 md:text-base;
+	}
+
+	.table-dashboard-shell__table-wrap {
+		@apply overflow-hidden rounded-2xl border border-white/10 bg-white/5;
+	}
+
+	.table-dashboard-table {
+		@apply w-full table-fixed border-separate border-spacing-0;
+	}
+
+	.table-dashboard-table thead th {
+		@apply sticky top-0 z-10 border-b border-white/10 bg-[#101834] px-4 py-3 text-left text-xs uppercase tracking-wide text-white/70;
+	}
+
+	.table-dashboard-table tbody td {
+		@apply border-b border-white/10 px-4 py-3 text-sm text-white/90;
+	}
+
+	.table-dashboard-table th:nth-child(3),
+	.table-dashboard-table td:nth-child(3),
+	.table-dashboard-table th:nth-child(6),
+	.table-dashboard-table td:nth-child(6) {
+		@apply break-all;
+	}
+
+	.table-dashboard-table__row {
+		@apply cursor-pointer outline-none transition;
+	}
+
+	.table-dashboard-table__row:focus-visible td {
+		@apply bg-white/10;
+	}
+
+	.table-dashboard-table tbody tr:hover td {
+		@apply bg-white/5;
+	}
+
+	.table-dashboard-table a {
+		@apply text-primary-orange transition hover:text-white;
+	}
+
+	.table-dashboard-table__status {
+		@apply inline-flex rounded-full border px-2 py-1 text-xs;
+	}
+
+	.table-dashboard-table__status--approved {
+		@apply border-primary-orange/50 bg-primary-orange/15 text-primary-orange;
+	}
+
+	.table-dashboard-table__status--review {
+		@apply border-white/25 bg-white/10 text-white;
+	}
+
+	.table-dashboard-table__status--pending {
+		@apply border-white/20 bg-transparent text-white/80;
+	}
+
+	.table-dashboard-modal {
+		@apply fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6;
+	}
+
+	.table-dashboard-modal__backdrop {
+		@apply absolute inset-0 bg-[#05070f]/75 backdrop-blur-[2px];
+	}
+
+	.table-dashboard-modal__card {
+		@apply relative z-10 w-full max-w-3xl rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_top,rgba(24,34,66,0.98),rgba(11,16,32,0.99)_58%)] p-4 shadow-[0_24px_80px_rgba(0,0,0,0.45)] sm:p-6;
+	}
+
+	.table-dashboard-modal__header {
+		@apply mb-4 flex items-center justify-between gap-3;
+	}
+
+	.table-dashboard-modal__header h3 {
+		@apply text-lg text-white sm:text-2xl;
+	}
+
+	.table-dashboard-modal__close {
+		@apply inline-flex rounded-xl border border-white/15 px-3 py-1.5 text-sm text-white/80 transition hover:border-primary-orange/40 hover:text-white;
+	}
+
+	.table-dashboard-modal__grid {
+		@apply grid grid-cols-1 gap-3 md:grid-cols-2;
+	}
+
+	.table-dashboard-modal__field {
+		@apply flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-3;
+	}
+
+	.table-dashboard-modal__field span {
+		@apply text-xs uppercase tracking-wide text-white/55;
+	}
+
+	.table-dashboard-modal__field p {
+		@apply wrap-break-word text-sm text-white;
+	}
+
+	.table-dashboard-modal__field select,
+	.table-dashboard-modal__field textarea {
+		@apply w-full rounded-xl border border-white/15 bg-[#0d1428] px-3 py-2 text-sm text-white outline-none transition placeholder:text-white/40 focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/25;
+	}
+
+	.table-dashboard-modal__field--full {
+		@apply md:col-span-2;
+	}
+</style>
