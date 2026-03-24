@@ -7,7 +7,7 @@ interface Props {
 const { side, text } = Astro.props;
 ---
 
-<div class="flex items-center gap-2 w-full px-4 md:px-0 mb-6 mt-6">
+<div class={`flex items-center gap-2 w-full px-4 md:px-0 mb-6 mt-6 ${side === "left" ? "animate-division-left" : "animate-division-right"}`}>
     {
         side == "right" ? (
             <>

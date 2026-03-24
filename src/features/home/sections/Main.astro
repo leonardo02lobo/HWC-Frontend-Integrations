@@ -1,21 +1,60 @@
 <div
-    class="w-ful flex md:flex-row flex-col-reverse justify-center items-center gap-3    bg-gradient-to-b from-[var(--color-primary-ark-blue)] via-[var(--color-primary-degra-blue)] to-[var(--color-primary-ark-blue)] py-0 pl-10"
+    class="w-ful flex md:flex-row flex-col-reverse justify-center items-center gap-3 bg-transparent py-0 pl-10"
 >
     <div
         class="pt-0 mb-15 flex flex-col justify-center items-center pr-7 pl-7 gap-4"
     >
         <h1
             class="xl:text-5xl lg:text-3xl md:text-2xl text-[1rem] flex flex-col justify-start items-center gap-2 text-white"
+            id="hero-title"
         >
             <div class="flex flex-row underline decoration-white text-center">
                 <p class="text-primary-orange">&lt;</p>
-                <p>HELLO WORLD CUP</p>
+                <p id="type-line-1" class="whitespace-nowrap"></p>
             </div>
-            <div class="flex flex-row underline decoration-primary-orange">
-                <p>2026</p>
+            <div class="flex flex-row underline decoration-primary-orange invisible" id="type-line-2-wrapper">
+                <p id="type-line-2"></p>
                 <p class="text-primary-orange">/&gt;</p>
             </div>
         </h1>
+        <script>
+            const line1 = "HELLO WORLD CUP";
+            const line2 = "2026";
+            const el1 = document.getElementById("type-line-1")!;
+            const el2 = document.getElementById("type-line-2")!;
+            const wrapper2 = document.getElementById("type-line-2-wrapper")!;
+
+            let i = 0;
+            el1.classList.add("border-r-2", "border-primary-orange");
+
+            function typeLine1() {
+                if (i < line1.length) {
+                    el1.textContent += line1[i];
+                    i++;
+                    setTimeout(typeLine1, 100);
+                } else {
+                    el1.classList.remove("border-r-2", "border-primary-orange");
+                    wrapper2.classList.remove("invisible");
+                    el2.classList.add("border-r-2", "border-primary-orange");
+                    i = 0;
+                    setTimeout(typeLine2, 200);
+                }
+            }
+
+            function typeLine2() {
+                if (i < line2.length) {
+                    el2.textContent += line2[i];
+                    i++;
+                    setTimeout(typeLine2, 100);
+                } else {
+                    setTimeout(() => {
+                        el2.classList.remove("border-r-2", "border-primary-orange");
+                    }, 1000);
+                }
+            }
+
+            typeLine1();
+        </script>
         <strong class="text-primary-orange w-full text-center text-2xl">
             14 DE JUNIO, 2026 &bull; Táchira &bull; San Cristobal
         </strong>
@@ -29,7 +68,7 @@
                 conocimientos y seas parte de la familia <span class="text-primary-orange font-zen-dots">HELLO WORLD CUP.</span>
             </p>
         </div>
-        <button class="bg-primary-orange text-white px-4 py-2 rounded-lg transition hover:scale-105 cursor-pointer">
+        <button class="bg-primary-orange text-white px-4 py-2 rounded-lg transition hover:scale-105 cursor-pointer animate-glow-pulse">
             Unirme a la comunidad
         </button>
     </div>

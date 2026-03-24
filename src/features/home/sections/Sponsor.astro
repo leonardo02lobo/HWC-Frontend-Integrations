@@ -10,11 +10,13 @@ interface CardSponsorProps {
 }
 ---
 
-<div class="flex flex-col items-center gap-6 p-0 md:px-20 relative">
+<div class="flex flex-col items-center gap-6 p-0 md:px-20 relative animate-on-scroll">
     <div class="flex flex-col md:grid md:grid-cols-3 gap-4 md:gap-6 p-6 w-full">
         {
-            sponsors.map((sponsor: CardSponsorProps) => (
-                <CardSponsor name={sponsor.name} description={sponsor.description} logo={sponsor.logo} />
+            sponsors.map((sponsor: CardSponsorProps, index: number) => (
+                <div class={`animate-on-scroll stagger-${Math.min(index + 1, 5)}`}>
+                    <CardSponsor name={sponsor.name} description={sponsor.description} logo={sponsor.logo} />
+                </div>
             ))
         }
     </div>
