@@ -12,15 +12,27 @@ import Podium from "../features/home/sections/Podium.astro";
 
 <Layout title="Hello World Cup 2026">
 	<Main />
-	<Division text="Podium" side="right" />
-	<Podium />
-	<Division text="¿Quieres Participar?" side="left" />
-	<Information />
-	<Division text="Ubicación" side="right" />
-	<Ubication />
-	<Division text="Charlas" side="left" />
-	<Speakers></Speakers>
-	<Division text="Patrocinadores" side="right" />
-	<Sponsor />
-	<Team />
+	<div id="podium">
+		<Division text="Podium" side="right" />
+		<Podium />
+	</div>
+	<div id="categorias">
+		<Division text="¿Quieres Participar?" side="left" />
+		<Information />
+	</div>
+	<div id="ubicacion">
+		<Division text="Ubicación" side="right" />
+		<Ubication />
+	</div>
+	<div id="charlas">
+		<Division text="Charlas" side="left" />
+		<Speakers />
+	</div>
+	<div id="patrocinadores">
+		<Division text="Patrocinadores" side="right" />
+		<Sponsor />
+	</div>
+	<div id="equipo">
+		<Team />
+	</div>
 </Layout>

@@ -125,8 +125,16 @@
     transform: translateX(0);
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: var(--font-jetbrains);
+}
+
+[id] {
+    scroll-margin-top: 5rem;
 }
 
 h1,
