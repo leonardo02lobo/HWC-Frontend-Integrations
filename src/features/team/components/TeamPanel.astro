@@ -1,130 +1,48 @@
 ---
-import type { TeamMember } from "../type";
+import { members } from "../data";
 import TeamMemberCard from "./TeamMemberCard.astro";
 import TeamToolbar from "./TeamToolbar.astro";
 import ParticipantSidebar from "../../shared/components/ParticipantSidebar.astro";
 
 const navigation = [
-	{ label: "Ejercicios", href: "/ejercicios" },
+	{ label: "Ejercicios", href: "/exercises" },
 	{ label: "Mi Equipo", href: "/team", active: true },
 	{ label: "Perfil", href: "/profile" },
 	{ label: "Table Dashboard", href: "/tableDashboard" },
 ];
-
-const members: TeamMember[] = [
-	{
-		name: "Juan Pérez",
-		username: "juanperez_dev",
-		role: "Capitán / Desarrollador Principal",
-		status: "Activo",
-		initials: "JP",
-		accent: "#FF6A2B",
-		actions: [{ title: "Ver Perfil", href: "#juan", variant: "primary" }],
-	},
-	{
-		name: "Maria Garcia",
-		username: "mariagarcia_code",
-		role: "Programador Backend",
-		status: "Activo",
-		initials: "MG",
-		accent: "#FF8A4C",
-		actions: [{ title: "Ver Perfil", href: "#maria", variant: "primary" }],
-	},
-	{
-		name: "Carlos Rodriguez",
-		username: "carlosrodriguez_ui",
-		role: "Diseñador UI/UX",
-		status: "Activo",
-		initials: "CR",
-		accent: "#FFB04A",
-		actions: [{ title: "Ver Perfil", href: "#carlos", variant: "primary" }],
-	},
-	{
-		name: "Pendiente...",
-		username: "invitado",
-		role: "Invitación Enviada",
-		status: "Pendiente de respuesta",
-		initials: "?",
-		accent: "#D4D4D8",
-		actions: [
-			{ title: "Reenviar", href: "#reenviar" },
-			{ title: "Revocar", href: "#revocar" },
-		],
-	},
-];
 ---
 
-<section class="team-shell">
-	<div class="team-shell__sidebar">
+<section
+	class="mx-auto flex min-h-[calc(100vh-2rem)] w-full max-w-7xl flex-col gap-4 px-3 py-3 sm:px-4 md:gap-5 md:px-6 lg:flex-row lg:px-8"
+>
+	<div
+		class="lg:sticky lg:top-4 lg:h-[calc(100vh-2rem)] lg:w-[20rem] lg:shrink-0"
+	>
 		<ParticipantSidebar items={navigation} />
 	</div>
 
-	<div class="team-shell__main">
-		<header class="team-shell__topbar">
-			<div class="team-shell__heading">
-				<h2 class="team-shell__title text-xl">
+	<div
+		class="flex min-w-0 flex-1 flex-col gap-4 rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_top,rgba(24,34,66,0.95),rgba(11,16,32,0.98)_55%)] p-4 shadow-[0_20px_80px_rgba(0,0,0,0.35)] sm:p-5 md:gap-5 md:p-6"
+	>
+		<header class="flex flex-col gap-4">
+			<div class="flex flex-col gap-2">
+				<h2 class="flex flex-wrap items-center gap-2 text-2xl text-white md:text-4xl">
 					<span class="text-primary-orange">&lt;</span>
 					<span>Gestión de Equipo</span>
 					<span class="text-primary-orange">/&gt;</span>
 				</h2>
-				<p class="team-shell__copy">
+				<p class="max-w-2xl text-sm text-white/60 md:text-base">
 					Vista para gestionar la colaboracion de los equipos.
 				</p>
 			</div>
 		</header>
 
-		<div class="team-shell__content">
+		<div class="flex flex-col gap-4 md:gap-5">
 			<TeamToolbar title="Colaboradores" actionLabel="Añadir Colaborador" />
 
-			<div class="team-shell__list">
+			<div class="flex flex-col gap-4">
 				{members.map((member) => <TeamMemberCard member={member} />)}
 			</div>
 		</div>
 	</div>
 </section>
-
-<style>
-	@reference "../../../styles/global.css";
-
-	.team-shell {
-		@apply mx-auto flex min-h-[calc(100vh-2rem)] w-full max-w-7xl flex-col gap-4 px-3 py-3 sm:px-4 md:gap-5 md:px-6 lg:flex-row lg:px-8;
-	}
-
-	.team-shell__sidebar {
-		@apply lg:sticky lg:top-4 lg:h-[calc(100vh-2rem)] lg:w-[20rem] lg:shrink-0;
-	}
-
-	.team-shell__main {
-		@apply flex min-w-0 flex-1 flex-col gap-4 rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_top,rgba(24,34,66,0.95),rgba(11,16,32,0.98)_55%)] p-4 shadow-[0_20px_80px_rgba(0,0,0,0.35)] sm:p-5 md:gap-5 md:p-6;
-	}
-
-	.team-shell__topbar {
-		@apply flex flex-col gap-4;
-	}
-
-	.team-shell__heading {
-		@apply flex flex-col gap-2;
-	}
-
-	.team-shell__title {
-		@apply flex flex-wrap items-center gap-2 text-2xl text-white md:text-4xl;
-	}
-
-	.team-shell__copy {
-		@apply max-w-2xl text-sm text-white/60 md:text-base;
-	}
-
-	.team-shell__content {
-		@apply flex flex-col gap-4 md:gap-5;
-	}
-
-	.team-shell__list {
-		@apply flex flex-col gap-4;
-	}
-
-	@media (min-width: 1024px) {
-		.team-shell__sidebar {
-			position: sticky;
-		}
-	}
-</style>

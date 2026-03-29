@@ -1,5 +1,5 @@
 ---
-import type { TeamMember } from "../type";
+import type { TeamMember } from "../data";
 
 interface Props {
 	member: TeamMember;
@@ -8,24 +8,24 @@ interface Props {
 const { member } = Astro.props as Props;
 ---
 
-<article class="team-member" aria-label={`Miembro del equipo: ${member.name}`}>
-	<div class="team-member__avatar" style={`--accent:${member.accent ?? "#FF4D00"}`}>
+<article class="flex flex-col gap-4 rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(18,27,50,0.95),rgba(10,15,29,0.98))] p-4 shadow-[0_18px_50px_rgba(0,0,0,0.25)] sm:flex-row sm:items-center sm:gap-5 md:p-5" aria-label={`Miembro del equipo: ${member.name}`}>
+	<div class="flex h-20 w-20 shrink-0 items-center justify-center rounded-full border-4 border-(--accent) bg-white/10 text-2xl font-zen-dots text-white shadow-[0_0_0_6px_rgba(255,255,255,0.04)]" style={`--accent:${member.accent ?? "#FF4D00"}`}>
 		<span>{member.initials}</span>
 	</div>
 
-	<div class="team-member__content">
-		<div class="team-member__info">
-			<h3 class="team-member__name">{member.name}</h3>
-			<p class="team-member__username">@{member.username}</p>
-			<p class="team-member__role">{member.role}</p>
+	<div class="flex flex-1 flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+		<div class="flex flex-col gap-1">
+			<h3 class="text-xl text-white md:text-2xl">{member.name}</h3>
+			<p class="text-sm text-primary-orange transition hover:text-[#ff8a57]">@{member.username}</p>
+			<p class="text-sm text-white/85">{member.role}</p>
 		</div>
 
-		<div class="team-member__actions">
-			<span class="team-member__status">{member.status}</span>
+		<div class="flex flex-col gap-2 sm:items-end">
+			<span class="text-sm text-white/60 sm:text-right">{member.status}</span>
 			{member.actions?.map((action) => (
-				<a href={action.href ?? "#"} class:list={{
-					"team-member__action": true,
-					"team-member__action--primary": action.variant === "primary",
+				<a href={action.href ?? ""} class:list={{
+					"text-sm text-white/60 sm:text-right": true,
+					"font-semibold": action.variant === "primary",
 				}}>
 					[ {action.title} ]
 				</a>
@@ -33,51 +33,3 @@ const { member } = Astro.props as Props;
 		</div>
 	</div>
 </article>
-
-<style>
-	@reference "../../../styles/global.css";
-
-	.team-member {
-		@apply flex flex-col gap-4 rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(18,27,50,0.95),rgba(10,15,29,0.98))] p-4 shadow-[0_18px_50px_rgba(0,0,0,0.25)] sm:flex-row sm:items-center sm:gap-5 md:p-5;
-	}
-
-	.team-member__avatar {
-		@apply flex h-20 w-20 shrink-0 items-center justify-center rounded-full border-4 border-(--accent) bg-white/10 text-2xl font-zen-dots text-white shadow-[0_0_0_6px_rgba(255,255,255,0.04)];
-	}
-
-	.team-member__content {
-		@apply flex flex-1 flex-col gap-4 sm:flex-row sm:items-center sm:justify-between;
-	}
-
-	.team-member__info {
-		@apply flex flex-col gap-1;
-	}
-
-	.team-member__name {
-		@apply text-xl text-white md:text-2xl;
-	}
-
-	.team-member__username {
-		@apply text-sm text-white/55;
-	}
-
-	.team-member__role {
-		@apply text-sm text-white/85;
-	}
-
-	.team-member__actions {
-		@apply flex flex-col gap-2 sm:items-end;
-	}
-
-	.team-member__status {
-		@apply text-sm text-white/60 sm:text-right;
-	}
-
-	.team-member__action {
-		@apply text-sm text-primary-orange transition hover:text-[#ff8a57];
-	}
-
-	.team-member__action--primary {
-		@apply font-semibold;
-	}
-</style>

@@ -2,11 +2,11 @@
 import Instagram from "../ui/Instagram.astro";
 ---
 
-<footer class="w-full bg-primary-ark-blue py-12 px-6 md:px-20 mt-16 border-t border-gray-800/60">
+<footer class="w-full bg-primary-ark-blue py-12 px-6 md:px-20 mt-16 border-t border-gray-800/60" id="footer">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
         <!-- Logo and Brand -->
         <div class="flex flex-col items-center md:items-start gap-4">
-            <a href="/" class="flex items-center gap-3">
+            <a href="#main" class="flex items-center gap-3">
                 <img src="/assets/mascot/logo-hwc-2026.png" alt="Hello World Cup 2026 Logo" class="w-16 h-16 object-contain" />
                 <h2 class="font-zen-dots text-3xl flex flex-row">
                     <span class="text-white">HWC</span>
@@ -22,14 +22,13 @@ import Instagram from "../ui/Instagram.astro";
         <div class="flex flex-col sm:flex-row gap-8 sm:gap-16 text-center md:text-left">
             <div class="flex flex-col gap-3">
                 <h3 class="text-primary-orange font-bold text-lg mb-2">Secciones</h3>
-                <a href="#" class="text-white/80 hover:text-primary-orange transition">Categorías</a>
-                <a href="#" class="text-white/80 hover:text-primary-orange transition">Charlas</a>
-                <a href="#" class="text-white/80 hover:text-primary-orange transition">Calendario</a>
+                <a href="#information" class="text-white/80 hover:text-primary-orange transition">Categorías</a>
+                <a href="#speakers" class="text-white/80 hover:text-primary-orange transition">Charlas</a>
             </div>
             <div class="flex flex-col gap-3">
                 <h3 class="text-primary-orange font-bold text-lg mb-2">Más Info</h3>
-                <a href="#" class="text-white/80 hover:text-primary-orange transition">Patrocinadores</a>
-                <a href="#" class="text-white/80 hover:text-primary-orange transition flex items-center justify-center md:justify-start gap-1">
+                <a href="#sponsors" class="text-white/80 hover:text-primary-orange transition">Patrocinadores</a>
+                <a href="#footer" class="text-white/80 hover:text-primary-orange transition flex items-center justify-center md:justify-start gap-1">
                     <span class="text-primary-orange">&lt;</span>
                     Equipo HWC
                     <span class="text-primary-orange">/&gt;</span>
