@@ -151,12 +151,12 @@ export default function TableDashboardInteractive({ initialRows }: Props) {
 							</div>
 							<div className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-3">
 								<span className="text-xs uppercase tracking-wide text-white/55">Última actualización</span>
-								<p className="break-words text-sm text-white">{selectedRow.updatedAt}</p>
+								<p className="wrap-break-word text-sm text-white">{selectedRow.updatedAt}</p>
 							</div>
 
 							<div className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-3">
 								<span className="text-xs uppercase tracking-wide text-white/55">Estado</span>
-								<p className="break-words text-sm text-white">{selectedRow.status}</p>
+								<p className="wrap-break-word text-sm text-white">{selectedRow.status}</p>
 							</div>
 
 							<label className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-3 md:col-span-2" htmlFor="modal-description">
