@@ -133,8 +133,8 @@ body {
     font-family: var(--font-jetbrains);
 }
 
-[id] {
-    scroll-margin-top: 5rem;
+html {
+    scroll-behavior: smooth;
 }
 
 h1,

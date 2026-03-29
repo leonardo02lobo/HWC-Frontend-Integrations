@@ -1,0 +1,23 @@
+export const backendLanguages: string[] = [
+    "JavaScript",
+    "TypeScript",
+    "Python",
+    "Java",
+    "C#",
+    "PHP",
+    "Go",
+    "Ruby",
+    "Rust",
+    "Elixir",
+    "C++",
+    "Kotlin",
+    "Scala",
+    "Swift",
+    "Clojure",
+    "Erlang",
+    "Haskell",
+    "Dart",
+    "Perl",
+    "R",
+    "Julia"
+];
