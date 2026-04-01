@@ -1,6 +1,8 @@
 ---
 import LanguageSelect from "./LanguageSelect.tsx";
 import GithubProfileInput from "./GithubProfileInput.tsx";
+import AuthFeedbackModals from "./AuthFeedbackModals.tsx";
+import { backendLanguages } from "../data";
 ---
 
 <section class="w-full px-6 md:px-20 py-12 min-h-[70vh] flex flex-col items-center justify-center gap-8">
@@ -34,8 +36,8 @@ import GithubProfileInput from "./GithubProfileInput.tsx";
         </div>
     </div>
 
-    <!-- Full-width Form Card -->
-    <div class="w-full max-w-5xl bg-[#141929] border border-gray-800/60 rounded-2xl p-6 md:p-8 transition-all duration-300 hover:border-gray-700/80 animate-on-scroll">
+    <!-- Register Form Card -->
+    <div id="register-form" class="auth-panel auth-panel--active w-full max-w-5xl bg-[#141929] border border-gray-800/60 rounded-2xl p-6 md:p-8 transition-all duration-300 hover:border-gray-700/80 animate-on-scroll">
         <form method="post" action="" class="space-y-8">
 
             <!-- Two-column form sections -->
@@ -142,9 +144,74 @@ import GithubProfileInput from "./GithubProfileInput.tsx";
         </form>
     </div>
 
+    <!-- Login Form Card -->
+    <div id="login-form" class="auth-panel w-full max-w-5xl bg-[#141929] border border-gray-800/60 rounded-2xl p-6 md:p-8 transition-all duration-300 hover:border-gray-700/80 animate-on-scroll">
+        <form method="post" action="" class="space-y-8">
+            <div class="max-w-md mx-auto space-y-4">
+                <div class="pb-2">
+                    <span class="text-white text-xl md:text-2xl font-zen-dots">
+                        <span class="text-primary-orange">$</span>{"Iniciar Sesión"}<span class="text-primary-orange">.</span>
+                    </span>
+                </div>
+
+                <label for="login-email" class="block space-y-1.5">
+                    <span class="text-white font-medium text-sm flex items-center gap-1.5">
+                        <span class="text-primary-orange">~</span>
+                        Correo Electrónico
+                    </span>
+                    <input
+                        type="email"
+                        id="login-email"
+                        name="login-email"
+                        required
+                        placeholder="correo@ejemplo.com"
+                        class="block w-full px-4 py-3 bg-primary-ark-blue/60 border border-gray-800/60 rounded-lg text-white placeholder-white/25 focus:outline-none focus:ring-2 focus:ring-primary-orange/60 focus:border-primary-orange/40 transition duration-200 font-jetbrains text-sm"
+                    />
+                </label>
+
+                <label for="login-password" class="block space-y-1.5">
+                    <span class="text-white font-medium text-sm flex items-center gap-1.5">
+                        <span class="text-primary-orange">~</span>
+                        Contraseña
+                    </span>
+                    <input
+                        type="password"
+                        id="login-password"
+                        name="login-password"
+                        required
+                        placeholder="••••••••"
+                        class="block w-full px-4 py-3 bg-primary-ark-blue/60 border border-gray-800/60 rounded-lg text-white placeholder-white/25 focus:outline-none focus:ring-2 focus:ring-primary-orange/60 focus:border-primary-orange/40 transition duration-200 font-jetbrains text-sm"
+                    />
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button
+                type="submit"
+                class="w-full bg-primary-orange text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 hover:scale-102 focus:outline-none focus:ring-2 focus:ring-primary-orange/60 focus:ring-offset-2 focus:ring-offset-[#141929] animate-glow-pulse font-zen-dots tracking-wide"
+            >
+                Iniciar Sesión <span class="font-jetbrains">{"->"}</span>
+            </button>
+        </form>
+    </div>
+
+    <!-- Toggle auth mode link -->
+    <div class="w-full max-w-5xl text-center animate-on-scroll">
+        <a
+            href="#"
+            id="toggle-auth-mode"
+            class="text-primary-orange underline underline-offset-4 hover:text-orange-400 transition font-jetbrains text-sm"
+        >
+            ¿Ya tienes usuario y contraseña? Inicia sesión
+        </a>
+    </div>
+
+    <AuthFeedbackModals client:load />
 </section>
 
 <script>
+    import "../type";
+
     const btn = document.getElementById("register-btn") as HTMLButtonElement;
     window.addEventListener("github-status", ((e: CustomEvent<string>) => {
         const status = e.detail;

@@ -52,7 +52,7 @@ export default function AuthFeedbackModals() {
 				aria-label="Cerrar modal"
 			></button>
 			<div className="relative z-10 w-full max-w-md rounded-2xl border border-gray-700 bg-gray-800 p-6 shadow-2xl">
-				<h3 className="text-xl font-bold text-white">{content.title}</h3>
+				<h3 className="text-xl text-white">{content.title}</h3>
 				<p className="mt-3 text-gray-300">{content.description}</p>
 				<button
 					type="button"
