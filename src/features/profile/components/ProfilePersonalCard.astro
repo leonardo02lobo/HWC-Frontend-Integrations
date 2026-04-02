@@ -8,41 +8,44 @@ interface Props {
 const { profile } = Astro.props as Props;
 ---
 
-<aside class="flex h-full flex-col gap-4 rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(20,30,56,0.95),rgba(11,16,32,0.98))] p-4 shadow-[0_20px_80px_rgba(0,0,0,0.35)] sm:p-5" aria-label="Datos personales del participante">
+<aside class="flex h-full flex-col gap-4 bg-[#141929] border border-gray-800/60 rounded-2xl p-5 md:p-6 transition-all duration-300 hover:border-gray-700/80" aria-label="Datos personales del participante">
 	<div class="flex justify-center">
-		<img src={profile.avatarUrl} alt={`Avatar de ${profile.name}`} class="h-28 w-28 rounded-full border-4 border-primary-orange bg-white/10 object-cover shadow-[0_0_0_6px_rgba(255,255,255,0.05)] sm:h-32 sm:w-32" />
-	</div>
-
-	<div class="flex flex-col gap-2">
-		<label class="text-sm text-white/70" for="profile-name">Nombre</label>
-		<input
-			id="profile-name"
-			type="text"
-			value={profile.name}
-			readonly
-			class="w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white outline-none transition placeholder:text-white/40 focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/30"
+		<img
+			src={profile.avatarUrl}
+			alt={`Avatar de ${profile.name}`}
+			class="h-24 w-24 rounded-full border-2 border-primary-orange bg-white/5 object-cover sm:h-28 sm:w-28"
 		/>
 	</div>
 
-	<div class="flex flex-col gap-2">
-		<label class="text-sm text-white/70" for="profile-username">Usuario</label>
-		<input
-			id="profile-username"
-			type="text"
-			value={profile.username}
-			readonly
-			class="w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white outline-none transition placeholder:text-white/40 focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/30"
-		/>
-	</div>
+	<div class="flex flex-col gap-4">
+		<div class="flex flex-col gap-1.5">
+			<span class="text-white/50 font-jetbrains text-sm flex items-center gap-1.5">
+				<span class="text-primary-orange">~</span>
+				Nombre
+			</span>
+			<div class="w-full rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-2.5 text-sm text-white font-jetbrains">
+				{profile.name}
+			</div>
+		</div>
 
-	<div class="flex flex-col gap-2">
-		<label class="text-sm text-white/70" for="profile-email">Correo</label>
-		<input
-			id="profile-email"
-			type="email"
-			value={profile.email}
-			readonly
-			class="w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white outline-none transition placeholder:text-white/40 focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/30"
-		/>
+		<div class="flex flex-col gap-1.5">
+			<span class="text-white/50 font-jetbrains text-sm flex items-center gap-1.5">
+				<span class="text-primary-orange">~</span>
+				Usuario
+			</span>
+			<div class="w-full rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-2.5 text-sm text-primary-orange font-jetbrains">
+				{profile.username}
+			</div>
+		</div>
+
+		<div class="flex flex-col gap-1.5">
+			<span class="text-white/50 font-jetbrains text-sm flex items-center gap-1.5">
+				<span class="text-primary-orange">~</span>
+				Correo
+			</span>
+			<div class="w-full rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-2.5 text-sm text-white font-jetbrains">
+				{profile.email}
+			</div>
+		</div>
 	</div>
 </aside>

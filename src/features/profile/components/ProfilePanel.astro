@@ -9,7 +9,7 @@ const navigation = [
 	{ label: "Ejercicios", href: "/exercises" },
 	{ label: "Mi Equipo", href: "/team" },
 	{ label: "Perfil", href: "/profile", active: true },
-	{ label: "Table Dashboard", href: "/tableDashboard" },
+	{ label: "Status", href: "/tableDashboard" },
 ];
 ---
 
@@ -17,7 +17,19 @@ const navigation = [
     <div class="lg:sticky lg:top-4 lg:h-[calc(100vh-2rem)] lg:w-[20rem] lg:shrink-0">
         <ParticipantSidebar items={navigation} />
     </div>
+
 	<div class="flex min-w-0 flex-1 flex-col gap-4 rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_top,rgba(24,34,66,0.95),rgba(11,16,32,0.98)_55%)] p-4 shadow-[0_20px_80px_rgba(0,0,0,0.35)] sm:p-5 md:gap-5 md:p-6">
+		<!-- Header -->
+		<header class="flex flex-col gap-2">
+			<h2 class="text-2xl text-white sm:text-3xl font-zen-dots">
+				<span class="text-primary-orange">$</span>{"Mi Perfil"}<span class="text-primary-orange">.</span>
+			</h2>
+			<p class="max-w-2xl text-sm text-white/50 font-jetbrains">
+				<span class="text-primary-orange">{"// "}</span>Información personal, equipo y datos académicos
+			</p>
+		</header>
+
+		<!-- Content -->
 		<div class="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,22rem)_1fr] md:gap-5">
 			<div class="min-w-0">
 				<ProfilePersonalCard profile={personalProfile} />
@@ -26,8 +38,7 @@ const navigation = [
 				<ProfileAcceptedTeamCard members={acceptedMembers} />
 			</div>
 		</div>
-		<div class="mt-auto">
-			<ProfileAcademicFooter academic={academicProfile} />
-		</div>
+
+		<ProfileAcademicFooter academic={academicProfile} />
 	</div>
 </section>
