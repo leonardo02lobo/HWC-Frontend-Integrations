@@ -30,3 +30,5 @@ pnpm-debug.log*
 .antigravity/
 .interface-design/
 
+CLAUDE.md
+skills-lock.json
