@@ -23,33 +23,31 @@ export default function TableDashboardInteractive({ initialRows }: Props) {
 		);
 	};
 
+	const statusClass = (status: DashboardRow["status"]) => {
+		switch (status) {
+			case "Aprobado":
+				return "border-primary-orange/40 bg-primary-orange/10 text-primary-orange";
+			case "En revisión":
+				return "border-white/20 bg-white/5 text-white/70";
+			case "Pendiente":
+				return "border-white/10 bg-transparent text-white/50";
+		}
+	};
+
 	return (
 		<>
-			<div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
-				<table className="w-full table-fixed border-separate border-spacing-0" aria-label="Tabla de seguimiento del equipo">
+			<div className="overflow-x-auto rounded-2xl bg-[#141929] border border-gray-800/60">
+				<table className="w-full min-w-[700px] border-separate border-spacing-0" aria-label="Status de competidores">
 					<thead>
 						<tr>
-							<th className="sticky top-0 z-10 border-b border-white/10 bg-[#101834] px-4 py-3 text-left text-xs uppercase tracking-wide text-white/70">
-								ID
-							</th>
-							<th className="sticky top-0 z-10 border-b border-white/10 bg-[#101834] px-4 py-3 text-left text-xs uppercase tracking-wide text-white/70">
-								Miembro
-							</th>
-							<th className="sticky top-0 z-10 break-all border-b border-white/10 bg-[#101834] px-4 py-3 text-left text-xs uppercase tracking-wide text-white/70">
-								Repositorio
-							</th>
-							<th className="sticky top-0 z-10 border-b border-white/10 bg-[#101834] px-4 py-3 text-left text-xs uppercase tracking-wide text-white/70">
-								Estado
-							</th>
-							<th className="sticky top-0 z-10 border-b border-white/10 bg-[#101834] px-4 py-3 text-left text-xs uppercase tracking-wide text-white/70">
-								Puntaje
-							</th>
-							<th className="sticky top-0 z-10 break-all border-b border-white/10 bg-[#101834] px-4 py-3 text-left text-xs uppercase tracking-wide text-white/70">
-								Descripción
-							</th>
-							<th className="sticky top-0 z-10 border-b border-white/10 bg-[#101834] px-4 py-3 text-left text-xs uppercase tracking-wide text-white/70">
-								Última actualización
-							</th>
+							{["ID", "Miembro", "Repositorio", "Estado", "Puntaje", "Actualización"].map((h) => (
+								<th
+									key={h}
+									className="sticky top-0 z-10 border-b border-gray-800/60 bg-primary-ark-blue/80 px-4 py-3 text-left text-xs uppercase tracking-wide text-white/40 font-jetbrains first:rounded-tl-2xl last:rounded-tr-2xl"
+								>
+									{h}
+								</th>
+							))}
 						</tr>
 					</thead>
 					<tbody>
@@ -63,79 +61,81 @@ export default function TableDashboardInteractive({ initialRows }: Props) {
 										setSelectedId(row.id);
 									}
 								}}
-								className="cursor-pointer outline-none transition [&:focus-visible>td]:bg-white/10 [&:hover>td]:bg-white/5"
+								className="cursor-pointer outline-none transition-colors duration-150 [&:hover>td]:bg-white/[0.03] [&:focus-visible>td]:bg-white/[0.05]"
 								tabIndex={0}
 							>
-								<td className="border-b border-white/10 px-4 py-3 text-sm text-white/90">{row.id}</td>
-								<td className="border-b border-white/10 px-4 py-3 text-sm text-white/90">{row.teammate}</td>
-								<td className="break-all border-b border-white/10 px-4 py-3 text-sm text-white/90">
+								<td className="border-b border-gray-800/40 px-4 py-3 text-sm text-white/40 font-jetbrains">{row.id}</td>
+								<td className="border-b border-gray-800/40 px-4 py-3 text-sm text-white font-jetbrains whitespace-nowrap">{row.teammate}</td>
+								<td className="border-b border-gray-800/40 px-4 py-3 text-sm font-jetbrains">
 									<a
 										href={`https://${row.repository}`}
 										target="_blank"
 										rel="noreferrer"
 										onClick={(event) => event.stopPropagation()}
-										className="text-primary-orange transition hover:text-white"
+										className="text-primary-orange transition-colors duration-200 hover:text-orange-400"
 									>
 										{row.repository}
 									</a>
 								</td>
-								<td className="border-b border-white/10 px-4 py-3 text-sm text-white/90">
-									<span
-										className={[
-											"inline-flex rounded-full border px-2 py-1 text-xs",
-											row.status === "Aprobado" && "border-primary-orange/50 bg-primary-orange/15 text-primary-orange",
-											row.status === "En revisión" && "border-white/25 bg-white/10 text-white",
-											row.status === "Pendiente" && "border-white/20 bg-transparent text-white/80",
-										]
-											.filter(Boolean)
-											.join(" ")}
-									>
+								<td className="border-b border-gray-800/40 px-4 py-3 text-sm font-jetbrains">
+									<span className={`inline-flex rounded-lg border px-2.5 py-1 text-xs ${statusClass(row.status)}`}>
 										{row.status}
 									</span>
 								</td>
-								<td className="border-b border-white/10 px-4 py-3 text-sm text-white/90">{row.score}</td>
-								<td className="break-all border-b border-white/10 px-4 py-3 text-sm text-white/90">{row.description || "-"}</td>
-								<td className="border-b border-white/10 px-4 py-3 text-sm text-white/90">{row.updatedAt}</td>
+								<td className="border-b border-gray-800/40 px-4 py-3 text-sm text-white font-jetbrains tabular-nums">{row.score}</td>
+								<td className="border-b border-gray-800/40 px-4 py-3 text-sm text-white/50 font-jetbrains whitespace-nowrap">{row.updatedAt}</td>
 							</tr>
 						))}
 					</tbody>
 				</table>
 			</div>
 
+			{/* Detail Modal */}
 			{selectedRow && (
-				<div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6" role="dialog" aria-modal="true" aria-label="Editar fila">
-					<div className="absolute inset-0 bg-[#05070f]/75 backdrop-blur-[2px]" onClick={closeModal}></div>
-					<div className="relative z-10 w-full max-w-3xl rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_top,rgba(24,34,66,0.98),rgba(11,16,32,0.99)_58%)] p-4 shadow-[0_24px_80px_rgba(0,0,0,0.45)] sm:p-6">
-						<header className="mb-4 flex items-center justify-between gap-3">
-							<h3 className="text-lg text-white sm:text-2xl">
-								<span className="text-primary-orange">&lt;</span>
-								Detalle de registro
-								<span className="text-primary-orange">/&gt;</span>
+				<div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6" role="dialog" aria-modal="true" aria-label="Detalle de registro">
+					<div className="absolute inset-0 bg-[#05070f]/80 backdrop-blur-[2px]" onClick={closeModal}></div>
+					<div className="relative z-10 w-full max-w-2xl bg-[#141929] border border-gray-800/60 rounded-2xl p-5 md:p-6">
+						<header className="mb-5 flex items-center justify-between gap-3">
+							<h3 className="text-lg text-white font-[Zen_Dots,cursive]">
+								<span className="text-[#FF4D00]">~</span> Detalle de Registro
 							</h3>
 							<button
 								type="button"
 								onClick={closeModal}
-								className="inline-flex rounded-xl border border-white/15 px-3 py-1.5 text-sm text-white/80 transition hover:border-primary-orange/40 hover:text-white"
+								className="rounded-lg border border-gray-800/60 px-3 py-1.5 text-sm text-white/50 transition-colors duration-200 hover:border-gray-700/80 hover:text-white font-[JetBrains_Mono,monospace]"
 							>
 								Cerrar
 							</button>
 						</header>
 
 						<div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-							<div className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-3">
-								<span className="text-xs uppercase tracking-wide text-white/55">ID</span>
-								<p className="wrap-break-word text-sm text-white">{selectedRow.id}</p>
+							<div className="flex flex-col gap-1.5 rounded-lg border border-gray-800/60 bg-[rgba(11,16,32,0.6)] p-3">
+								<span className="text-xs uppercase tracking-wide text-white/40 font-[JetBrains_Mono,monospace]">ID</span>
+								<p className="text-sm text-white font-[JetBrains_Mono,monospace]">{selectedRow.id}</p>
 							</div>
-							<div className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-3">
-								<span className="text-xs uppercase tracking-wide text-white/55">Miembro</span>
-								<p className="wrap-break-word text-sm text-white">{selectedRow.teammate}</p>
+							<div className="flex flex-col gap-1.5 rounded-lg border border-gray-800/60 bg-[rgba(11,16,32,0.6)] p-3">
+								<span className="text-xs uppercase tracking-wide text-white/40 font-[JetBrains_Mono,monospace]">Miembro</span>
+								<p className="text-sm text-white font-[JetBrains_Mono,monospace]">{selectedRow.teammate}</p>
 							</div>
-							<div className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-3">
-								<span className="text-xs uppercase tracking-wide text-white/55">Repositorio</span>
-								<p className="wrap-break-word text-sm text-white">{selectedRow.repository}</p>
+							<div className="flex flex-col gap-1.5 rounded-lg border border-gray-800/60 bg-[rgba(11,16,32,0.6)] p-3">
+								<span className="text-xs uppercase tracking-wide text-white/40 font-[JetBrains_Mono,monospace]">Repositorio</span>
+								<a
+									href={`https://${selectedRow.repository}`}
+									target="_blank"
+									rel="noreferrer"
+									className="text-sm text-[#FF4D00] hover:text-orange-400 transition-colors duration-200 font-[JetBrains_Mono,monospace] break-all"
+								>
+									{selectedRow.repository}
+								</a>
 							</div>
-							<div className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-3">
-								<span className="text-xs uppercase tracking-wide text-white/55">Puntaje</span>
+							<div className="flex flex-col gap-1.5 rounded-lg border border-gray-800/60 bg-[rgba(11,16,32,0.6)] p-3">
+								<span className="text-xs uppercase tracking-wide text-white/40 font-[JetBrains_Mono,monospace]">Estado</span>
+								<span className={`inline-flex w-fit rounded-lg border px-2.5 py-1 text-xs font-[JetBrains_Mono,monospace] ${statusClass(selectedRow.status)}`}>
+									{selectedRow.status}
+								</span>
+							</div>
+							<div className="flex flex-col gap-1.5 rounded-lg border border-gray-800/60 bg-[rgba(11,16,32,0.6)] p-3">
+								<span className="text-xs uppercase tracking-wide text-white/40 font-[JetBrains_Mono,monospace]">Puntaje</span>
 								<input
 									type="number"
 									min={0}
@@ -146,28 +146,23 @@ export default function TableDashboardInteractive({ initialRows }: Props) {
 										if (Number.isNaN(value)) return;
 										updateSelectedRow({ score: value });
 									}}
-									className="w-full rounded-xl border border-white/15 bg-[#0d1428] px-3 py-2 text-sm text-white outline-none transition placeholder:text-white/40 focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/25"
+									className="w-full rounded-lg border border-gray-800/60 bg-[rgba(11,16,32,0.6)] px-3 py-2 text-sm text-white outline-none transition duration-200 placeholder:text-white/25 focus:ring-2 focus:ring-[rgba(255,77,0,0.6)] focus:border-[rgba(255,77,0,0.4)] font-[JetBrains_Mono,monospace]"
 								/>
 							</div>
-							<div className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-3">
-								<span className="text-xs uppercase tracking-wide text-white/55">Última actualización</span>
-								<p className="wrap-break-word text-sm text-white">{selectedRow.updatedAt}</p>
+							<div className="flex flex-col gap-1.5 rounded-lg border border-gray-800/60 bg-[rgba(11,16,32,0.6)] p-3">
+								<span className="text-xs uppercase tracking-wide text-white/40 font-[JetBrains_Mono,monospace]">Actualización</span>
+								<p className="text-sm text-white/50 font-[JetBrains_Mono,monospace]">{selectedRow.updatedAt}</p>
 							</div>
 
-							<div className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-3">
-								<span className="text-xs uppercase tracking-wide text-white/55">Estado</span>
-								<p className="wrap-break-word text-sm text-white">{selectedRow.status}</p>
-							</div>
-
-							<label className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-3 md:col-span-2" htmlFor="modal-description">
-								<span className="text-xs uppercase tracking-wide text-white/55">Descripción</span>
+							<label className="flex flex-col gap-1.5 rounded-lg border border-gray-800/60 bg-[rgba(11,16,32,0.6)] p-3 md:col-span-2" htmlFor="modal-description">
+								<span className="text-xs uppercase tracking-wide text-white/40 font-[JetBrains_Mono,monospace]">Descripción</span>
 								<textarea
 									id="modal-description"
 									value={selectedRow.description}
 									onChange={(event) => updateSelectedRow({ description: event.target.value })}
 									placeholder="Agrega una descripción para este registro"
-									rows={4}
-									className="w-full rounded-xl border border-white/15 bg-[#0d1428] px-3 py-2 text-sm text-white outline-none transition placeholder:text-white/40 focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/25"
+									rows={3}
+									className="w-full rounded-lg border border-gray-800/60 bg-[rgba(11,16,32,0.6)] px-3 py-2 text-sm text-white outline-none transition duration-200 placeholder:text-white/25 focus:ring-2 focus:ring-[rgba(255,77,0,0.6)] focus:border-[rgba(255,77,0,0.4)] font-[JetBrains_Mono,monospace] resize-none"
 								/>
 							</label>
 						</div>
