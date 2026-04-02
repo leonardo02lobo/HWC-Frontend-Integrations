@@ -11,42 +11,38 @@ const { isPDF, text, description, mode = "download" } = Astro.props as Props;
 ---
 
 <div
-    class="relative flex h-72 md:h-72.5 lg:h-80 flex-col justify-between gap-4 bg-linear-to-br from-white/5 to-primary-degra-blue border border-gray-700 rounded-xl p-5 md:p-6 lg:p-8 shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 w-full max-w-2xl mx-auto overflow-hidden"
+    class="flex flex-col gap-4 bg-[#141929] border border-gray-800/60 rounded-2xl p-5 md:p-6 transition-all duration-300 hover:border-gray-700/80"
     role="article"
     aria-label={text}
 >
     {
         mode === "download" ? (
             <>
-                <div class="flex items-start justify-between w-full gap-4">
-                    <div class="flex items-center gap-3">
-                        {isPDF ? (
-                            <div class="flex items-center justify-center w-12 h-12 md:w-14 md:h-14">
-                                <Pdf />
-                            </div>
-                        ) : (
-                            <span></span>
-                        )}
-                        <div>
-                            <h3 class="text-base md:text-lg lg:text-xl font-semibold text-white">
-                                {text}
-                            </h3>
-                            <p class="text-sm md:text-base text-gray-300 mt-1 line-clamp-2">
-                                {description}
-                            </p>
+                <div class="flex items-start gap-3">
+                    {isPDF && (
+                        <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-orange/10 shrink-0">
+                            <Pdf />
                         </div>
+                    )}
+                    <div class="min-w-0">
+                        <h4 class="text-base md:text-lg text-white font-jetbrains">
+                            {text}
+                        </h4>
+                        <p class="text-sm text-white/50 mt-1 font-jetbrains line-clamp-2">
+                            {description}
+                        </p>
                     </div>
                 </div>
 
-                <hr class="w-full border-t border-gray-700 my-3" />
+                <div class="h-px bg-gray-800/60" />
 
-                <div class="w-full flex items-center justify-between gap-3">
-                    <p class="text-sm md:text-base text-gray-300 line-clamp-3">
-                        {description}
+                <div class="flex items-center justify-between gap-3">
+                    <p class="text-sm text-white/40 font-jetbrains line-clamp-2">
+                        {isPDF ? "Archivo PDF disponible para descarga" : "Material de referencia"}
                     </p>
-                    { isPDF && (
+                    {isPDF && (
                         <button
-                            class="bg-primary-orange text-white px-4 py-2 rounded-md hover:bg-orange-600 transition"
+                            class="shrink-0 bg-primary-orange text-white text-sm px-4 py-2 rounded-lg hover:bg-orange-600 transition-all duration-200 font-jetbrains"
                             aria-label={`Descargar ${text}`}
                         >
                             Descargar
@@ -56,39 +52,37 @@ const { isPDF, text, description, mode = "download" } = Astro.props as Props;
             </>
         ) : (
             <>
-                <div class="w-full">
-                    <h3 class="text-base md:text-lg lg:text-xl font-semibold text-white">
+                <div>
+                    <h4 class="text-base md:text-lg text-white font-jetbrains">
                         {text}
-                    </h3>
-                    <p class="text-sm md:text-base text-gray-300 mt-1 line-clamp-2">
+                    </h4>
+                    <p class="text-sm text-white/50 mt-1 font-jetbrains line-clamp-2">
                         {description}
                     </p>
                 </div>
 
-                <hr class="w-full border-t border-gray-700 my-3" />
+                <div class="h-px bg-gray-800/60" />
 
                 <form class="w-full" id="form-repo">
                     <div class="flex flex-col sm:flex-row items-center gap-3 w-full">
-                        {mode === "add" && (
-                            <label
-                                for="repo-url"
-                                class="flex items-center justify-center w-10 h-10 rounded-md bg-white/5 p-2 cursor-pointer"
-                                aria-hidden
-                            >
-                                <Github />
-                            </label>
-                        )}
+                        <label
+                            for="repo-url"
+                            class="flex items-center justify-center w-10 h-10 rounded-lg bg-white/5 shrink-0 cursor-pointer"
+                            aria-hidden
+                        >
+                            <Github />
+                        </label>
                         <input
                             id="repo-url"
                             name="repo-url"
                             type="url"
-                            placeholder="Ingrese la URL del repositorio"
-                            class="flex-1 w-full px-3 py-2 rounded-md border border-gray-600 bg-transparent text-gray-100 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent transition"
+                            placeholder="https://github.com/usuario/repo"
+                            class="flex-1 w-full px-4 py-2.5 rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 text-white text-sm placeholder:text-white/25 focus:outline-none focus:ring-2 focus:ring-primary-orange/60 focus:border-primary-orange/40 transition duration-200 font-jetbrains"
                             required
                         />
                         <button
                             type="submit"
-                            class="w-full sm:w-auto bg-primary-orange text-white px-4 py-2 rounded-md hover:bg-orange-600 transition"
+                            class="w-full sm:w-auto shrink-0 bg-primary-orange text-white text-sm px-4 py-2.5 rounded-lg hover:bg-orange-600 transition-all duration-200 font-jetbrains"
                         >
                             Agregar
                         </button>

@@ -1,247 +1,220 @@
 ---
-import { backendLanguages } from "./../data.ts";
-import AuthFeedbackModals from "./AuthFeedbackModals";
+import LanguageSelect from "./LanguageSelect.tsx";
+import GithubProfileInput from "./GithubProfileInput.tsx";
+import AuthFeedbackModals from "./AuthFeedbackModals.tsx";
+import { backendLanguages } from "../data";
 ---
 
-<div class="bg-gray-900 flex items-center justify-center px-4 py-8">
-    <div
-        class="bg-gray-800 rounded-2xl shadow-2xl max-w-4xl w-full flex flex-col overflow-hidden"
-    >
-        <h1
-            class="text-3xl font-bold text-white text-center mb-8 mt-8 flex justify-center"
-        >
-            <span class="text-primary-orange">&lt;</span>
-            <span>Registro de Participante</span>
-            <span class="text-primary-orange">/&gt;</span>
+<section class="w-full px-6 md:px-20 py-12 min-h-[70vh] flex flex-col items-center justify-center gap-8">
+
+    <!-- Page Title with Division-style gradient line -->
+    <div class="flex items-center gap-4 w-full max-w-5xl animate-on-scroll">
+        <div class="h-px flex-1 bg-gradient-to-r from-transparent via-primary-orange/40 to-primary-orange" />
+        <h1 class="text-white text-2xl md:text-4xl font-zen-dots whitespace-nowrap">
+            <span class="text-primary-orange">&lt;</span>Registro<span class="text-primary-orange">&nbsp;/&gt;</span>
         </h1>
+        <div class="h-px flex-1 bg-gradient-to-l from-transparent via-primary-orange/40 to-primary-orange" />
+    </div>
 
-        <p class="text-center text-gray-300 px-8 pb-2">
-            <a
-                href="#"
-                id="toggle-auth-mode"
-                class="text-primary-orange underline underline-offset-4 hover:text-orange-400 transition"
-            >
-                ¿Ya tienes usuario y contraseña? Inicia sesión
-            </a>
-        </p>
-
-        <div class="flex flex-col md:flex-row">
-            <div class="w-full md:w-1/2 p-8">
-                <div class="relative min-h-[780px]">
-                    <form
-                        method="post"
-                        action=""
-                        class="space-y-6 auth-panel auth-panel--active"
-                        id="register-form"
-                    >
-                        <div class="space-y-4">
-                            <h2 class="text-xl font-semibold text-white pb-2">
-                                [Datos de Perfil]
-                            </h2>
-
-                            <div class="space-y-3">
-                                <label for="username" class="block">
-                                    <span class="text-white font-medium"
-                                        >Nombre de Usuario <span
-                                            class="text-gray-400">(Username)</span
-                                        ></span
-                                    >
-                                    <input
-                                        type="text"
-                                        id="username"
-                                        name="username"
-                                        required
-                                        class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent transition duration-200"
-                                    />
-                                </label>
-
-                                <label for="name" class="block">
-                                    <span class="text-white font-medium"
-                                        >Nombre Completo <span class="text-gray-400"
-                                            >(Name)</span
-                                        ></span
-                                    >
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        required
-                                        class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent transition duration-200"
-                                    />
-                                </label>
-
-                                <label for="email" class="block">
-                                    <span class="text-white font-medium"
-                                        >Correo Electrónico <span
-                                            class="text-gray-400">(Mail)</span
-                                        ></span
-                                    >
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        required
-                                        class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent transition duration-200"
-                                    />
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="space-y-4">
-                            <h2
-                                class="text-xl font-semibold text-primary-orange border-b border-primary-orange pb-2"
-                            >
-                                [Configuracion de Desarrollo]
-                            </h2>
-                            <p class="text-gray-400 text-sm">
-                                (Especifico para nivel datos)
-                            </p>
-
-                            <div class="space-y-3">
-                                <label for="language" class="block">
-                                    <span class="text-white font-medium"
-                                        >Lenguaje de Programación <span
-                                            class="text-gray-400"
-                                            >(Programming Language)</span
-                                        ></span
-                                    >
-                                    <select
-                                        id="language"
-                                        name="language"
-                                        required
-                                        class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent transition duration-200"
-                                    >
-                                        <option value="" class="bg-gray-700"
-                                            >Selecciona un lenguaje</option
-                                        >
-                                        {
-                                            backendLanguages.map((lang: string) => (
-                                                <option
-                                                    value={lang.toLowerCase()}
-                                                    class="bg-gray-700"
-                                                >
-                                                    {lang}
-                                                </option>
-                                            ))
-                                        }
-                                    </select>
-                                </label>
-
-                                <label for="github" class="block">
-                                    <span class="text-white font-medium"
-                                        >Perfil de GitHub <span
-                                            class="text-gray-400"
-                                            >(GitHub Profile)</span
-                                        ></span
-                                    >
-                                    <input
-                                        type="url"
-                                        id="github"
-                                        name="github"
-                                        required
-                                        class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent transition duration-200"
-                                    />
-                                </label>
-                            </div>
-                        </div>
-
-                        <button
-                            type="submit"
-                            class="w-full bg-primary-orange hover:bg-orange-600 text-white font-bold py-4 px-6 rounded-lg transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-orange focus:ring-offset-2 focus:ring-offset-gray-800"
-                        >
-                            [Registrar -&gt;]
-                        </button>
-                    </form>
-
-                    <form
-                        method="post"
-                        action=""
-                        class="space-y-6 auth-panel"
-                        id="login-form"
-                    >
-                        <div class="space-y-4">
-                            <h2
-                                class="text-xl font-semibold text-primary-orange border-b border-primary-orange pb-2"
-                            >
-                                [Inicio de Sesión]
-                            </h2>
-                            <p class="text-gray-400 text-sm">
-                                Ingresa tus credenciales para continuar
-                            </p>
-
-                            <div class="space-y-3">
-                                <label for="login-email" class="block">
-                                    <span class="text-white font-medium"
-                                        >Correo Electrónico <span
-                                            class="text-gray-400">(Mail)</span
-                                        ></span
-                                    >
-                                    <input
-                                        type="email"
-                                        id="login-email"
-                                        name="login-email"
-                                        required
-                                        class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent transition duration-200"
-                                    />
-                                </label>
-
-                                <label for="login-password" class="block">
-                                    <span class="text-white font-medium"
-                                        >Contraseña <span class="text-gray-400"
-                                            >(Password)</span
-                                        ></span
-                                    >
-                                    <input
-                                        type="password"
-                                        id="login-password"
-                                        name="login-password"
-                                        required
-                                        minlength="6"
-                                        class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent transition duration-200"
-                                    />
-                                </label>
-                            </div>
-                        </div>
-
-                        <button
-                            type="submit"
-                            class="w-full bg-primary-orange hover:bg-orange-600 text-white font-bold py-4 px-6 rounded-lg transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-orange focus:ring-offset-2 focus:ring-offset-gray-800"
-                        >
-                            [Iniciar sesión -&gt;]
-                        </button>
-                    </form>
-                </div>
-            </div>
-            <div class="hidden md:flex items-center justify-center py-8">
-                <img
-                    src="/assets/login/fondo_login.png"
-                    alt="Logo HWC 2026"
-                    class="w-full h-full object-cover rounded-2xl"
-                />
+    <!-- How it works bar -->
+    <div class="w-full max-w-5xl bg-[#141929] border border-gray-800/60 rounded-2xl p-5 transition-all duration-300 hover:border-gray-700/80 animate-on-scroll">
+        <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+            <span class="text-white text-lg font-zen-dots shrink-0">
+                <span class="text-primary-orange">$¿</span>Cómo funciona<span class="text-primary-orange">?.</span>
+            </span>
+            <div class="flex flex-col sm:flex-row gap-3 sm:gap-8">
+                <p class="text-white/70 text-sm font-jetbrains">
+                    <span class="text-primary-orange">1.</span> Completa el formulario
+                </p>
+                <p class="text-white/70 text-sm font-jetbrains">
+                    <span class="text-primary-orange">2.</span> Serás categorizado
+                </p>
+                <p class="text-white/70 text-sm font-jetbrains">
+                    <span class="text-primary-orange">3.</span> ¡Compite el 14 de Junio!
+                </p>
             </div>
         </div>
     </div>
-</div>
 
-<AuthFeedbackModals client:load />
+    <!-- Register Form Card -->
+    <div id="register-form" class="auth-panel auth-panel--active w-full max-w-5xl bg-[#141929] border border-gray-800/60 rounded-2xl p-6 md:p-8 transition-all duration-300 hover:border-gray-700/80 animate-on-scroll">
+        <form method="post" action="" class="space-y-8">
 
-<script src="./../type.ts"></script>
+            <!-- Two-column form sections -->
+            <div class="flex flex-col md:flex-row gap-8">
 
-<style>
-    .auth-panel {
-        position: absolute;
-        inset: 0;
-        opacity: 0;
-        transform: translateX(32px);
-        pointer-events: none;
-        z-index: 0;
-        transition: opacity 300ms ease, transform 300ms ease;
-    }
+                <!-- Profile Section -->
+                <div class="flex-1 space-y-4">
+                    <div class="pb-2">
+                        <span class="text-white text-xl md:text-2xl font-zen-dots">
+                            <span class="text-primary-orange">$</span>{"Datos de Perfil"}<span class="text-primary-orange">.</span>
+                        </span>
+                    </div>
 
-    .auth-panel--active {
-        opacity: 1;
-        transform: translateX(0);
-        pointer-events: auto;
-        z-index: 1;
-    }
-</style>
+                    <div class="space-y-4">
+                        <label for="username" class="block space-y-1.5">
+                            <span class="text-white font-medium text-sm flex items-center gap-1.5">
+                                <span class="text-primary-orange">~</span>
+                                Nombre de Usuario
+                            </span>
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                required
+                                placeholder="tu_username"
+                                class="block w-full px-4 py-3 bg-primary-ark-blue/60 border border-gray-800/60 rounded-lg text-white placeholder-white/25 focus:outline-none focus:ring-2 focus:ring-primary-orange/60 focus:border-primary-orange/40 transition duration-200 font-jetbrains text-sm"
+                            />
+                        </label>
+
+                        <label for="name" class="block space-y-1.5">
+                            <span class="text-white font-medium text-sm flex items-center gap-1.5">
+                                <span class="text-primary-orange">~</span>
+                                Nombre Completo
+                            </span>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                required
+                                placeholder="Juan Pérez"
+                                class="block w-full px-4 py-3 bg-primary-ark-blue/60 border border-gray-800/60 rounded-lg text-white placeholder-white/25 focus:outline-none focus:ring-2 focus:ring-primary-orange/60 focus:border-primary-orange/40 transition duration-200 font-jetbrains text-sm"
+                            />
+                        </label>
+
+                        <label for="email" class="block space-y-1.5">
+                            <span class="text-white font-medium text-sm flex items-center gap-1.5">
+                                <span class="text-primary-orange">~</span>
+                                Correo Electrónico
+                                </span>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                required
+                                placeholder="correo@ejemplo.com"
+                                class="block w-full px-4 py-3 bg-primary-ark-blue/60 border border-gray-800/60 rounded-lg text-white placeholder-white/25 focus:outline-none focus:ring-2 focus:ring-primary-orange/60 focus:border-primary-orange/40 transition duration-200 font-jetbrains text-sm"
+                            />
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Vertical divider on desktop -->
+                <div class="hidden md:block w-px bg-gray-800/60"></div>
+
+                <!-- Dev Config Section -->
+                <div class="flex-1 space-y-4">
+                    <div class="pb-2">
+                        <span class="text-white text-xl md:text-2xl font-zen-dots">
+                            <span class="text-primary-orange">$</span>{"Configuración de Desarrollo"}<span class="text-primary-orange">.</span>
+                        </span>
+                    </div>
+                    <p class="text-white/40 text-xs font-jetbrains">
+                        <span class="text-primary-orange">{"// "}</span>Específico para nivel de datos
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="block space-y-1.5">
+                            <span class="text-white font-medium text-sm flex items-center gap-1.5">
+                                <span class="text-primary-orange">~</span>
+                                ¿Cual es tu lenguaje de programación favorito?
+                            </span>
+                            <LanguageSelect client:load />
+                        </div>
+
+                        <div class="block space-y-1.5">
+                            <span class="text-white font-medium text-sm flex items-center gap-1.5">
+                                <span class="text-primary-orange">~</span>
+                                Perfil de GitHub
+                            </span>
+                            <GithubProfileInput client:load />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button
+                type="submit"
+                id="register-btn"
+                class="w-full bg-primary-orange text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 hover:scale-102 focus:outline-none focus:ring-2 focus:ring-primary-orange/60 focus:ring-offset-2 focus:ring-offset-[#141929] animate-glow-pulse font-zen-dots tracking-wide disabled:opacity-40 disabled:cursor-not-allowed disabled:animate-none disabled:hover:scale-100"
+            >
+                Registrar <span class="font-jetbrains">{"->"}</span>
+            </button>
+        </form>
+    </div>
+
+    <!-- Login Form Card -->
+    <div id="login-form" class="auth-panel w-full max-w-5xl bg-[#141929] border border-gray-800/60 rounded-2xl p-6 md:p-8 transition-all duration-300 hover:border-gray-700/80 animate-on-scroll">
+        <form method="post" action="" class="space-y-8">
+            <div class="max-w-md mx-auto space-y-4">
+                <div class="pb-2">
+                    <span class="text-white text-xl md:text-2xl font-zen-dots">
+                        <span class="text-primary-orange">$</span>{"Iniciar Sesión"}<span class="text-primary-orange">.</span>
+                    </span>
+                </div>
+
+                <label for="login-email" class="block space-y-1.5">
+                    <span class="text-white font-medium text-sm flex items-center gap-1.5">
+                        <span class="text-primary-orange">~</span>
+                        Correo Electrónico
+                    </span>
+                    <input
+                        type="email"
+                        id="login-email"
+                        name="login-email"
+                        required
+                        placeholder="correo@ejemplo.com"
+                        class="block w-full px-4 py-3 bg-primary-ark-blue/60 border border-gray-800/60 rounded-lg text-white placeholder-white/25 focus:outline-none focus:ring-2 focus:ring-primary-orange/60 focus:border-primary-orange/40 transition duration-200 font-jetbrains text-sm"
+                    />
+                </label>
+
+                <label for="login-password" class="block space-y-1.5">
+                    <span class="text-white font-medium text-sm flex items-center gap-1.5">
+                        <span class="text-primary-orange">~</span>
+                        Contraseña
+                    </span>
+                    <input
+                        type="password"
+                        id="login-password"
+                        name="login-password"
+                        required
+                        placeholder="••••••••"
+                        class="block w-full px-4 py-3 bg-primary-ark-blue/60 border border-gray-800/60 rounded-lg text-white placeholder-white/25 focus:outline-none focus:ring-2 focus:ring-primary-orange/60 focus:border-primary-orange/40 transition duration-200 font-jetbrains text-sm"
+                    />
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button
+                type="submit"
+                class="w-full bg-primary-orange text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 hover:scale-102 focus:outline-none focus:ring-2 focus:ring-primary-orange/60 focus:ring-offset-2 focus:ring-offset-[#141929] animate-glow-pulse font-zen-dots tracking-wide"
+            >
+                Iniciar Sesión <span class="font-jetbrains">{"->"}</span>
+            </button>
+        </form>
+    </div>
+
+    <!-- Toggle auth mode link -->
+    <div class="w-full max-w-5xl text-center animate-on-scroll">
+        <a
+            href="#"
+            id="toggle-auth-mode"
+            class="text-primary-orange underline underline-offset-4 hover:text-orange-400 transition font-jetbrains text-sm"
+        >
+            ¿Ya tienes usuario y contraseña? Inicia sesión
+        </a>
+    </div>
+
+    <AuthFeedbackModals client:load />
+</section>
+
+<script>
+    import "../type";
+
+    const btn = document.getElementById("register-btn") as HTMLButtonElement;
+    window.addEventListener("github-status", ((e: CustomEvent<string>) => {
+        const status = e.detail;
+        btn.disabled = status === "loading" || status === "invalid";
+    }) as EventListener);
+</script>

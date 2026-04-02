@@ -1,5 +1,7 @@
-const registerForm = document.getElementById("register-form") as HTMLFormElement | null;
-const loginForm = document.getElementById("login-form") as HTMLFormElement | null;
+const registerPanel = document.getElementById("register-form") as HTMLDivElement | null;
+const loginPanel = document.getElementById("login-form") as HTMLDivElement | null;
+const registerForm = registerPanel?.querySelector("form") as HTMLFormElement | null;
+const loginForm = loginPanel?.querySelector("form") as HTMLFormElement | null;
 const toggleAuthMode = document.getElementById("toggle-auth-mode") as HTMLAnchorElement | null;
 
 interface RegisterFormData {
@@ -24,13 +26,13 @@ const dispatchAuthModal = (detail: AuthModalDetail) => {
     window.dispatchEvent(new CustomEvent<AuthModalDetail>("auth:modal", { detail }));
 };
 
-if (registerForm && loginForm && toggleAuthMode) {
+if (registerPanel && loginPanel && registerForm && loginForm && toggleAuthMode) {
     let isLoginMode = false;
 
     const setAuthMode = (loginMode: boolean) => {
         isLoginMode = loginMode;
-        registerForm.classList.toggle("auth-panel--active", !loginMode);
-        loginForm.classList.toggle("auth-panel--active", loginMode);
+        registerPanel.classList.toggle("auth-panel--active", !loginMode);
+        loginPanel.classList.toggle("auth-panel--active", loginMode);
 
         toggleAuthMode.textContent = loginMode
             ? "¿Aún no tienes cuenta? Regístrate"
