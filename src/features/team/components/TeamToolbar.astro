@@ -1,28 +1,20 @@
 ---
-interface Props {
-	title: string;
-	actionLabel: string;
-}
-
-const { title, actionLabel } = Astro.props as Props;
 ---
 
-<section class="flex flex-col gap-4 rounded-3xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm md:p-5 lg:flex-row lg:items-end lg:justify-between">
-	<div class="flex flex-col gap-1">
-		<h1 class="flex flex-wrap items-center gap-2 text-2xl text-white md:text-3xl w-screen max-w-max whitespace-nowrap">
-			<span class="text-primary-orange">&lt;</span>
-			<span>{title}</span>
-			<span class="text-primary-orange">/&gt;</span>
-		</h1>
-		<p class="text-sm text-white/60">Gestiona colaboradores, invitaciones y accesos.</p>
-	</div>
+<div class="flex flex-col gap-3 sm:flex-row sm:items-center bg-[#141929] border border-gray-800/60 rounded-2xl p-4 md:p-5 transition-all duration-300 hover:border-gray-700/80">
+	<label class="flex flex-1 min-w-0 items-center gap-3 rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-2.5 text-white/70" aria-label="Buscar colaborador">
+		<span class="text-primary-orange text-sm">~</span>
+		<input
+			class="min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/25 font-jetbrains"
+			type="search"
+			placeholder="Buscar colaborador"
+		/>
+	</label>
 
-	<div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-		<label class="flex h-14 min-w-0 items-center gap-3 rounded-2xl border border-white/10 bg-[#111a32] px-4 text-white/70 shadow-inner" aria-label="Buscar colaborador">
-			<span class="text-2xl text-white/35">⌕</span>
-			<input class="min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/35" type="search" placeholder="Buscar colaborador" />
-		</label>
-
-		<a href="#add-member" class="inline-flex h-14 items-center justify-center rounded-2xl bg-primary-orange px-5 text-sm font-semibold text-white transition hover:scale-[1.02] hover:bg-[#ff5f1f]">[ + {actionLabel} ]</a>
-	</div>
-</section>
+	<a
+		href="#add-member"
+		class="inline-flex items-center justify-center rounded-lg bg-primary-orange px-5 py-2.5 text-sm text-white transition-all duration-200 hover:bg-orange-600 font-jetbrains shrink-0"
+	>
+		+ Añadir Colaborador
+	</a>
+</div>
