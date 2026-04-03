@@ -20,7 +20,7 @@ const { isPDF, text, description, mode = "download" } = Astro.props as Props;
             <>
                 <div class="flex items-start gap-3">
                     {isPDF && (
-                        <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-orange/10 shrink-0">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-lg">
                             <Pdf />
                         </div>
                     )}
