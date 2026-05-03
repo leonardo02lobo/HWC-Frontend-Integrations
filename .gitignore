@@ -32,3 +32,4 @@ pnpm-debug.log*
 
 CLAUDE.md
 skills-lock.json
+pnpm-lock.yaml
