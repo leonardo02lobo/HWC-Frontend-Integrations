@@ -28,7 +28,18 @@ const podiumCollection = defineCollection({
     }),
 });
 
+const sponsorsCollection = defineCollection({
+    type: "content",
+    schema: z.object({
+        order: z.number().int().min(1),
+        name: z.string(),
+        description: z.string(),
+        logo: z.string(),
+    }),
+});
+
 export const collections = {
     speakers: speakersCollection,
     podium: podiumCollection,
+    sponsors: sponsorsCollection,
 };
