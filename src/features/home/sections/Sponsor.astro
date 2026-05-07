@@ -1,21 +1,28 @@
 ---
-import sponsors  from "../../../data/Sponsor.json";
+import { getCollection } from "astro:content";
 import CardSponsor from "./components/CardSponsor.astro";
 
-
-interface CardSponsorProps {
-    name: string;
-    description: string;
-    logo: string;
-}
+const sponsors = (await getCollection("sponsors")).sort((a, b) => a.data.order - b.data.order);
 ---
 
 <div class="flex flex-col items-center gap-6 px-6 md:px-20 py-12 relative animate-on-scroll" id="sponsors">
+    {sponsors.length > 0 && (
+        <CardSponsor
+            name={sponsors[0].data.name}
+            description={sponsors[0].data.description}
+            logo={sponsors[0].data.logo}
+            noBackground={true}
+        />
+    )}
     <div class="flex flex-col md:grid md:grid-cols-3 gap-4 md:gap-6 p-6 w-full">
         {
-            sponsors.map((sponsor: CardSponsorProps, index: number) => (
-                <div class={`animate-on-scroll stagger-${Math.min(index + 1, 5)}`}>
-                    <CardSponsor name={sponsor.name} description={sponsor.description} logo={sponsor.logo} />
+            sponsors.slice(1).map((sponsor, index: number) => (
+                <div class={`animate-on-scroll stagger-${Math.min(index + 2, 5)}`}>
+                    <CardSponsor
+                        name={sponsor.data.name}
+                        description={sponsor.data.description}
+                        logo={sponsor.data.logo}
+                    />
                 </div>
             ))
         }

@@ -20,10 +20,34 @@ La aplicación consta de tres secciones principales diseñadas para guiar a los 
 * **Agenda:** Cronograma detallado de las conferencias y talleres.
 * **Speakers:** Tarjetas informativas con biografía, foto y redes sociales de los ponentes invitados.
 
-### 3.  Proyectos de la Comunidad
+### 3.  Sponsors
+* **Colección de contenido:** Cada sponsor vive en `src/content/sponsors` como un archivo `.md` con frontmatter tipado.
+* **Render centralizado:** La sección `Sponsor.astro` consume la colección y construye las cards sin depender de JSON plano.
+* **Orden explícito:** El campo `order` define el orden de aparición en la grilla.
+
+### 4.  Proyectos de la Comunidad
 * **Galería de Proyectos:** Un espacio para exhibir desarrollos previos o actuales de la comunidad.
 * **Showcase:** Cada proyecto incluye título, equipo, repositorio y demo en vivo.
 * **Involucramiento:** Sección para invitar a otros desarrolladores a enviar sus propias creaciones.
+
+##  Agregar un nuevo sponsor
+
+1. Crea un archivo `.md` dentro de `src/content/sponsors`, por ejemplo `acme.md`.
+2. Define el frontmatter con estos campos obligatorios: `order`, `name`, `description` y `logo`.
+3. Usa una ruta pública para `logo`, por ejemplo `/assets/mascot/logo-hwc-2026.png`.
+4. Guarda el archivo y Astro lo incluirá automáticamente en la sección de sponsors.
+5. Si necesitas reordenarlo, cambia únicamente el valor de `order`.
+
+Ejemplo:
+
+```md
+---
+order: 7
+name: "Acme"
+description: "Sponsor de ejemplo"
+logo: "/assets/mascot/logo-hwc-2026.png"
+---
+```
 
 ---
 
