@@ -10,12 +10,49 @@ const { profile } = Astro.props as Props;
 
 <aside class="flex h-full flex-col gap-4 bg-[#141929] border border-gray-800/60 rounded-2xl p-5 md:p-6 transition-all duration-300 hover:border-gray-700/80" aria-label="Datos personales del participante">
 	<div class="flex justify-center">
-		<img
-			src={profile.avatarUrl}
-			alt={`Avatar de ${profile.name}`}
-			class="h-24 w-24 rounded-full border-2 border-primary-orange bg-white/5 object-cover sm:h-28 sm:w-28"
-		/>
+		<div class="relative">
+			<img
+				src={profile.avatarUrl}
+				alt={`Avatar de ${profile.name}`}
+				class="h-24 w-24 rounded-full border-2 border-primary-orange bg-white/5 object-cover sm:h-28 sm:w-28"
+				data-portrait-img
+			/>
+			<div
+				class="absolute inset-0 flex items-center justify-center rounded-full bg-black/50 hidden"
+				data-portrait-loading
+			>
+				<svg class="h-8 w-8 animate-spin text-primary-orange" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+					<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+					<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+				</svg>
+			</div>
+		</div>
 	</div>
+
+	<div class="flex justify-center gap-2">
+		<button
+			type="button"
+			class="text-xs text-white/50 hover:text-primary-orange transition-colors font-jetbrains"
+			data-portrait-change
+		>
+			Cambiar foto
+		</button>
+		<span class="text-white/30">|</span>
+		<button
+			type="button"
+			class="text-xs text-white/50 hover:text-red-400 transition-colors font-jetbrains"
+			data-portrait-delete
+		>
+			Eliminar
+		</button>
+	</div>
+
+	<input
+		type="file"
+		accept="image/png"
+		class="hidden"
+		data-portrait-input
+	/>
 
 	<div class="flex flex-col gap-4">
 		<div class="flex flex-col gap-1.5">
@@ -39,3 +76,88 @@ const { profile } = Astro.props as Props;
 		</div>
 	</div>
 </aside>
+
+<script>
+	import { getPortrait, uploadPortrait, deletePortrait } from "../../portrait/data";
+	import { dispatchApiError } from "../../../lib/events";
+
+	const DEFAULT_AVATAR = "/assets/mascot/logo-hwc-2026.png";
+
+	const img = document.querySelector("[data-portrait-img]") as HTMLImageElement | null;
+	const loadingOverlay = document.querySelector("[data-portrait-loading]") as HTMLDivElement | null;
+	const fileInput = document.querySelector("[data-portrait-input]") as HTMLInputElement | null;
+	const changeButton = document.querySelector("[data-portrait-change]") as HTMLButtonElement | null;
+	const deleteButton = document.querySelector("[data-portrait-delete]") as HTMLButtonElement | null;
+
+	const setLoading = (isLoading: boolean) => {
+		loadingOverlay?.classList.toggle("hidden", !isLoading);
+		changeButton && (changeButton.disabled = isLoading);
+		deleteButton && (deleteButton.disabled = isLoading);
+	};
+
+	const updateImage = (url: string) => {
+		if (img) {
+			img.src = url;
+		}
+	};
+
+	const resetImage = () => {
+		if (img) {
+			img.src = DEFAULT_AVATAR;
+		}
+	};
+
+	const loadPortrait = async () => {
+		try {
+			const payload = await getPortrait();
+			updateImage(payload.url);
+		} catch {
+			// Silently keep default avatar if no portrait exists
+		}
+	};
+
+	loadPortrait();
+
+	changeButton?.addEventListener("click", () => {
+		fileInput?.click();
+	});
+
+	fileInput?.addEventListener("change", async () => {
+		const file = fileInput?.files?.[0];
+		if (!file) return;
+
+		if (!file.type.match(/^image\/png$/)) {
+			dispatchApiError("Solo se permiten archivos PNG");
+			fileInput.value = "";
+			return;
+		}
+
+		try {
+			setLoading(true);
+			const payload = await uploadPortrait(file);
+			updateImage(payload.url);
+		} catch (error) {
+			const message = error instanceof Error ? error.message : "Error al subir la foto";
+			dispatchApiError(message);
+		} finally {
+			setLoading(false);
+			fileInput.value = "";
+		}
+	});
+
+	deleteButton?.addEventListener("click", async () => {
+		const confirmed = confirm("¿Eliminar foto de perfil?");
+		if (!confirmed) return;
+
+		try {
+			setLoading(true);
+			await deletePortrait();
+			resetImage();
+		} catch (error) {
+			const message = error instanceof Error ? error.message : "Error al eliminar la foto";
+			dispatchApiError(message);
+		} finally {
+			setLoading(false);
+		}
+	});
+</script>

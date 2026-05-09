@@ -9,6 +9,13 @@ const buildUrl = (path: string) => {
 	return `${API_BASE_URL}${path.startsWith("/") ? "" : "/"}${path}`;
 };
 
+export type ApiResponse<T> = {
+	success: boolean;
+	status_code: string;
+	error: string | null;
+	data: T | null;
+};
+
 const parseJson = async <T>(response: Response): Promise<T> => {
 	if (!response.ok) {
 		const errorText = await response.text();
@@ -23,6 +30,25 @@ export const api = {
 			method: "GET",
 			headers: { ...defaultHeaders, ...headers },
 			credentials: "include",
+		});
+		return parseJson<T>(response);
+	},
+
+	delete: async <T>(path: string, headers: Record<string, string> = {}): Promise<T> => {
+		const response = await fetch(buildUrl(path), {
+			method: "DELETE",
+			headers: { ...defaultHeaders, ...headers },
+			credentials: "include",
+		});
+		return parseJson<T>(response);
+	},
+
+	upload: async <T>(path: string, formData: FormData): Promise<T> => {
+		const response = await fetch(buildUrl(path), {
+			method: "POST",
+			headers: { Accept: "application/json" },
+			credentials: "include",
+			body: formData,
 		});
 		return parseJson<T>(response);
 	},

@@ -1,15 +1,8 @@
-import { api } from "../../lib/api";
+import { api, type ApiResponse } from "../../lib/api";
 
 export type ExerciseDownloadResponse = {
     url: string;
     filename?: string;
-};
-
-type ApiResponse<T> = {
-    success: boolean;
-    status_code: string;
-    error: string | null;
-    data: T | null;
 };
 
 const EXERCISE_ID = "16";
