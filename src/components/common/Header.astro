@@ -9,12 +9,12 @@ const url = Astro.url.pathname;
         class="flex xl:flex-row flex-col gap-4 justify-between items-center w-full px-4"
     >
         <a href="/" class="flex flex-row justify-center items-center">
-            <h1 class="font-zen-dots text-5xl flex flex-row">
+            <h1 class="font-zen-dots xl:text-5xl text-4xl flex flex-row">
                 <span class="text-white">HWC</span>
                 <span class="text-primary-orange">|2026</span>
             </h1>
             <span class="font-zen-dots text-4xl flex flex-row text-white pl-5">X</span>
-            <img src="/assets/sponsors/crazy.png" alt="Crazy" class="w-28">
+            <img src="/assets/sponsors/crazy.png" alt="Crazy" class="xl:w-28 w-20">
         </a>
         <button
             class="block sm:hidden text-white z-50 p-1"
@@ -43,21 +43,6 @@ const url = Astro.url.pathname;
             </a>
         </div>
     </div>
-    {
-        url !== "/register" && (
-            <div
-                class="sm:flex flex-row justify-center items-center hidden"
-                id="button-container"
-            >
-                <a
-                    href="/register"
-                    class="bg-primary-orange text-white px-4 py-2 rounded-lg transition hover:scale-105 inline-block"
-                >
-                    REGISTRARSE
-                </a>
-            </div>
-        )
-    }
 </header>
 
 <div
@@ -76,14 +61,6 @@ const url = Astro.url.pathname;
                 <p class="text-primary-orange">&lt;</p>
                 <p>EQUIPO HWC</p>
                 <p class="text-primary-orange">/&gt;</p>
-            </a>
-        </div>
-        <div class="flex justify-center" id="mobile-button-container">
-            <a
-                href="/login"
-                class="bg-primary-orange text-white px-4 py-2 rounded-lg transition hover:scale-105 inline-block"
-            >
-                REGISTRARSE
             </a>
         </div>
     </div>

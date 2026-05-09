@@ -5,7 +5,7 @@ import CardSponsor from "./components/CardSponsor.astro";
 const sponsors = (await getCollection("sponsors")).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<div class="flex flex-col items-center gap-6 px-6 md:px-20 py-12 relative animate-on-scroll" id="sponsors">
+<div class="flex flex-col items-center gap-6 px-6 md:px-20 py-12 relative animate-on-scroll max-w-6xl mx-auto w-full" id="sponsors">
     {sponsors.length > 0 && (
         <CardSponsor
             name={sponsors[0].data.name}
@@ -14,7 +14,7 @@ const sponsors = (await getCollection("sponsors")).sort((a, b) => a.data.order -
             noBackground={true}
         />
     )}
-    <div class="flex flex-col md:grid md:grid-cols-3 gap-4 md:gap-6 p-6 w-full">
+    <!-- <div class="flex flex-col md:grid md:grid-cols-3 gap-4 md:gap-6 w-full">
         {
             sponsors.slice(1).map((sponsor, index: number) => (
                 <div class={`animate-on-scroll stagger-${Math.min(index + 2, 5)}`}>
@@ -25,6 +25,6 @@ const sponsors = (await getCollection("sponsors")).sort((a, b) => a.data.order -
                     />
                 </div>
             ))
-        }
+        } -->
     </div>
 </div>

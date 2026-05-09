@@ -12,13 +12,13 @@ const { side, text } = Astro.props;
         side == "right" ? (
             <>
                 <div class="h-px flex-1 bg-gradient-to-r from-transparent via-primary-orange/40 to-primary-orange" />
-                <span class="text-white text-2xl md:text-4xl font-zen-dots whitespace-nowrap">
+                <span class="text-white text-xl md:text-4xl font-zen-dots md:whitespace-nowrap text-center">
                     <span class="text-primary-orange">&lt;</span>{text}<span class="text-primary-orange">&nbsp;/&gt;</span>
                 </span>
             </>
         ) : (
             <>
-                <span class="text-white text-2xl md:text-4xl font-zen-dots whitespace-nowrap">
+                <span class="text-white text-xl md:text-4xl font-zen-dots md:whitespace-nowrap text-center">
                     <span class="text-primary-orange">&lt;</span>{text}<span class="text-primary-orange">&nbsp;/&gt;</span>
                 </span>
                 <div class="h-px flex-1 bg-gradient-to-l from-transparent via-primary-orange/40 to-primary-orange" />
