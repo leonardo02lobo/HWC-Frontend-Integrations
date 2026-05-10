@@ -61,7 +61,17 @@ const { profile } = Astro.props as Props;
 				Nombre
 			</span>
 			<div class="w-full rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-2.5 text-sm text-white font-jetbrains">
-				{profile.name}
+				<span data-profile-name>{profile.name}</span>
+			</div>
+		</div>
+
+		<div class="flex flex-col gap-1.5">
+			<span class="text-white/50 font-jetbrains text-sm flex items-center gap-1.5">
+				<span class="text-primary-orange">~</span>
+				Usuario
+			</span>
+			<div class="w-full rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-2.5 text-sm text-white font-jetbrains">
+				<span data-profile-username>{profile.username}</span>
 			</div>
 		</div>
 
@@ -71,13 +81,46 @@ const { profile } = Astro.props as Props;
 				Correo
 			</span>
 			<div class="w-full rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-2.5 text-sm text-white font-jetbrains">
-				{profile.email}
+				<span data-profile-email>{profile.email}</span>
+			</div>
+		</div>
+
+		<div class="flex flex-col gap-1.5">
+			<span class="text-white/50 font-jetbrains text-sm flex items-center gap-1.5">
+				<span class="text-primary-orange">~</span>
+				Lenguaje
+			</span>
+			<div class="w-full rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-2.5 text-sm text-white font-jetbrains">
+				<span data-profile-language>{profile.programmingLanguage}</span>
+			</div>
+		</div>
+
+		<div class="flex flex-col gap-1.5">
+			<span class="text-white/50 font-jetbrains text-sm flex items-center gap-1.5">
+				<span class="text-primary-orange">~</span>
+				GitHub
+			</span>
+			<div class="w-full rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-2.5 text-sm text-white font-jetbrains">
+				<a href={`https://github.com/${profile.githubProfile}`} target="_blank" rel="noreferrer" class="text-primary-orange hover:text-orange-400 transition-colors" data-profile-github>
+					{profile.githubProfile}
+				</a>
+			</div>
+		</div>
+
+		<div class="flex flex-col gap-1.5">
+			<span class="text-white/50 font-jetbrains text-sm flex items-center gap-1.5">
+				<span class="text-primary-orange">~</span>
+				Estatus
+			</span>
+			<div class="w-full rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-2.5 text-sm text-primary-orange font-jetbrains">
+				<span data-profile-status>{profile.status}</span>
 			</div>
 		</div>
 	</div>
 </aside>
 
 <script>
+	import { getCurrentUser } from "../../auth/services/auth.service";
 	import { getPortrait, uploadPortrait, deletePortrait } from "../../portrait/data";
 	import { dispatchApiError } from "../../../lib/events";
 
@@ -88,6 +131,13 @@ const { profile } = Astro.props as Props;
 	const fileInput = document.querySelector("[data-portrait-input]") as HTMLInputElement | null;
 	const changeButton = document.querySelector("[data-portrait-change]") as HTMLButtonElement | null;
 	const deleteButton = document.querySelector("[data-portrait-delete]") as HTMLButtonElement | null;
+	const nameField = document.querySelector("[data-profile-name]") as HTMLSpanElement | null;
+	const usernameField = document.querySelector("[data-profile-username]") as HTMLSpanElement | null;
+	const emailField = document.querySelector("[data-profile-email]") as HTMLSpanElement | null;
+	const languageField = document.querySelector("[data-profile-language]") as HTMLSpanElement | null;
+	const githubField = document.querySelector("[data-profile-github]") as HTMLAnchorElement | null;
+	const statusField = document.querySelector("[data-profile-status]") as HTMLSpanElement | null;
+	let currentUserId: string | null = null;
 
 	const setLoading = (isLoading: boolean) => {
 		loadingOverlay?.classList.toggle("hidden", !isLoading);
@@ -107,16 +157,61 @@ const { profile } = Astro.props as Props;
 		}
 	};
 
-	const loadPortrait = async () => {
+	const normalizeGithubProfile = (profile: string) => {
+		const trimmed = profile.trim();
+		const match = trimmed.match(/(?:https?:\/\/)?(?:www\.)?github\.com\/([^/]+)/);
+		return match?.[1] ?? trimmed;
+	};
+
+	const statusLabel = (status: number) => {
+		if (status === 1) return "Activo";
+		if (status === 0) return "Pendiente";
+		if (status === -1) return "Sin categorizar";
+		return `Estado ${status}`;
+	};
+
+	const setText = (element: HTMLElement | null, value: string | number | null | undefined, fallback = "No disponible") => {
+		if (element) element.textContent = String(value ?? fallback);
+	};
+
+	const loadCurrentUser = async () => {
 		try {
-			const payload = await getPortrait();
+			const user = await getCurrentUser();
+			const githubUsername = normalizeGithubProfile(user.github_profile);
+			currentUserId = String(user.id);
+
+			setText(nameField, user.name);
+			setText(usernameField, user.username ? `@${user.username}` : null);
+			setText(emailField, user.email);
+			setText(languageField, user.programming_language);
+			setText(statusField, statusLabel(user.status));
+
+			if (githubField) {
+				githubField.textContent = githubUsername || "No disponible";
+				githubField.href = githubUsername ? `https://github.com/${githubUsername}` : "#";
+			}
+
+			if (user.portrait) {
+				updateImage(user.portrait);
+			}
+
+			await loadPortrait(currentUserId);
+		} catch (error) {
+			console.error(error);
+			window.location.href = "/register";
+		}
+	};
+
+	const loadPortrait = async (userId: string) => {
+		try {
+			const payload = await getPortrait(userId);
 			updateImage(payload.url);
 		} catch {
 			// Silently keep default avatar if no portrait exists
 		}
 	};
 
-	loadPortrait();
+	loadCurrentUser();
 
 	changeButton?.addEventListener("click", () => {
 		fileInput?.click();
@@ -134,7 +229,7 @@ const { profile } = Astro.props as Props;
 
 		try {
 			setLoading(true);
-			const payload = await uploadPortrait(file);
+			const payload = await uploadPortrait(file, currentUserId ?? undefined);
 			updateImage(payload.url);
 		} catch (error) {
 			const message = error instanceof Error ? error.message : "Error al subir la foto";
@@ -151,7 +246,7 @@ const { profile } = Astro.props as Props;
 
 		try {
 			setLoading(true);
-			await deletePortrait();
+			await deletePortrait(currentUserId ?? undefined);
 			resetImage();
 		} catch (error) {
 			const message = error instanceof Error ? error.message : "Error al eliminar la foto";

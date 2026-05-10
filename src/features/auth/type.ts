@@ -1,15 +1,18 @@
+import { loginUser, registerUser, saveAuthSession } from "./services/auth.service";
+
 const registerPanel = document.getElementById("register-form") as HTMLDivElement | null;
 const loginPanel = document.getElementById("login-form") as HTMLDivElement | null;
 const registerForm = registerPanel?.querySelector("form") as HTMLFormElement | null;
 const loginForm = loginPanel?.querySelector("form") as HTMLFormElement | null;
 const toggleAuthMode = document.getElementById("toggle-auth-mode") as HTMLAnchorElement | null;
+const registerButton = document.getElementById("register-btn") as HTMLButtonElement | null;
+const loginButton = loginForm?.querySelector("button[type='submit']") as HTMLButtonElement | null;
 
 interface RegisterFormData {
-    username: string;
     name: string;
-    mail: string;
-    programingLanguage: string;
-    profileGithub: string;
+    email: string;
+    programming_language: string;
+    github_profile: string;
 }
 
 interface LoginFormData {
@@ -44,25 +47,32 @@ if (registerPanel && loginPanel && registerForm && loginForm && toggleAuthMode) 
         setAuthMode(!isLoginMode);
     });
 
-    registerForm.addEventListener("submit", (event) => {
+    registerForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         const formData = new FormData(registerForm);
         const data: RegisterFormData = {
-            username: formData.get("username") as string,
             name: formData.get("name") as string,
-            mail: formData.get("email") as string,
-            programingLanguage: formData.get("language") as string,
-            profileGithub: formData.get("github") as string,
+            email: formData.get("email") as string,
+            programming_language: formData.get("language") as string,
+            github_profile: formData.get("github") as string,
         };
 
-        console.log(data);
-        dispatchAuthModal({ type: "register-success", email: data.mail });
-        registerForm.reset();
-        setAuthMode(true);
+        try {
+            if (registerButton) registerButton.disabled = true;
+            await registerUser(data);
+            dispatchAuthModal({ type: "register-success", email: data.email });
+            registerForm.reset();
+            setAuthMode(true);
+        } catch (error) {
+            const message = error instanceof Error ? error.message : "No se pudo registrar el usuario";
+            window.alert(message);
+        } finally {
+            if (registerButton) registerButton.disabled = false;
+        }
     });
 
-    loginForm.addEventListener("submit", (event) => {
+    loginForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         const formData = new FormData(loginForm);
@@ -71,20 +81,18 @@ if (registerPanel && loginPanel && registerForm && loginForm && toggleAuthMode) 
             password: (formData.get("login-password") as string) ?? "",
         };
 
-        const credentialsAreValid =
-            data.email.trim().toLowerCase() === "participant@hwc.com" &&
-            data.password === "HWC2026";
+        try {
+            if (loginButton) loginButton.disabled = true;
+            const response = await loginUser(data);
 
-        if (!credentialsAreValid) {
+            saveAuthSession(response ?? { email: data.email });
+            window.location.href = "/profile";
+            loginForm.reset();
+        } catch (error) {
+            console.error(error);
             dispatchAuthModal({ type: "invalid-credentials" });
-            return;
+        } finally {
+            if (loginButton) loginButton.disabled = false;
         }
-        document.cookie = JSON.stringify({
-            email: data.email,
-            password: data.password,
-            user: "participant",
-        })
-        window.location.href = "/profile"
-        loginForm.reset();
     });
 }
