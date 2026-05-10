@@ -40,14 +40,19 @@ const { isPDF, text, description, mode = "download" } = Astro.props as Props;
                     <p class="text-sm text-white/40 font-jetbrains line-clamp-2">
                         {isPDF ? "Archivo PDF disponible para descarga" : "Material de referencia"}
                     </p>
-                    {isPDF && (
+                    {isPDF ? (
                         <button
-                            class="shrink-0 bg-primary-orange text-white text-sm px-4 py-2 rounded-lg hover:bg-orange-600 transition-all duration-200 font-jetbrains"
+                            class="shrink-0 bg-primary-orange text-white text-sm px-4 py-2 rounded-lg hover:bg-orange-600 transition-all duration-200 font-jetbrains flex items-center gap-2"
                             aria-label={`Descargar ${text}`}
+                            data-exercise-download
                         >
-                            Descargar
+                            <svg class="hidden h-4 w-4 animate-spin" data-exercise-spinner xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                            </svg>
+                            <span data-exercise-text>Descargar</span>
                         </button>
-                    )}
+                    ) : null}
                 </div>
             </>
         ) : (
@@ -93,6 +98,49 @@ const { isPDF, text, description, mode = "download" } = Astro.props as Props;
     }
 </div>
 <script>
+    import { getExerciseDownload } from "../data";
+    import { dispatchApiError } from "../../../lib/events";
+
+    const downloadButton = document.querySelector("[data-exercise-download]") as HTMLButtonElement | null;
+    const spinner = document.querySelector("[data-exercise-spinner]") as SVGElement | null;
+    const buttonText = document.querySelector("[data-exercise-text]") as HTMLSpanElement | null;
+
+    const toggleLoading = (isLoading: boolean) => {
+        if (!downloadButton || !spinner || !buttonText) return;
+        downloadButton.disabled = isLoading;
+        spinner.classList.toggle("hidden", !isLoading);
+        buttonText.textContent = isLoading ? "Descargando..." : "Descargar";
+    };
+
+    const downloadFile = (blob: Blob, filename: string) => {
+        const url = URL.createObjectURL(blob);
+        const anchor = document.createElement("a");
+        anchor.href = url;
+        anchor.download = filename;
+        anchor.click();
+        URL.revokeObjectURL(url);
+    };
+
+    downloadButton?.addEventListener("click", async () => {
+        try {
+            toggleLoading(true);
+            const payload = await getExerciseDownload();
+            const fileResponse = await fetch(payload.url, { method: "GET" });
+
+            if (!fileResponse.ok) {
+                throw new Error("No se pudo descargar el PDF");
+            }
+
+            const blob = await fileResponse.blob();
+            downloadFile(blob, payload.filename ?? "ejercicio.pdf");
+        } catch (error) {
+            const message = error instanceof Error ? error.message : "Error al descargar el ejercicio";
+            dispatchApiError(message);
+        } finally {
+            toggleLoading(false);
+        }
+    });
+
     const submitButton = document.getElementById("form-repo") as HTMLFormElement;
 
     submitButton.addEventListener("submit", (e) => {

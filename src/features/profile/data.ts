@@ -3,6 +3,9 @@ export interface PersonalProfile {
 	username: string;
 	email: string;
 	avatarUrl: string;
+	programmingLanguage: string;
+	githubProfile: string;
+	status: string;
 }
 
 export interface AcademicProfile {
@@ -21,6 +24,9 @@ export const personalProfile: PersonalProfile = {
 	username: "@juanperez_dev",
 	email: "juan.perez@email.unet.edu.ve",
 	avatarUrl: "/assets/mascot/logo-hwc-2026.png",
+	programmingLanguage: "JavaScript",
+	githubProfile: "juanperez_dev",
+	status: "Sin categorizar",
 };
 
 export const academicProfile: AcademicProfile = {
