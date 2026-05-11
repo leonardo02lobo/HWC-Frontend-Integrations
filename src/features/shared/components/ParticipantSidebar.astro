@@ -54,11 +54,30 @@ const {
 		</nav>
 	</div>
 	<div>
-		<a href="/" class="participant-sidebar__link participant-sidebar__link--logout">
+		<button type="button" class="participant-sidebar__link participant-sidebar__link--logout" data-signout-button>
 			Cerrar Sesión
-		</a>
+		</button>
 	</div>
 </aside>
+
+<script>
+	import { clearAuthSession, signOutUser } from "../../auth/services/auth.service";
+
+	const signoutButton = document.querySelector("[data-signout-button]") as HTMLButtonElement | null;
+
+	signoutButton?.addEventListener("click", async () => {
+		signoutButton.disabled = true;
+
+		try {
+			await signOutUser();
+		} catch (error) {
+			console.error(error);
+		} finally {
+			clearAuthSession();
+			window.location.href = "/register";
+		}
+	});
+</script>
 
 <style>
 	@reference "../../../styles/global.css";
@@ -97,6 +116,6 @@ const {
 	}
 
 	.participant-sidebar__link--logout {
-		@apply text-white/50 hover:text-white/80;
+		@apply w-full text-left text-white/50 hover:text-white/80 disabled:cursor-not-allowed disabled:opacity-50;
 	}
 </style>
