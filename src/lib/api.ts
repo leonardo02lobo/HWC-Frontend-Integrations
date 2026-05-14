@@ -43,10 +43,10 @@ export const api = {
 		return parseJson<T>(response);
 	},
 
-	upload: async <T>(path: string, formData: FormData): Promise<T> => {
+	upload: async <T>(path: string, formData: FormData, headers: Record<string, string> = {}): Promise<T> => {
 		const response = await fetch(buildUrl(path), {
 			method: "POST",
-			headers: { Accept: "application/json" },
+			headers: { Accept: "application/json", ...headers },
 			credentials: "include",
 			body: formData,
 		});

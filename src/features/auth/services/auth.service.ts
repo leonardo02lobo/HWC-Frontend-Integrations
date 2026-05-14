@@ -83,7 +83,7 @@ export const clearAuthSession = () => {
     localStorage.removeItem(AUTH_TOKEN_KEY);
 };
 
-const getAuthHeaders = () => {
+export const getAuthHeaders = () => {
     const token = localStorage.getItem(AUTH_TOKEN_KEY);
 
     return {

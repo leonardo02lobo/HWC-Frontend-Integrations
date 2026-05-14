@@ -1,4 +1,5 @@
 import { api, type ApiResponse } from "../../lib/api";
+import { getAuthHeaders } from "../auth/services/auth.service";
 
 export type ExerciseDownloadResponse = {
     url: string;
@@ -10,6 +11,7 @@ const EXERCISE_ID = "16";
 export const getExerciseDownload = async (): Promise<ExerciseDownloadResponse> => {
     const response = await api.get<ApiResponse<ExerciseDownloadResponse>>(
         `/bucket/exercises/${EXERCISE_ID}`,
+        getAuthHeaders(),
     );
 
     if (!response.success) {
