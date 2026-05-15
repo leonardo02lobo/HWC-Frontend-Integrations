@@ -8,23 +8,42 @@ interface Props {
 const { academic } = Astro.props as Props;
 ---
 
-<footer class="bg-[#141929] border border-gray-800/60 rounded-2xl p-5 md:p-6 transition-all duration-300 hover:border-gray-700/80" aria-label="Información académica del participante">
-	<h3 class="text-lg text-white font-zen-dots">
-		<span class="text-primary-orange">~</span> Información Académica
-	</h3>
+<section
+	class="flex h-full flex-col gap-4 rounded-2xl border border-gray-800/60 bg-[#141929] p-5 transition-all duration-300 hover:border-gray-700/80 md:p-6"
+	aria-label="Información académica del participante"
+>
+	<header class="flex flex-col gap-1">
+		<h3 class="text-base text-white font-zen-dots sm:text-lg">
+			<span class="text-primary-orange">~</span> Información Académica
+		</h3>
+		<p class="text-xs text-white/40 font-jetbrains">
+			<span class="text-primary-orange">{"// "}</span>Datos institucionales del participante
+		</p>
+	</header>
 
-	<div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-		<div class="rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-3">
-			<p class="text-xs uppercase tracking-wide text-white/40 font-jetbrains">Institución</p>
-			<p class="mt-1 text-sm text-white font-jetbrains">{academic.institution}</p>
+	<dl class="flex flex-col gap-3">
+		<div class="border-l border-primary-orange/30 pl-4">
+			<dt class="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-white/40 font-jetbrains">
+				<span class="text-primary-orange">~</span>
+				Institución
+			</dt>
+			<dd class="mt-1 text-sm text-white font-jetbrains">{academic.institution}</dd>
 		</div>
-		<div class="rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-3">
-			<p class="text-xs uppercase tracking-wide text-white/40 font-jetbrains">Carrera</p>
-			<p class="mt-1 text-sm text-white font-jetbrains">{academic.career}</p>
+
+		<div class="border-l border-primary-orange/30 pl-4">
+			<dt class="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-white/40 font-jetbrains">
+				<span class="text-primary-orange">~</span>
+				Carrera
+			</dt>
+			<dd class="mt-1 text-sm text-white font-jetbrains">{academic.career}</dd>
 		</div>
-		<div class="rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-3">
-			<p class="text-xs uppercase tracking-wide text-white/40 font-jetbrains">Nivel</p>
-			<p class="mt-1 text-sm text-primary-orange font-jetbrains">{academic.level}</p>
+
+		<div class="border-l border-primary-orange/30 pl-4">
+			<dt class="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-white/40 font-jetbrains">
+				<span class="text-primary-orange">~</span>
+				Nivel
+			</dt>
+			<dd class="mt-1 text-sm font-jetbrains text-primary-orange">{academic.level}</dd>
 		</div>
-	</div>
-</footer>
+	</dl>
+</section>
