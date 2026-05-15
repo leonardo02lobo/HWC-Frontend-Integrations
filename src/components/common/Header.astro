@@ -1,9 +1,39 @@
 ---
 const url = Astro.url.pathname;
+
+const participantRoutes = ["/exercises", "/team", "/profile", "/tableDashboard"];
+const isParticipantArea = participantRoutes.some((route) => url === route || url.startsWith(`${route}/`));
+
+interface NavLink {
+    label: string;
+    href: string;
+    accentBrackets?: boolean;
+}
+
+const participantNav: NavLink[] = [
+    { label: "EJERCICIOS", href: "/exercises" },
+    { label: "MI EQUIPO", href: "/team" },
+    { label: "PERFIL", href: "/profile" },
+    { label: "STATUS", href: "/tableDashboard" },
+];
+
+const marketingNav: NavLink[] = [
+    { label: "CATEGORIAS", href: "/#categorias" },
+    { label: "CHARLAS", href: "/#charlas" },
+    { label: "PATROCINADORES", href: "/#patrocinadores" },
+    { label: "EQUIPO HWC", href: "/#equipo", accentBrackets: true },
+];
+
+const navItems = isParticipantArea ? participantNav : marketingNav;
+
+const isActive = (href: string) => {
+    if (!href.startsWith("/") || href.startsWith("/#")) return false;
+    return url === href || url.startsWith(`${href}/`);
+};
 ---
 
 <header
-    class="w-full flex xl:flex-row flex-col gap-4 justify-center items-center px-6 md:px-16 py-4 sticky top-0 z-50 bg-primary-ark-blue/80 backdrop-blur-lg border-b border-gray-800/60"
+    class="w-full flex xl:flex-row flex-col gap-2 justify-center items-center px-6 md:px-16 py-4 sticky top-0 z-50 bg-primary-ark-blue/80 backdrop-blur-lg border-b border-gray-800/60"
 >
     <div
         class="flex xl:flex-row flex-col gap-4 justify-between items-center w-full px-4"
@@ -11,7 +41,7 @@ const url = Astro.url.pathname;
         <a href="/" class="flex flex-row justify-center items-center">
             <img src="/assets/sponsors/crazy.png" alt="Crazy" class="w-28">
             <span class="font-zen-dots text-4xl flex flex-row text-white pr-5">X</span>
-            
+
             <h1 class="font-zen-dots text-5xl flex flex-row">
                 <span class="text-white">HWC</span>
                 <span class="text-primary-orange">|2026</span>
@@ -31,21 +61,35 @@ const url = Astro.url.pathname;
             </span>
         </button>
         <div
-            class="sm:flex sm:flex-row flex-col text-white gap-4 hidden"
+            class="sm:flex sm:flex-row sm:items-center flex-col text-white gap-4 hidden"
             id="menu"
         >
-            <a href="#information" class="header-link">CATEGORIAS</a>
-            <a href="#speakers" class="header-link">CHARLAS</a>
-            <a href="#sponsors" class="header-link">PATROCINADORES</a>
-            <a href="#footer" class="header-link flex flex-row">
-                <p class="text-primary-orange">&lt;</p>
-                <p>EQUIPO HWC</p>
-                <p class="text-primary-orange">/&gt;</p>
-            </a>
+            {
+                navItems.map((item) => (
+                    <a
+                        href={item.href}
+                        class:list={[
+                            "header-link",
+                            item.accentBrackets && "flex flex-row",
+                            isActive(item.href) && "header-link--active",
+                        ]}
+                    >
+                        {item.accentBrackets ? (
+                            <>
+                                <p class="text-primary-orange">&lt;</p>
+                                <p>{item.label}</p>
+                                <p class="text-primary-orange">/&gt;</p>
+                            </>
+                        ) : (
+                            item.label
+                        )}
+                    </a>
+                ))
+            }
         </div>
     </div>
     {
-        url !== "/register" && (
+        !isParticipantArea && url !== "/register" && (
             <div
                 class="sm:flex flex-row justify-center items-center hidden"
                 id="button-container"
@@ -56,6 +100,19 @@ const url = Astro.url.pathname;
                 >
                     REGISTRARSE
                 </a>
+            </div>
+        )
+    }
+    {
+        isParticipantArea && (
+            <div class="sm:flex flex-row justify-center items-center hidden">
+                <button
+                    type="button"
+                    data-signout-button
+                    class="bg-primary-orange text-white px-4 py-2 rounded-lg transition hover:scale-105 inline-block whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                    CERRAR SESIÓN
+                </button>
             </div>
         )
     }
@@ -70,23 +127,54 @@ const url = Astro.url.pathname;
             class="flex flex-col text-white gap-4 w-full justify-center items-center"
             id="mobile-menu"
         >
-            <a href="#information" class="header-link">CATEGORIAS</a>
-            <a href="#speakers" class="header-link">CHARLAS</a>
-            <a href="#sponsors" class="header-link">PATROCINADORES</a>
-            <a href="#footer" class="header-link flex flex-row">
-                <p class="text-primary-orange">&lt;</p>
-                <p>EQUIPO HWC</p>
-                <p class="text-primary-orange">/&gt;</p>
-            </a>
+            {
+                navItems.map((item) => (
+                    <a
+                        href={item.href}
+                        class:list={[
+                            "header-link",
+                            item.accentBrackets && "flex flex-row",
+                            isActive(item.href) && "header-link--active",
+                        ]}
+                    >
+                        {item.accentBrackets ? (
+                            <>
+                                <p class="text-primary-orange">&lt;</p>
+                                <p>{item.label}</p>
+                                <p class="text-primary-orange">/&gt;</p>
+                            </>
+                        ) : (
+                            item.label
+                        )}
+                    </a>
+                ))
+            }
         </div>
-        <div class="flex justify-center" id="mobile-button-container">
-            <a
-                href="/login"
-                class="bg-primary-orange text-white px-4 py-2 rounded-lg transition hover:scale-105 inline-block"
-            >
-                REGISTRARSE
-            </a>
-        </div>
+        {
+            !isParticipantArea && (
+                <div class="flex justify-center" id="mobile-button-container">
+                    <a
+                        href="/register"
+                        class="bg-primary-orange text-white px-4 py-2 rounded-lg transition hover:scale-105 inline-block"
+                    >
+                        REGISTRARSE
+                    </a>
+                </div>
+            )
+        }
+        {
+            isParticipantArea && (
+                <div class="flex justify-center">
+                    <button
+                        type="button"
+                        data-signout-button
+                        class="bg-primary-orange text-white px-4 py-2 rounded-lg transition hover:scale-105 inline-block disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                        CERRAR SESIÓN
+                    </button>
+                </div>
+            )
+        }
     </div>
 </div>
 
@@ -126,9 +214,33 @@ const url = Astro.url.pathname;
     }
 </script>
 
+<script>
+    import { clearAuthSession, signOutUser } from "../../features/auth/services/auth.service";
+
+    const signoutButtons = document.querySelectorAll<HTMLButtonElement>("[data-signout-button]");
+
+    signoutButtons.forEach((button) => {
+        button.addEventListener("click", async () => {
+            signoutButtons.forEach((btn) => (btn.disabled = true));
+
+            try {
+                await signOutUser();
+            } catch (error) {
+                console.error(error);
+            } finally {
+                clearAuthSession();
+                window.location.href = "/register";
+            }
+        });
+    });
+</script>
+
 <style>
     @reference "../../styles/global.css";
     .header-link {
         @apply hover:text-primary-orange transition hover:scale-105;
+    }
+    .header-link--active {
+        @apply text-primary-orange;
     }
 </style>
