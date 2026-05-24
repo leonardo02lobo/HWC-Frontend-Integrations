@@ -40,6 +40,7 @@ const API_URL =
     "http://localhost:8000";
 
 const AUTH_TOKEN_KEY = "auth:token";
+const AUTH_USER_KEY = "auth:user";
 
 const parseResponse = async (response: Response, fallbackMessage: string) => {
     const body = response.status === 204 ? null : await response.json().catch(() => null);
@@ -69,7 +70,7 @@ const findToken = (value: unknown): string | null => {
 };
 
 export const saveAuthSession = (response: LoginResponse) => {
-    localStorage.setItem("auth:user", JSON.stringify(response));
+    localStorage.setItem(AUTH_USER_KEY, JSON.stringify(response));
 
     const token = findToken(response);
     if (token) {
@@ -77,7 +78,12 @@ export const saveAuthSession = (response: LoginResponse) => {
     }
 };
 
-const getAuthHeaders = () => {
+export const clearAuthSession = () => {
+    localStorage.removeItem(AUTH_USER_KEY);
+    localStorage.removeItem(AUTH_TOKEN_KEY);
+};
+
+export const getAuthHeaders = () => {
     const token = localStorage.getItem(AUTH_TOKEN_KEY);
 
     return {
@@ -125,4 +131,14 @@ export async function getCurrentUser() {
     }
 
     return body.data;
+}
+
+export async function signOutUser() {
+    const response = await fetch(`${API_URL}/auth/signout`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+        credentials: "include",
+    });
+
+    return parseResponse(response, "No se pudo cerrar sesión");
 }

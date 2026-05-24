@@ -8,116 +8,128 @@ interface Props {
 const { profile } = Astro.props as Props;
 ---
 
-<aside class="flex h-full flex-col gap-4 bg-[#141929] border border-gray-800/60 rounded-2xl p-5 md:p-6 transition-all duration-300 hover:border-gray-700/80" aria-label="Datos personales del participante">
-	<div class="flex justify-center">
-		<div class="relative">
+<section
+	class="relative flex flex-col gap-6 rounded-2xl border border-gray-800/60 bg-[#141929] p-5 transition-all duration-300 hover:border-gray-700/80 md:gap-7 md:p-6"
+	aria-label="Datos personales del participante"
+>
+	<button
+		type="button"
+		data-profile-edit-trigger
+		class="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-lg border border-gray-800/60 bg-primary-ark-blue/40 px-3 py-1.5 text-xs text-white/70 font-jetbrains transition-colors duration-200 hover:border-primary-orange/40 hover:bg-primary-orange/10 hover:text-primary-orange md:right-5 md:top-5"
+		aria-label="Editar perfil"
+	>
+		<svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+			<path d="M14 4l6 6-10 10H4v-6L14 4z" stroke-linecap="round" stroke-linejoin="round" />
+		</svg>
+		Editar perfil
+	</button>
+
+	<!-- Hero stripe -->
+	<header class="flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:gap-6 sm:pr-32">
+		<div class="relative shrink-0">
 			<img
 				src={profile.avatarUrl}
 				alt={`Avatar de ${profile.name}`}
-				class="h-24 w-24 rounded-full border-2 border-primary-orange bg-white/5 object-cover sm:h-28 sm:w-28"
+				class="h-20 w-20 rounded-full border-2 border-primary-orange/70 bg-white/5 object-cover ring-2 ring-primary-orange/10 ring-offset-2 ring-offset-[#141929] sm:h-24 sm:w-24"
 				data-portrait-img
 			/>
 			<div
-				class="absolute inset-0 flex items-center justify-center rounded-full bg-black/50 hidden"
+				class="absolute inset-0 hidden items-center justify-center rounded-full bg-black/50"
 				data-portrait-loading
 			>
-				<svg class="h-8 w-8 animate-spin text-primary-orange" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+				<svg class="h-7 w-7 animate-spin text-primary-orange" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
 					<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
 					<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
 				</svg>
 			</div>
 		</div>
-	</div>
 
-	<div class="flex justify-center gap-2">
-		<button
-			type="button"
-			class="text-xs text-white/50 hover:text-primary-orange transition-colors font-jetbrains"
-			data-portrait-change
-		>
-			Cambiar foto
-		</button>
-		<span class="text-white/30">|</span>
-		<button
-			type="button"
-			class="text-xs text-white/50 hover:text-red-400 transition-colors font-jetbrains"
-			data-portrait-delete
-		>
-			Eliminar
-		</button>
-	</div>
+		<div class="flex min-w-0 flex-1 flex-col gap-2 text-center sm:text-left">
+			<div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 sm:justify-start">
+				<h3 class="truncate text-xl text-white font-zen-dots sm:text-2xl" data-profile-name>
+					{profile.name}
+				</h3>
+				<span
+					class="inline-flex items-center gap-1.5 rounded-full border border-primary-orange/40 bg-primary-orange/10 px-2.5 py-0.5 text-[11px] uppercase tracking-wider font-jetbrains text-primary-orange"
+				>
+					<span class="relative inline-flex h-1.5 w-1.5">
+						<span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-orange opacity-60"></span>
+						<span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary-orange"></span>
+					</span>
+					<span data-profile-status>{profile.status}</span>
+				</span>
+			</div>
 
-	<input
-		type="file"
-		accept="image/png"
-		class="hidden"
-		data-portrait-input
-	/>
+			<p class="text-sm text-white/50 font-jetbrains" data-profile-username>
+				{profile.username}
+			</p>
 
-	<div class="flex flex-col gap-4">
-		<div class="flex flex-col gap-1.5">
-			<span class="text-white/50 font-jetbrains text-sm flex items-center gap-1.5">
-				<span class="text-primary-orange">~</span>
-				Nombre
-			</span>
-			<div class="w-full rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-2.5 text-sm text-white font-jetbrains">
-				<span data-profile-name>{profile.name}</span>
+			<div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs font-jetbrains sm:justify-start">
+				<button
+					type="button"
+					class="text-white/50 transition-colors duration-150 hover:text-primary-orange disabled:cursor-not-allowed disabled:opacity-50"
+					data-portrait-change
+				>
+					↑ Cambiar foto
+				</button>
+				<span class="text-white/20">·</span>
+				<button
+					type="button"
+					class="text-white/50 transition-colors duration-150 hover:text-rose-400 disabled:cursor-not-allowed disabled:opacity-50"
+					data-portrait-delete
+				>
+					✕ Eliminar
+				</button>
 			</div>
 		</div>
+	</header>
 
-		<div class="flex flex-col gap-1.5">
-			<span class="text-white/50 font-jetbrains text-sm flex items-center gap-1.5">
-				<span class="text-primary-orange">~</span>
-				Usuario
-			</span>
-			<div class="w-full rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-2.5 text-sm text-white font-jetbrains">
-				<span data-profile-username>{profile.username}</span>
-			</div>
-		</div>
+	<input type="file" accept="image/png" class="hidden" data-portrait-input />
 
-		<div class="flex flex-col gap-1.5">
-			<span class="text-white/50 font-jetbrains text-sm flex items-center gap-1.5">
+	<!-- Manifest-style inspector -->
+	<dl class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-3">
+		<div class="border-l border-primary-orange/30 pl-4">
+			<dt class="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-white/40 font-jetbrains">
 				<span class="text-primary-orange">~</span>
 				Correo
-			</span>
-			<div class="w-full rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-2.5 text-sm text-white font-jetbrains">
-				<span data-profile-email>{profile.email}</span>
-			</div>
+			</dt>
+			<dd class="mt-1 break-all text-sm text-white font-jetbrains" data-profile-email>
+				{profile.email}
+			</dd>
 		</div>
 
-		<div class="flex flex-col gap-1.5">
-			<span class="text-white/50 font-jetbrains text-sm flex items-center gap-1.5">
+		<div class="border-l border-primary-orange/30 pl-4">
+			<dt class="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-white/40 font-jetbrains">
 				<span class="text-primary-orange">~</span>
 				Lenguaje
-			</span>
-			<div class="w-full rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-2.5 text-sm text-white font-jetbrains">
-				<span data-profile-language>{profile.programmingLanguage}</span>
-			</div>
+			</dt>
+			<dd class="mt-1 text-sm text-white font-jetbrains" data-profile-language>
+				{profile.programmingLanguage}
+			</dd>
 		</div>
 
-		<div class="flex flex-col gap-1.5">
-			<span class="text-white/50 font-jetbrains text-sm flex items-center gap-1.5">
+		<div class="border-l border-primary-orange/30 pl-4">
+			<dt class="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-white/40 font-jetbrains">
 				<span class="text-primary-orange">~</span>
 				GitHub
-			</span>
-			<div class="w-full rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-2.5 text-sm text-white font-jetbrains">
-				<a href={`https://github.com/${profile.githubProfile}`} target="_blank" rel="noreferrer" class="text-primary-orange hover:text-orange-400 transition-colors" data-profile-github>
+			</dt>
+			<dd class="mt-1 text-sm font-jetbrains">
+				<a
+					href={`https://github.com/${profile.githubProfile}`}
+					target="_blank"
+					rel="noreferrer"
+					class="inline-flex items-center gap-1.5 text-primary-orange transition-colors duration-200 hover:text-orange-400"
+					data-profile-github
+				>
 					{profile.githubProfile}
+					<svg viewBox="0 0 16 16" class="h-3 w-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+						<path d="M6 3h7v7M13 3L7 9M11 9v4H3V5h4" stroke-linecap="round" stroke-linejoin="round" />
+					</svg>
 				</a>
-			</div>
+			</dd>
 		</div>
-
-		<div class="flex flex-col gap-1.5">
-			<span class="text-white/50 font-jetbrains text-sm flex items-center gap-1.5">
-				<span class="text-primary-orange">~</span>
-				Estatus
-			</span>
-			<div class="w-full rounded-lg border border-gray-800/60 bg-primary-ark-blue/60 px-4 py-2.5 text-sm text-primary-orange font-jetbrains">
-				<span data-profile-status>{profile.status}</span>
-			</div>
-		</div>
-	</div>
-</aside>
+	</dl>
+</section>
 
 <script>
 	import { getCurrentUser } from "../../auth/services/auth.service";
@@ -131,6 +143,7 @@ const { profile } = Astro.props as Props;
 	const fileInput = document.querySelector("[data-portrait-input]") as HTMLInputElement | null;
 	const changeButton = document.querySelector("[data-portrait-change]") as HTMLButtonElement | null;
 	const deleteButton = document.querySelector("[data-portrait-delete]") as HTMLButtonElement | null;
+	const editButton = document.querySelector("[data-profile-edit-trigger]") as HTMLButtonElement | null;
 	const nameField = document.querySelector("[data-profile-name]") as HTMLSpanElement | null;
 	const usernameField = document.querySelector("[data-profile-username]") as HTMLSpanElement | null;
 	const emailField = document.querySelector("[data-profile-email]") as HTMLSpanElement | null;
@@ -253,6 +266,46 @@ const { profile } = Astro.props as Props;
 			dispatchApiError(message);
 		} finally {
 			setLoading(false);
+		}
+	});
+
+	editButton?.addEventListener("click", () => {
+		const rawUsername = usernameField?.textContent?.trim() ?? "";
+		window.dispatchEvent(
+			new CustomEvent("profile:open-edit", {
+				detail: {
+					name: nameField?.textContent?.trim() ?? "",
+					username: rawUsername.replace(/^@/, ""),
+					email: emailField?.textContent?.trim() ?? "",
+					language: languageField?.textContent?.trim() ?? "",
+					github: githubField?.textContent?.trim() ?? "",
+				},
+			}),
+		);
+	});
+
+	window.addEventListener("profile:updated", (event) => {
+		const detail = (event as CustomEvent<{
+			name?: string;
+			username?: string | null;
+			email?: string;
+			language?: string | null;
+			github?: string | null;
+		}>).detail;
+		if (!detail) return;
+
+		if (detail.name) setText(nameField, detail.name);
+		if (detail.username !== undefined) {
+			setText(usernameField, detail.username ? `@${detail.username}` : null);
+		}
+		if (detail.email) setText(emailField, detail.email);
+		if (detail.language !== undefined) {
+			setText(languageField, detail.language ?? null);
+		}
+		if (detail.github !== undefined && githubField) {
+			const handle = detail.github ?? "";
+			githubField.textContent = handle || "No disponible";
+			githubField.href = handle ? `https://github.com/${handle}` : "#";
 		}
 	});
 </script>

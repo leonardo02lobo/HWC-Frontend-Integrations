@@ -1,0 +1,155 @@
+---
+import type { Team } from "../data";
+
+interface Props {
+	teams: Team[];
+	selectedId: string;
+}
+
+const { teams, selectedId } = Astro.props as Props;
+---
+
+<section
+	data-team-section="teams-list"
+	class="flex min-w-0 flex-1 flex-col gap-4 rounded-2xl border border-gray-800/60 bg-[#141929] p-4 md:p-5 transition-all duration-300 hover:border-gray-700/80"
+>
+	<!-- Tabs -->
+	<nav aria-label="Filtrar equipos" class="-mx-1 overflow-x-auto scrollbar-thin">
+		<ul class="flex min-w-fit items-center gap-1 border-b border-gray-800/60 px-1">
+			<li class="shrink-0">
+				<button
+					type="button"
+					role="tab"
+					aria-selected="true"
+					class="relative inline-flex items-center px-4 py-3 text-sm text-primary-orange font-jetbrains whitespace-nowrap"
+				>
+					Todos los equipos
+					<span class="absolute inset-x-2 -bottom-px h-0.5 rounded-full bg-gradient-to-r from-primary-orange via-primary-orange to-primary-orange/40" aria-hidden="true"></span>
+				</button>
+			</li>
+		</ul>
+	</nav>
+
+	<!-- Table -->
+	<div class="overflow-x-auto">
+		<table class="w-full min-w-[680px] border-separate border-spacing-0" aria-label="Lista de equipos">
+			<thead>
+				<tr>
+					{
+						["Equipo", "Descripción", "Miembros", "Repositorio", "Acciones"].map((h) => (
+							<th
+								scope="col"
+								class="border-b border-gray-800/60 px-3 py-3 text-left text-xs uppercase tracking-wider text-white/40 font-jetbrains"
+							>
+								{h}
+							</th>
+						))
+					}
+				</tr>
+			</thead>
+			<tbody>
+				{
+					teams.map((team) => {
+						const active = team.id === selectedId;
+						return (
+							<tr class={`group transition-colors duration-150 ${active ? "bg-primary-orange/[0.04]" : "hover:bg-white/[0.02]"}`}>
+								{/* Equipo */}
+								<td class="border-b border-gray-800/40 px-3 py-3.5 align-middle">
+									<div class="flex items-center gap-3">
+										<span
+											class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border bg-white/5 text-[11px] font-zen-dots"
+											style={`border-color:${team.accent}; color:${team.accent}`}
+											aria-hidden="true"
+										>
+											{team.initials}
+										</span>
+										<span class="text-sm text-white font-jetbrains whitespace-nowrap">{team.name}</span>
+									</div>
+								</td>
+
+								{/* Descripción */}
+								<td class="border-b border-gray-800/40 px-3 py-3.5 align-middle">
+									<span class="text-sm text-white/60 font-jetbrains">{team.description}</span>
+								</td>
+
+								{/* Miembros */}
+								<td class="border-b border-gray-800/40 px-3 py-3.5 align-middle">
+									<div class="flex items-center -space-x-2">
+										{
+											team.memberPreview.map((m) => (
+												<img
+													src={m.photo}
+													alt=""
+													loading="lazy"
+													class="h-7 w-7 rounded-full border-2 border-[#141929] object-cover bg-white/5"
+												/>
+											))
+										}
+										{team.memberOverflow > 0 && (
+											<span class="ml-1 inline-flex h-7 min-w-7 items-center justify-center rounded-full border border-gray-800/80 bg-[rgba(11,16,32,0.8)] px-1.5 text-[10px] text-white/70 font-jetbrains">
+												+{team.memberOverflow}
+											</span>
+										)}
+									</div>
+								</td>
+
+								{/* Repositorio */}
+								<td class="border-b border-gray-800/40 px-3 py-3.5 align-middle">
+									<a
+										href={team.repository.href}
+										target="_blank"
+										rel="noreferrer"
+										class="text-sm text-primary-orange hover:text-orange-400 transition-colors duration-200 font-jetbrains"
+									>
+										{team.repository.label}
+									</a>
+								</td>
+
+								{/* Acciones */}
+								<td class="border-b border-gray-800/40 px-3 py-3.5 align-middle">
+									<div class="flex items-center gap-1">
+										<button
+											type="button"
+											data-team-detail-trigger={team.id}
+											aria-label={`Ver ${team.name}`}
+											class="inline-flex h-8 w-8 items-center justify-center rounded-md text-white/50 transition-colors duration-150 hover:bg-white/5 hover:text-white"
+										>
+											<svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.75">
+												<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
+												<circle cx="12" cy="12" r="3" />
+											</svg>
+										</button>
+										<button
+											type="button"
+											aria-label={`Editar ${team.name}`}
+											class="inline-flex h-8 w-8 items-center justify-center rounded-md text-white/50 transition-colors duration-150 hover:bg-white/5 hover:text-white"
+										>
+											<svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.75">
+												<path d="M14 4l6 6-10 10H4v-6L14 4z" stroke-linecap="round" stroke-linejoin="round" />
+											</svg>
+										</button>
+										<button
+											type="button"
+											aria-label={`Eliminar ${team.name}`}
+											class="inline-flex h-8 w-8 items-center justify-center rounded-md text-white/50 transition-colors duration-150 hover:bg-rose-500/10 hover:text-rose-400"
+										>
+											<svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.75">
+												<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" stroke-linecap="round" stroke-linejoin="round" />
+											</svg>
+										</button>
+									</div>
+								</td>
+							</tr>
+						);
+					})
+				}
+			</tbody>
+		</table>
+	</div>
+
+	<footer class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+		<p class="text-xs text-white/40 font-jetbrains">
+			Mostrando <span class="text-white/70">1</span> a <span class="text-white/70">{teams.length}</span> de <span class="text-white/70">{teams.length}</span> equipos
+		</p>
+	</footer>
+</section>
