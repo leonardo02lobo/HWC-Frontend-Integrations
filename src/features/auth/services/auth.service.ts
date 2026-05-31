@@ -93,6 +93,7 @@ export const getAuthHeaders = () => {
 };
 
 export async function registerUser(payload: RegisterPayload) {
+    console.log(API_URL)
     const response = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: {
