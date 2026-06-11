@@ -21,7 +21,7 @@ interface LoginFormData {
 }
 
 type AuthModalDetail = {
-    type: "invalid-credentials" | "register-success" | "email-verification";
+    type: "invalid-credentials" | "register-success" | "email-verification" | "register-error";
     email?: string;
 };
 
@@ -64,9 +64,8 @@ if (registerPanel && loginPanel && registerForm && loginForm && toggleAuthMode) 
             dispatchAuthModal({ type: "email-verification", email: data.email });
             registerForm.reset();
             window.addEventListener("auth:verified", () => setAuthMode(true), { once: true });
-        } catch (error) {
-            const message = error instanceof Error ? error.message : "No se pudo registrar el usuario";
-            window.alert(message);
+        } catch {
+            dispatchAuthModal({ type: "register-error" });
         } finally {
             if (registerButton) registerButton.disabled = false;
         }
