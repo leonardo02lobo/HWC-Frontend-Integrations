@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-type AuthModalType = "invalid-credentials" | "register-success" | "email-verification";
+type AuthModalType = "invalid-credentials" | "register-success" | "email-verification" | "register-error";
 
 interface AuthModalDetail {
 	type: AuthModalType;
@@ -41,6 +41,16 @@ export default function AuthFeedbackModals() {
 				title: "Credenciales incorrectas",
 				description:
 					"El correo o la contraseña no son válidos. Verifica tus datos e intenta nuevamente.",
+				providerLink: undefined,
+				isVerification: false,
+			};
+		}
+
+		if (modal.type === "register-error") {
+			return {
+				title: "Error al registrarse",
+				description:
+					"No se pudo completar el registro. El servidor puede estar temporalmente no disponible. Intenta nuevamente en unos momentos.",
 				providerLink: undefined,
 				isVerification: false,
 			};
