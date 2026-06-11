@@ -1,12 +1,6 @@
-export interface DashboardRow {
-	id: string;
-	teammate: string;
-	repository: string;
-	status: "Pendiente" | "En revisión" | "Aprobado";
-	score: number;
-	updatedAt: string;
-	description: string;
-}
+import type { DashboardRow } from "./type";
+
+export type { DashboardRow };
 
 export const rows: DashboardRow[] = [
 	{
