@@ -60,7 +60,7 @@ export default function AuthFeedbackModals() {
 			const provider = getEmailProviderLink(modal.email);
 			return {
 				title: "Verifica tu correo",
-				description: `Enviamos un enlace de verificación a ${modal.email ?? "tu correo electrónico"}. Haz clic en el enlace para activar tu cuenta.`,
+				description: `Enviamos un enlace de verificación a ${modal.email ?? "tu correo electrónico"}. Haz clic en el enlace para activar tu cuenta. Si no lo encuentras, revisa tu carpeta de spam o correo no deseado.`,
 				providerLink: provider,
 				isVerification: true,
 			};
