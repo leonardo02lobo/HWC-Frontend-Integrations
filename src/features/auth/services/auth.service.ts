@@ -1,4 +1,4 @@
-// src/features/auth/services/auth.service.ts
+import { api, type ApiResponse } from "../../../lib/api";
 
 export interface RegisterPayload {
     name: string;
@@ -25,32 +25,8 @@ export interface AuthUser {
     category_id: number | null;
 }
 
-export interface AuthResponse<T> {
-    success: boolean;
-    status_code: string;
-    error: string | null;
-    data: T | null;
-}
-
-type LoginResponse = AuthResponse<unknown> | Record<string, unknown> | null;
-
-const API_URL =
-    import.meta.env.PUBLIC_API_BASE_URL ??
-    import.meta.env.PUBLIC_API_URL ??
-    "http://localhost:8000";
-
 const AUTH_TOKEN_KEY = "auth:token";
 const AUTH_USER_KEY = "auth:user";
-
-const parseResponse = async (response: Response, fallbackMessage: string) => {
-    const body = response.status === 204 ? null : await response.json().catch(() => null);
-
-    if (!response.ok) {
-        throw new Error(body?.message ?? body?.detail ?? body?.error ?? fallbackMessage);
-    }
-
-    return body;
-};
 
 const findToken = (value: unknown): string | null => {
     if (!value || typeof value !== "object") return null;
@@ -69,7 +45,7 @@ const findToken = (value: unknown): string | null => {
     return findToken(record.data);
 };
 
-export const saveAuthSession = (response: LoginResponse) => {
+export const saveAuthSession = (response: ApiResponse<unknown> | Record<string, unknown> | null) => {
     localStorage.setItem(AUTH_USER_KEY, JSON.stringify(response));
 
     const token = findToken(response);
@@ -93,53 +69,33 @@ export const getAuthHeaders = () => {
 };
 
 export async function registerUser(payload: RegisterPayload) {
-    console.log(API_URL)
-    const response = await fetch(`${API_URL}/auth/register`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-    });
-
-    return parseResponse(response, "No se pudo registrar el usuario");
+    const response = await api.post<ApiResponse<unknown>>("/auth/register", payload);
+    if (!response.success) {
+        throw new Error(response.error ?? "No se pudo registrar el usuario");
+    }
+    return response;
 }
 
 export async function loginUser(payload: LoginPayload) {
-    const response = await fetch(`${API_URL}/auth/login`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(payload),
-    });
-
-    return parseResponse(response, "No se pudo iniciar sesión");
+    const response = await api.post<ApiResponse<unknown>>("/auth/login", payload);
+    if (!response.success) {
+        throw new Error(response.error ?? "No se pudo iniciar sesión");
+    }
+    return response;
 }
 
-export async function getCurrentUser() {
-    const response = await fetch(`${API_URL}/auth/me`, {
-        method: "GET",
-        headers: getAuthHeaders(),
-        credentials: "include",
-    });
-
-    const body = await parseResponse(response, "No se pudo obtener el perfil") as AuthResponse<AuthUser>;
-
-    if (!body.success || !body.data) {
-        throw new Error(body.error ?? "No se pudo obtener el perfil");
+export async function getCurrentUser(): Promise<AuthUser> {
+    const response = await api.get<ApiResponse<AuthUser>>("/auth/me", getAuthHeaders());
+    if (!response.success || !response.data) {
+        throw new Error(response.error ?? "No se pudo obtener el perfil");
     }
-
-    return body.data;
+    return response.data;
 }
 
 export async function signOutUser() {
-    const response = await fetch(`${API_URL}/auth/signout`, {
-        method: "POST",
-        headers: getAuthHeaders(),
-        credentials: "include",
-    });
-
-    return parseResponse(response, "No se pudo cerrar sesión");
+    const response = await api.post<ApiResponse<unknown>>("/auth/signout", {}, getAuthHeaders());
+    if (!response.success) {
+        throw new Error(response.error ?? "No se pudo cerrar sesión");
+    }
+    return response;
 }

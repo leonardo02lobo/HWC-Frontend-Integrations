@@ -43,6 +43,26 @@ export const api = {
 		return parseJson<T>(response);
 	},
 
+	post: async <T>(path: string, body: unknown, headers: Record<string, string> = {}): Promise<T> => {
+		const response = await fetch(buildUrl(path), {
+			method: "POST",
+			headers: { ...defaultHeaders, "Content-Type": "application/json", ...headers },
+			credentials: "include",
+			body: JSON.stringify(body),
+		});
+		return parseJson<T>(response);
+	},
+
+	patch: async <T>(path: string, body: unknown, headers: Record<string, string> = {}): Promise<T> => {
+		const response = await fetch(buildUrl(path), {
+			method: "PATCH",
+			headers: { ...defaultHeaders, "Content-Type": "application/json", ...headers },
+			credentials: "include",
+			body: JSON.stringify(body),
+		});
+		return parseJson<T>(response);
+	},
+
 	upload: async <T>(path: string, formData: FormData, headers: Record<string, string> = {}): Promise<T> => {
 		const response = await fetch(buildUrl(path), {
 			method: "POST",

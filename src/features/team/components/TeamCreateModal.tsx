@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { createTeam } from "../services/team.service";
+import { dispatchApiError } from "../../../lib/events";
 
 const initialState = {
 	name: "",
@@ -9,6 +11,7 @@ const initialState = {
 export default function TeamCreateModal() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [values, setValues] = useState(initialState);
+	const [submitting, setSubmitting] = useState(false);
 
 	useEffect(() => {
 		const onOpen = () => {
@@ -43,16 +46,23 @@ export default function TeamCreateModal() {
 	const trimmedName = values.name.trim();
 	const canSubmit = trimmedName.length > 0;
 
-	const handleSubmit = (event: React.FormEvent) => {
+	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
-		if (!canSubmit) return;
-		// eslint-disable-next-line no-console
-		console.log("POST /teams", {
-			name: trimmedName,
-			description: values.description.trim() || null,
-			repository: values.repository.trim() || null,
-		});
-		close();
+		if (!canSubmit || submitting) return;
+		setSubmitting(true);
+		try {
+			await createTeam({
+				name: trimmedName,
+				description: values.description.trim() || null,
+				repository: values.repository.trim() || null,
+			});
+			close();
+			window.dispatchEvent(new CustomEvent("team:created"));
+		} catch (err) {
+			dispatchApiError(err instanceof Error ? err.message : "No se pudo crear el equipo");
+		} finally {
+			setSubmitting(false);
+		}
 	};
 
 	return (
@@ -166,13 +176,13 @@ export default function TeamCreateModal() {
 						</button>
 						<button
 							type="submit"
-							disabled={!canSubmit}
+							disabled={!canSubmit || submitting}
 							className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#FF4D00] px-4 py-2.5 text-sm text-white transition-all duration-200 hover:bg-orange-600 font-[JetBrains_Mono,monospace] disabled:cursor-not-allowed disabled:opacity-40"
 						>
 							<svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
 								<path d="M8 3v10M3 8h10" strokeLinecap="round" />
 							</svg>
-							Crear Equipo
+							{submitting ? "Creando..." : "Crear Equipo"}
 						</button>
 					</div>
 				</footer>
