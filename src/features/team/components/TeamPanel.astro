@@ -1,28 +1,11 @@
 ---
-import {
-	apiFlow,
-	invitationsReceived,
-	selectedTeamId,
-	selectedTeamMembersOverflow,
-	selectedTeamMembersPreview,
-	teams,
-} from "../data";
-import TeamsTable from "./TeamsTable.astro";
-import TeamDetailPanel from "./TeamDetailPanel.astro";
+import TeamsTable from "./TeamsTable";
 import TeamDetailModal from "./TeamDetailModal";
 import TeamCreateModal from "./TeamCreateModal";
+import InvitationsPanel from "./InvitationsPanel";
 
 // Toggle this when wiring real auth: true when the user already belongs to a team.
 const hasTeam = false;
-
-const selectedTeam = teams.find((t) => t.id === selectedTeamId) ?? teams[0];
-
-const methodColor: Record<string, string> = {
-	GET: "text-emerald-300",
-	POST: "text-primary-orange",
-	PATCH: "text-amber-300",
-	DELETE: "text-rose-300",
-};
 ---
 
 <section class="mx-auto flex w-full max-w-7xl flex-col gap-4 px-3 py-6 sm:px-4 md:gap-5 md:px-6 md:py-8 lg:px-8">
@@ -54,17 +37,11 @@ const methodColor: Record<string, string> = {
 
 		<!-- Table + Detail row -->
 		<div class="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_26rem] md:gap-5">
-			<TeamsTable teams={teams} selectedId={selectedTeam.id} />
+			<TeamsTable client:load />
 
 			<div class="flex flex-col gap-4 md:gap-5">
 				{
-					hasTeam ? (
-						<TeamDetailPanel
-							team={selectedTeam}
-							membersPreview={selectedTeamMembersPreview}
-							membersOverflow={selectedTeamMembersOverflow}
-						/>
-					) : (
+					!hasTeam && (
 						<aside
 							data-team-section="team-detail"
 							class="flex flex-col items-center gap-4 rounded-2xl border border-dashed border-gray-800/80 bg-[#141929] p-6 text-center transition-all duration-300 hover:border-gray-700/80"
@@ -102,153 +79,18 @@ const methodColor: Record<string, string> = {
 						</aside>
 					)
 				}
-
-				<!-- Flujo rápido -->
-				<section class="flex flex-col gap-3 rounded-2xl border border-gray-800/60 bg-[#141929] p-4 transition-colors duration-200 hover:border-gray-700/80 md:p-5">
-					<header class="flex flex-col gap-1">
-						<h2 class="text-base text-white font-zen-dots">
-							<span class="text-primary-orange">~</span> Flujo rápido
-						</h2>
-						<p class="text-xs text-white/40 font-jetbrains">
-							<span class="text-primary-orange">{"// "}</span>Pulsa un paso para resaltar la zona correspondiente
-						</p>
-					</header>
-
-					<ol class="flex flex-col gap-1.5">
-						{
-							apiFlow.map((step) => (
-								<li>
-									<button
-										type="button"
-										data-team-section-trigger={step.target}
-										class="group flex w-full items-start gap-2.5 rounded-lg border border-transparent px-2 py-1.5 text-left text-xs font-jetbrains leading-relaxed transition-all duration-200 hover:border-primary-orange/30 hover:bg-primary-orange/[0.06] focus-visible:border-primary-orange/40 focus-visible:bg-primary-orange/[0.08] focus-visible:outline-none"
-									>
-										<span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-primary-orange/10 text-[10px] text-primary-orange transition-colors duration-200 group-hover:bg-primary-orange/20">
-											{step.n}
-										</span>
-										<span class="min-w-0 flex-1 text-white/60 transition-colors duration-200 group-hover:text-white/80">
-											{step.label}{" "}
-											<code class={`${methodColor[step.method]} font-jetbrains`}>{step.method}</code>{" "}
-											<code class="text-white/80">{step.path}</code>
-										</span>
-										<svg
-											viewBox="0 0 16 16"
-											class="mt-1 h-3 w-3 shrink-0 text-white/20 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-primary-orange"
-											fill="none"
-											stroke="currentColor"
-											stroke-width="2"
-											aria-hidden="true"
-										>
-											<path d="M6 3l5 5-5 5" stroke-linecap="round" stroke-linejoin="round" />
-										</svg>
-									</button>
-								</li>
-							))
-						}
-					</ol>
-				</section>
 			</div>
 		</div>
 
 		<!-- Invitaciones recibidas (full width) -->
-		<section
-			id="invitations-card"
-			data-team-section="invitations"
-			class="flex flex-col gap-3 rounded-2xl border border-gray-800/60 bg-[#141929] p-4 transition-all duration-300 hover:border-gray-700/80 md:p-5"
-		>
-			<header class="flex flex-col gap-1">
-				<h2 class="text-base text-white font-zen-dots">
-					<span class="text-primary-orange">~</span> Invitaciones recibidas
-				</h2>
-				<p class="text-xs text-white/40 font-jetbrains">
-					<span class="text-primary-orange">{"// "}</span>Gestiona las invitaciones que has recibido
-				</p>
-			</header>
-
-				<div class="overflow-x-auto">
-					<table class="w-full min-w-[420px] border-separate border-spacing-0" aria-label="Invitaciones recibidas">
-						<thead>
-							<tr>
-								{
-									["Equipo", "Invitado por", "Fecha", "Estado", "Acciones"].map((h) => (
-										<th class="border-b border-gray-800/60 px-2 py-2 text-left text-[10px] uppercase tracking-wider text-white/40 font-jetbrains">
-											{h}
-										</th>
-									))
-								}
-							</tr>
-						</thead>
-						<tbody>
-							{
-								invitationsReceived.map((inv) => (
-									<tr class="transition-colors duration-150 hover:bg-white/[0.02]">
-										<td class="border-b border-gray-800/40 px-2 py-3 align-middle">
-											<div class="flex items-center gap-2">
-												<span
-													class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border bg-white/5 text-[9px] font-zen-dots"
-													style={`border-color:${inv.team.accent}; color:${inv.team.accent}`}
-													aria-hidden="true"
-												>
-													{inv.team.initials}
-												</span>
-												<span class="text-xs text-white font-jetbrains whitespace-nowrap">{inv.team.name}</span>
-											</div>
-										</td>
-										<td class="border-b border-gray-800/40 px-2 py-3 align-middle">
-											<span class="text-xs text-white/70 font-jetbrains whitespace-nowrap">{inv.invitedBy}</span>
-										</td>
-										<td class="border-b border-gray-800/40 px-2 py-3 align-middle">
-											<span class="text-xs text-white/50 font-jetbrains whitespace-nowrap">{inv.date}</span>
-										</td>
-										<td class="border-b border-gray-800/40 px-2 py-3 align-middle">
-											<span class="inline-flex rounded-md border border-primary-orange/40 bg-primary-orange/10 px-1.5 py-0.5 text-[10px] text-primary-orange font-jetbrains">
-												{inv.status}
-											</span>
-										</td>
-										<td class="border-b border-gray-800/40 px-2 py-3 align-middle">
-											<div class="flex items-center gap-1">
-												<button
-													type="button"
-													aria-label={`Aceptar invitación de ${inv.team.name}`}
-													class="inline-flex h-6 w-6 items-center justify-center rounded-md border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 transition-colors duration-150 hover:bg-emerald-500/15"
-												>
-													<svg viewBox="0 0 16 16" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2.5">
-														<path d="M3 8.5l3.5 3.5L13 4.5" stroke-linecap="round" stroke-linejoin="round" />
-													</svg>
-												</button>
-												<button
-													type="button"
-													aria-label={`Rechazar invitación de ${inv.team.name}`}
-													class="inline-flex h-6 w-6 items-center justify-center rounded-md border border-rose-500/30 bg-rose-500/10 text-rose-300 transition-colors duration-150 hover:bg-rose-500/15"
-												>
-													<svg viewBox="0 0 16 16" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2.5">
-														<path d="M3 3l10 10M13 3L3 13" stroke-linecap="round" />
-													</svg>
-												</button>
-											</div>
-										</td>
-									</tr>
-								))
-							}
-						</tbody>
-					</table>
-				</div>
-
-			<p class="text-xs text-white/40 font-jetbrains">
-				Mostrando <span class="text-white/70">1</span> a <span class="text-white/70">{invitationsReceived.length}</span> de <span class="text-white/70">{invitationsReceived.length}</span> invitaciones
-			</p>
-		</section>
+		<InvitationsPanel client:load />
 	</div>
 
-	<TeamDetailModal teams={teams} client:load />
+	<TeamDetailModal client:load />
 	<TeamCreateModal client:load />
 </section>
 
 <script>
-	const dispatchDetail = (teamId: string) => {
-		window.dispatchEvent(new CustomEvent("team:open-detail", { detail: { teamId } }));
-	};
-
 	const dispatchCreate = () => {
 		window.dispatchEvent(new CustomEvent("team:open-create"));
 	};
@@ -256,14 +98,6 @@ const methodColor: Record<string, string> = {
 	document.addEventListener("click", (event) => {
 		const target = event.target as HTMLElement | null;
 		if (!target) return;
-
-		const detailTrigger = target.closest<HTMLElement>("[data-team-detail-trigger]");
-		if (detailTrigger) {
-			event.preventDefault();
-			const teamId = detailTrigger.getAttribute("data-team-detail-trigger");
-			if (teamId) dispatchDetail(teamId);
-			return;
-		}
 
 		const createTrigger = target.closest<HTMLElement>("[data-team-create-trigger]");
 		if (createTrigger) {

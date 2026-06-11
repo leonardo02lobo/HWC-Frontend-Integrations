@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { updateProfile } from "../services/profile.service";
+import { dispatchApiError } from "../../../lib/events";
 
 interface ProfileValues {
 	name: string;
@@ -19,6 +21,7 @@ const initialState: ProfileValues = {
 export default function ProfileEditModal() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [values, setValues] = useState<ProfileValues>(initialState);
+	const [submitting, setSubmitting] = useState(false);
 
 	useEffect(() => {
 		const onOpen = (event: Event) => {
@@ -61,9 +64,9 @@ export default function ProfileEditModal() {
 	const trimmedEmail = values.email.trim();
 	const canSubmit = trimmedName.length > 0 && trimmedEmail.length > 0;
 
-	const handleSubmit = (event: React.FormEvent) => {
+	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
-		if (!canSubmit) return;
+		if (!canSubmit || submitting) return;
 
 		const trimmedUsername = values.username.trim().replace(/^@/, "");
 		const trimmedLanguage = values.language.trim();
@@ -77,22 +80,26 @@ export default function ProfileEditModal() {
 			github_profile: trimmedGithub || null,
 		};
 
-		// eslint-disable-next-line no-console
-		console.log("PATCH /me", payload);
-
-		window.dispatchEvent(
-			new CustomEvent("profile:updated", {
-				detail: {
-					name: payload.name,
-					username: payload.username,
-					email: payload.email,
-					language: payload.programming_language,
-					github: payload.github_profile,
-				},
-			}),
-		);
-
-		close();
+		setSubmitting(true);
+		try {
+			await updateProfile(payload);
+			window.dispatchEvent(
+				new CustomEvent("profile:updated", {
+					detail: {
+						name: payload.name,
+						username: payload.username,
+						email: payload.email,
+						language: payload.programming_language,
+						github: payload.github_profile,
+					},
+				}),
+			);
+			close();
+		} catch (err) {
+			dispatchApiError(err instanceof Error ? err.message : "No se pudo actualizar el perfil");
+		} finally {
+			setSubmitting(false);
+		}
 	};
 
 	const inputClass =
@@ -232,13 +239,13 @@ export default function ProfileEditModal() {
 						</button>
 						<button
 							type="submit"
-							disabled={!canSubmit}
+							disabled={!canSubmit || submitting}
 							className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#FF4D00] px-4 py-2.5 text-sm text-white transition-all duration-200 hover:bg-orange-600 font-[JetBrains_Mono,monospace] disabled:cursor-not-allowed disabled:opacity-40"
 						>
 							<svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
 								<path d="M3 8.5l3.5 3.5L13 4.5" strokeLinecap="round" strokeLinejoin="round" />
 							</svg>
-							Guardar cambios
+							{submitting ? "Guardando..." : "Guardar cambios"}
 						</button>
 					</div>
 				</footer>
