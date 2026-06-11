@@ -3,6 +3,17 @@ import { api, type ApiResponse } from "../../../lib/api";
 
 type VerifyState = "loading" | "success" | "error";
 
+function extractErrorMessage(err: unknown): string {
+	if (!(err instanceof Error)) return "No se pudo conectar con el servidor. Intenta nuevamente.";
+	try {
+		const parsed = JSON.parse(err.message) as ApiResponse<unknown>;
+		if (typeof parsed?.error === "string" && parsed.error) return parsed.error;
+	} catch {
+		// err.message is plain text, not JSON
+	}
+	return err.message || "No se pudo conectar con el servidor. Intenta nuevamente.";
+}
+
 function LoadingView() {
 	return (
 		<>
@@ -51,7 +62,7 @@ function SuccessView() {
 			</div>
 			<a
 				href="/register"
-				className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary-orange px-4 py-3 text-sm font-semibold text-white transition duration-200 hover:bg-orange-600 font-[JetBrains_Mono,monospace]"
+				className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary-orange px-4 py-3 text-sm text-white transition duration-200 hover:bg-orange-600 font-[JetBrains_Mono,monospace]"
 			>
 				Ir al inicio de sesión
 				<svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
@@ -74,9 +85,7 @@ function ErrorView({ message }: { message: string }) {
 				<h2 className="text-xl text-white font-[Zen_Dots,cursive]">
 					<span className="text-rose-400">$</span>Error<span className="text-rose-400">.</span>
 				</h2>
-				<p className="text-sm text-white/60 font-[JetBrains_Mono,monospace]">
-					{message}
-				</p>
+				<p className="text-sm text-white/60 font-[JetBrains_Mono,monospace]">{message}</p>
 			</div>
 			<a
 				href="/register"
@@ -110,8 +119,8 @@ export default function EmailVerification() {
 					setState("error");
 				}
 			})
-			.catch(() => {
-				setErrorMsg("No se pudo conectar con el servidor. Intenta nuevamente en unos momentos.");
+			.catch((err: unknown) => {
+				setErrorMsg(extractErrorMessage(err));
 				setState("error");
 			});
 	}, []);
