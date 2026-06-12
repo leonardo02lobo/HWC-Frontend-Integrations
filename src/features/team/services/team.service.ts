@@ -10,6 +10,21 @@ export interface TeamApiData {
     member_count?: number;
 }
 
+export interface TeamDisplayData {
+    id: number;
+    name: string;
+    cloud_repo_link: string | null;
+    status: number;
+    feedback: string | null;
+    evaluation_file_url: string | null;
+}
+
+export interface UserTeamItem {
+    team: TeamDisplayData;
+    leader: null;
+    members_count: number;
+}
+
 export interface InvitationApiData {
     id: string;
     team_id: string;
@@ -24,6 +39,12 @@ export async function getTeams(): Promise<TeamApiData[]> {
     const res = await api.get<ApiResponse<TeamApiData[]>>("/teams", getAuthHeaders());
     if (!res.success || !res.data) throw new Error(res.error ?? "No se pudo obtener los equipos");
     return res.data;
+}
+
+export async function getUserTeam(): Promise<UserTeamItem[]> {
+    const res = await api.get<ApiResponse<{ message: string; teams: UserTeamItem[] }>>("/teams/me", getAuthHeaders());
+    if (!res.success || !res.data) throw new Error(res.error ?? "No se pudo obtener tu equipo");
+    return res.data.teams;
 }
 
 export async function createTeam(payload: { name: string; description?: string | null; repository?: string | null }) {
