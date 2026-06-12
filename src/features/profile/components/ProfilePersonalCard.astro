@@ -1,35 +1,16 @@
 ---
-import type { PersonalProfile } from "../data";
-
-interface Props {
-	profile: PersonalProfile;
-}
-
-const { profile } = Astro.props as Props;
 ---
 
 <section
 	class="relative flex flex-col gap-6 rounded-2xl border border-gray-800/60 bg-[#141929] p-5 transition-all duration-300 hover:border-gray-700/80 md:gap-7 md:p-6"
 	aria-label="Datos personales del participante"
 >
-	<button
-		type="button"
-		data-profile-edit-trigger
-		class="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-lg border border-gray-800/60 bg-primary-ark-blue/40 px-3 py-1.5 text-xs text-white/70 font-jetbrains transition-colors duration-200 hover:border-primary-orange/40 hover:bg-primary-orange/10 hover:text-primary-orange md:right-5 md:top-5"
-		aria-label="Editar perfil"
-	>
-		<svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
-			<path d="M14 4l6 6-10 10H4v-6L14 4z" stroke-linecap="round" stroke-linejoin="round" />
-		</svg>
-		Editar perfil
-	</button>
-
 	<!-- Hero stripe -->
-	<header class="flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:gap-6 sm:pr-32">
+	<header class="flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:gap-6">
 		<div class="relative shrink-0">
 			<img
-				src={profile.avatarUrl}
-				alt={`Avatar de ${profile.name}`}
+				src="/assets/mascot/logo-hwc-2026.png"
+				alt="Avatar de perfil"
 				class="h-20 w-20 rounded-full border-2 border-primary-orange/70 bg-white/5 object-cover ring-2 ring-primary-orange/10 ring-offset-2 ring-offset-[#141929] sm:h-24 sm:w-24"
 				data-portrait-img
 			/>
@@ -47,7 +28,7 @@ const { profile } = Astro.props as Props;
 		<div class="flex min-w-0 flex-1 flex-col gap-2 text-center sm:text-left">
 			<div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 sm:justify-start">
 				<h3 class="truncate text-xl text-white font-zen-dots sm:text-2xl" data-profile-name>
-					{profile.name}
+					—
 				</h3>
 				<span
 					class="inline-flex items-center gap-1.5 rounded-full border border-primary-orange/40 bg-primary-orange/10 px-2.5 py-0.5 text-[11px] uppercase tracking-wider font-jetbrains text-primary-orange"
@@ -56,35 +37,23 @@ const { profile } = Astro.props as Props;
 						<span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-orange opacity-60"></span>
 						<span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary-orange"></span>
 					</span>
-					<span data-profile-status>{profile.status}</span>
+					<span data-profile-status>—</span>
 				</span>
 			</div>
 
-			<p class="text-sm text-white/50 font-jetbrains" data-profile-username>
-				{profile.username}
-			</p>
+			<p class="text-sm text-white/50 font-jetbrains" data-profile-username>—</p>
 
-			<div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs font-jetbrains sm:justify-start">
-				<button
-					type="button"
-					class="text-white/50 transition-colors duration-150 hover:text-primary-orange disabled:cursor-not-allowed disabled:opacity-50"
-					data-portrait-change
-				>
-					↑ Cambiar foto
-				</button>
-				<span class="text-white/20">·</span>
-				<button
-					type="button"
-					class="text-white/50 transition-colors duration-150 hover:text-rose-400 disabled:cursor-not-allowed disabled:opacity-50"
-					data-portrait-delete
-				>
-					✕ Eliminar
-				</button>
-			</div>
+			<button
+				type="button"
+				class="self-center text-xs text-white/50 transition-colors duration-150 hover:text-primary-orange disabled:cursor-not-allowed disabled:opacity-50 font-jetbrains sm:self-start"
+				data-portrait-change
+			>
+				↑ Cambiar foto
+			</button>
 		</div>
 	</header>
 
-	<input type="file" accept="image/png" class="hidden" data-portrait-input />
+	<input type="file" accept="image/png,image/jpeg,image/webp" class="hidden" data-portrait-input />
 
 	<!-- Manifest-style inspector -->
 	<dl class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-3">
@@ -93,9 +62,7 @@ const { profile } = Astro.props as Props;
 				<span class="text-primary-orange">~</span>
 				Correo
 			</dt>
-			<dd class="mt-1 break-all text-sm text-white font-jetbrains" data-profile-email>
-				{profile.email}
-			</dd>
+			<dd class="mt-1 break-all text-sm text-white font-jetbrains" data-profile-email>—</dd>
 		</div>
 
 		<div class="border-l border-primary-orange/30 pl-4">
@@ -103,9 +70,7 @@ const { profile } = Astro.props as Props;
 				<span class="text-primary-orange">~</span>
 				Lenguaje
 			</dt>
-			<dd class="mt-1 text-sm text-white font-jetbrains" data-profile-language>
-				{profile.programmingLanguage}
-			</dd>
+			<dd class="mt-1 text-sm text-white font-jetbrains" data-profile-language>—</dd>
 		</div>
 
 		<div class="border-l border-primary-orange/30 pl-4">
@@ -115,13 +80,13 @@ const { profile } = Astro.props as Props;
 			</dt>
 			<dd class="mt-1 text-sm font-jetbrains">
 				<a
-					href={`https://github.com/${profile.githubProfile}`}
+					href="#"
 					target="_blank"
 					rel="noreferrer"
 					class="inline-flex items-center gap-1.5 text-primary-orange transition-colors duration-200 hover:text-orange-400"
 					data-profile-github
 				>
-					{profile.githubProfile}
+					—
 					<svg viewBox="0 0 16 16" class="h-3 w-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
 						<path d="M6 3h7v7M13 3L7 9M11 9v4H3V5h4" stroke-linecap="round" stroke-linejoin="round" />
 					</svg>
@@ -142,32 +107,29 @@ const { profile } = Astro.props as Props;
 	const loadingOverlay = document.querySelector("[data-portrait-loading]") as HTMLDivElement | null;
 	const fileInput = document.querySelector("[data-portrait-input]") as HTMLInputElement | null;
 	const changeButton = document.querySelector("[data-portrait-change]") as HTMLButtonElement | null;
-	const deleteButton = document.querySelector("[data-portrait-delete]") as HTMLButtonElement | null;
-	const editButton = document.querySelector("[data-profile-edit-trigger]") as HTMLButtonElement | null;
-	const nameField = document.querySelector("[data-profile-name]") as HTMLSpanElement | null;
-	const usernameField = document.querySelector("[data-profile-username]") as HTMLSpanElement | null;
-	const emailField = document.querySelector("[data-profile-email]") as HTMLSpanElement | null;
-	const languageField = document.querySelector("[data-profile-language]") as HTMLSpanElement | null;
+	const nameField = document.querySelector("[data-profile-name]") as HTMLElement | null;
+	const usernameField = document.querySelector("[data-profile-username]") as HTMLElement | null;
+	const emailField = document.querySelector("[data-profile-email]") as HTMLElement | null;
+	const languageField = document.querySelector("[data-profile-language]") as HTMLElement | null;
 	const githubField = document.querySelector("[data-profile-github]") as HTMLAnchorElement | null;
-	const statusField = document.querySelector("[data-profile-status]") as HTMLSpanElement | null;
+	const statusField = document.querySelector("[data-profile-status]") as HTMLElement | null;
+
 	let currentUserId: string | null = null;
+	let hasPortrait = false;
 
 	const setLoading = (isLoading: boolean) => {
 		loadingOverlay?.classList.toggle("hidden", !isLoading);
-		changeButton && (changeButton.disabled = isLoading);
-		deleteButton && (deleteButton.disabled = isLoading);
+		if (changeButton) changeButton.disabled = isLoading;
 	};
 
 	const updateImage = (url: string) => {
-		if (img) {
-			img.src = url;
-		}
+		if (img) img.src = url;
+		hasPortrait = true;
 	};
 
 	const resetImage = () => {
-		if (img) {
-			img.src = DEFAULT_AVATAR;
-		}
+		if (img) img.src = DEFAULT_AVATAR;
+		hasPortrait = false;
 	};
 
 	const normalizeGithubProfile = (profile: string) => {
@@ -190,7 +152,7 @@ const { profile } = Astro.props as Props;
 	const loadCurrentUser = async () => {
 		try {
 			const user = await getCurrentUser();
-			const githubUsername = normalizeGithubProfile(user.github_profile);
+			const githubUsername = normalizeGithubProfile(user.github_profile ?? "");
 			currentUserId = String(user.id);
 
 			setText(nameField, user.name);
@@ -206,11 +168,10 @@ const { profile } = Astro.props as Props;
 
 			if (user.portrait) {
 				updateImage(user.portrait);
+			} else {
+				await loadPortrait(currentUserId);
 			}
-
-			await loadPortrait(currentUserId);
-		} catch (error) {
-			console.error(error);
+		} catch {
 			window.location.href = "/register";
 		}
 	};
@@ -220,7 +181,7 @@ const { profile } = Astro.props as Props;
 			const payload = await getPortrait(userId);
 			updateImage(payload.url);
 		} catch {
-			// Silently keep default avatar if no portrait exists
+			// No portrait stored — keep default avatar
 		}
 	};
 
@@ -232,80 +193,21 @@ const { profile } = Astro.props as Props;
 
 	fileInput?.addEventListener("change", async () => {
 		const file = fileInput?.files?.[0];
-		if (!file) return;
-
-		if (!file.type.match(/^image\/png$/)) {
-			dispatchApiError("Solo se permiten archivos PNG");
-			fileInput.value = "";
-			return;
-		}
+		if (!file || !currentUserId) return;
 
 		try {
 			setLoading(true);
-			const payload = await uploadPortrait(file, currentUserId ?? undefined);
+			if (hasPortrait) {
+				await deletePortrait(currentUserId);
+			}
+			const payload = await uploadPortrait(file, currentUserId);
 			updateImage(payload.url);
 		} catch (error) {
-			const message = error instanceof Error ? error.message : "Error al subir la foto";
+			const message = error instanceof Error ? error.message : "Error al actualizar la foto";
 			dispatchApiError(message);
 		} finally {
 			setLoading(false);
-			fileInput.value = "";
-		}
-	});
-
-	deleteButton?.addEventListener("click", async () => {
-		const confirmed = confirm("¿Eliminar foto de perfil?");
-		if (!confirmed) return;
-
-		try {
-			setLoading(true);
-			await deletePortrait(currentUserId ?? undefined);
-			resetImage();
-		} catch (error) {
-			const message = error instanceof Error ? error.message : "Error al eliminar la foto";
-			dispatchApiError(message);
-		} finally {
-			setLoading(false);
-		}
-	});
-
-	editButton?.addEventListener("click", () => {
-		const rawUsername = usernameField?.textContent?.trim() ?? "";
-		window.dispatchEvent(
-			new CustomEvent("profile:open-edit", {
-				detail: {
-					name: nameField?.textContent?.trim() ?? "",
-					username: rawUsername.replace(/^@/, ""),
-					email: emailField?.textContent?.trim() ?? "",
-					language: languageField?.textContent?.trim() ?? "",
-					github: githubField?.textContent?.trim() ?? "",
-				},
-			}),
-		);
-	});
-
-	window.addEventListener("profile:updated", (event) => {
-		const detail = (event as CustomEvent<{
-			name?: string;
-			username?: string | null;
-			email?: string;
-			language?: string | null;
-			github?: string | null;
-		}>).detail;
-		if (!detail) return;
-
-		if (detail.name) setText(nameField, detail.name);
-		if (detail.username !== undefined) {
-			setText(usernameField, detail.username ? `@${detail.username}` : null);
-		}
-		if (detail.email) setText(emailField, detail.email);
-		if (detail.language !== undefined) {
-			setText(languageField, detail.language ?? null);
-		}
-		if (detail.github !== undefined && githubField) {
-			const handle = detail.github ?? "";
-			githubField.textContent = handle || "No disponible";
-			githubField.href = handle ? `https://github.com/${handle}` : "#";
+			if (fileInput) fileInput.value = "";
 		}
 	});
 </script>
