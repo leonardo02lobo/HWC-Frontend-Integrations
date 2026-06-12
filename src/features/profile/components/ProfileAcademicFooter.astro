@@ -1,11 +1,4 @@
 ---
-import type { AcademicProfile } from "../data";
-
-interface Props {
-	academic: AcademicProfile;
-}
-
-const { academic } = Astro.props as Props;
 ---
 
 <section
@@ -27,7 +20,7 @@ const { academic } = Astro.props as Props;
 				<span class="text-primary-orange">~</span>
 				Institución
 			</dt>
-			<dd class="mt-1 text-sm text-white font-jetbrains">{academic.institution}</dd>
+			<dd class="mt-1 text-sm text-white/30 font-jetbrains">No disponible</dd>
 		</div>
 
 		<div class="border-l border-primary-orange/30 pl-4">
@@ -35,7 +28,7 @@ const { academic } = Astro.props as Props;
 				<span class="text-primary-orange">~</span>
 				Carrera
 			</dt>
-			<dd class="mt-1 text-sm text-white font-jetbrains">{academic.career}</dd>
+			<dd class="mt-1 text-sm text-white/30 font-jetbrains">No disponible</dd>
 		</div>
 
 		<div class="border-l border-primary-orange/30 pl-4">
@@ -43,7 +36,7 @@ const { academic } = Astro.props as Props;
 				<span class="text-primary-orange">~</span>
 				Nivel
 			</dt>
-			<dd class="mt-1 text-sm font-jetbrains text-primary-orange">{academic.level}</dd>
+			<dd class="mt-1 text-sm text-white/30 font-jetbrains">No disponible</dd>
 		</div>
 	</dl>
 </section>

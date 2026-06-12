@@ -1,9 +1,7 @@
 ---
 import ProfileAcademicFooter from "./ProfileAcademicFooter.astro";
-import ProfileAcceptedTeamCard from "./ProfileAcceptedTeamCard.astro";
+import ProfileTeamCard from "./ProfileTeamCard";
 import ProfilePersonalCard from "./ProfilePersonalCard.astro";
-import ProfileEditModal from "./ProfileEditModal";
-import { personalProfile, acceptedMembers, academicProfile } from "../data";
 ---
 
 <section class="mx-auto flex w-full max-w-7xl flex-col gap-4 px-3 py-6 sm:px-4 md:gap-5 md:px-6 md:py-8 lg:px-8">
@@ -17,13 +15,11 @@ import { personalProfile, acceptedMembers, academicProfile } from "../data";
 			</p>
 		</header>
 
-		<ProfilePersonalCard profile={personalProfile} />
+		<ProfilePersonalCard />
 
 		<div class="grid grid-cols-1 gap-4 md:gap-5 lg:grid-cols-2">
-			<ProfileAcceptedTeamCard members={acceptedMembers} />
-			<ProfileAcademicFooter academic={academicProfile} />
+			<ProfileTeamCard client:load />
+			<ProfileAcademicFooter />
 		</div>
 	</div>
-
-	<ProfileEditModal client:load />
 </section>
