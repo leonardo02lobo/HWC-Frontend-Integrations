@@ -60,15 +60,6 @@ function SuccessView() {
 					Tu cuenta ha sido activada exitosamente. Ya puedes iniciar sesión.
 				</p>
 			</div>
-			<a
-				href="/register"
-				className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary-orange px-4 py-3 text-sm text-white transition duration-200 hover:bg-orange-600 font-[JetBrains_Mono,monospace]"
-			>
-				Ir al inicio de sesión
-				<svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
-					<path d="M3 8h10M9 3l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
-				</svg>
-			</a>
 		</>
 	);
 }
@@ -87,12 +78,6 @@ function ErrorView({ message }: { message: string }) {
 				</h2>
 				<p className="text-sm text-white/60 font-[JetBrains_Mono,monospace]">{message}</p>
 			</div>
-			<a
-				href="/register"
-				className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-gray-700 bg-transparent px-4 py-3 text-sm text-white/70 transition duration-200 hover:border-gray-600 hover:text-white font-[JetBrains_Mono,monospace]"
-			>
-				Volver al registro
-			</a>
 		</>
 	);
 }
